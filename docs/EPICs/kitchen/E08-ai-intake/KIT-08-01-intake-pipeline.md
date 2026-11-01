@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-06 (proposal builder), KIT-03 (`MatchNames`), KIT-01 (ai client with deadlines) |
 | Unblocks | KIT-08-02, KIT-08-03, KIT-08-04 |
 

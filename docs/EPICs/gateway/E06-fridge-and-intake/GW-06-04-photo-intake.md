@@ -6,6 +6,7 @@
 | Epic | [GW-06 Fridge, barcode and intake routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-05, GW-03-01, GW-03-02, KIT-08 (`IntakeFromPhoto`) |
 | Unblocks | MOB-03, MOB-07 |
 

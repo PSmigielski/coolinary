@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-02-04, KIT-01-08, AI-09 (`translate_ingredients` batch kind) |
 | Unblocks | new languages (wave 2: French, Spanish, Italian), ADM-03 (review of machine names) |
 

@@ -6,6 +6,7 @@
 | Epic | [OFF-10 User-supplied flyers](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-10-01 |
 | Unblocks | GW-10 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-08-01, AI-05 (`ExtractItemsFromText`), KIT-02 (`SearchIngredients`) |
 | Unblocks | GW-06 (`POST /v1/intake/text`) |
 

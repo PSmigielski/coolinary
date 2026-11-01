@@ -6,6 +6,7 @@
 | Epic | [PLN-04 Dish nutrition and calories](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-04-01, PLN-02-06 |
 | Unblocks | GW-07 (dish detail), PLN-05, PLN-10-01, PLN-12 |
 

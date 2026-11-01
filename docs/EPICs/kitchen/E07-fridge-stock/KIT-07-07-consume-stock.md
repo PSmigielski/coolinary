@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | KIT-07-01, KIT-02 (unit conversion library, KIT-02-02), KIT-10-05 (staples) |
 | Unblocks | PLN-10 ("cooked it"), KIT-12-02 |
 

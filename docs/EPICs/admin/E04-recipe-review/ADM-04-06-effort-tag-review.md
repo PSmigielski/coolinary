@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-04-03; PLN-03-06 (`SuggestEffortTags`, `DecideEffortTag`), PLN-03-07 (`ListDishes`, `GetReviewItem`), PLN-03-04 (`ListDraftBatches`); AI-09 (`suggest_effort_tags`) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-13 Family day plan](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-12-05 |
 | Unblocks | PLN-13-04, PLN-13-06, PLN-13-07, PLN-14-06, PLN-14-07, PLN-18-03 |
 

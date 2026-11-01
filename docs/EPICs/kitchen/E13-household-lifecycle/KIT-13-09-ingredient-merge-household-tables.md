@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-02-09 (`ingredientRefs` registry), KIT-07-01, KIT-08-05, KIT-10-04, KIT-10-05 |
 | Unblocks | — |
 

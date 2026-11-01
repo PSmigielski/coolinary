@@ -6,6 +6,7 @@
 | Epic | [AI-17 Cheapest top-up](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-17-01, AI-03-05 |
 | Unblocks | cheapest top-up going live |
 

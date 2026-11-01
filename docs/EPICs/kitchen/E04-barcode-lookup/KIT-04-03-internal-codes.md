@@ -6,6 +6,7 @@
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-01, KIT-10 (household country) |
 | Unblocks | KIT-04-09, Verification 14 ("a weighed-counter code … handled") |
 

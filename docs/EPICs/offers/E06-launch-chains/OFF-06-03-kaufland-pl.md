@@ -6,6 +6,7 @@
 | Epic | [OFF-06 Launch chain adapters](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | OFF-05-02, OFF-05-03, OFF-03-05, OFF-05-07 |
 | Unblocks | OFF-06-07, OFF-08-02 for `kaufland-pl` |
 

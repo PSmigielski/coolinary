@@ -6,6 +6,7 @@
 | Epic | [ADM-07 AI cost and system overview](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-07-03; AI-02-02 (cost metrics), AI-02-04 (`AiAdminService.GetSpendStatus`) |
 | Unblocks | — |
 

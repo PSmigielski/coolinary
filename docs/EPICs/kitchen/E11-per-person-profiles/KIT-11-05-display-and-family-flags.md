@@ -6,6 +6,7 @@
 | Epic | [KIT-11 Per-person profiles](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-11-02, KIT-10-06 (`eat_lighter_as_family` column) |
 | Unblocks | KIT-11-06, PLN-13-04 (eat lighter), GW-05 |
 

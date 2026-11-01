@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-02-02, KIT-02-03, KIT-02-04 |
 | Unblocks | PLN-02, PLN-07, PLN-15 (planner reads flags, weights, packs), OFF-07, GW-05 |
 

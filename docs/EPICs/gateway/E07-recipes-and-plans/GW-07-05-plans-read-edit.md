@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-07-04, PLN-08 (`GetPlans`, `AcceptPlan`, `DeletePlan`, `SetPlanMeal`) |
 | Unblocks | MOB-03, GW-08-02 |
 

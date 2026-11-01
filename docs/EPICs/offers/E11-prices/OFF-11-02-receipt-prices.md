@@ -6,6 +6,7 @@
 | Epic | [OFF-11 Prices](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-11-01, OFF-01-02, KIT-08 (receipt.scanned) |
 | Unblocks | OFF-11-04 (receipt step) |
 

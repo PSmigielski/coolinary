@@ -6,6 +6,7 @@
 | Epic | [PLN-12 Per-person portions](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-12-03, PLN-12-04 |
 | Unblocks | PLN-12-06, PLN-13-03, PLN-14-05 |
 

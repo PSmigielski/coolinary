@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-02-03; PLN-03-04 (`DraftDishes`, `GetDraftBatch`, `ListDraftBatches`); AI-04, AI-09 (`draft_dishes`) |
 | Unblocks | ADM-04-03 |
 

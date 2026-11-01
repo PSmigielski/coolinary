@@ -6,6 +6,7 @@
 | Epic | [ADM-02 Admin sign-in, roles and audit log](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-01-03, ADM-02-02 |
 | Unblocks | every mutating admin route |
 

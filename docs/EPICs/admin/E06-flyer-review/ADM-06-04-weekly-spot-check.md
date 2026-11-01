@@ -6,6 +6,7 @@
 | Epic | [ADM-06 Flyer sources, offers and shops review](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-06-03; OFF-08-03 (weekly samples), OFF-08-01 (`ListReviewSamples`, `GetReviewSample`), OFF-08-04 (`GetChainAccuracy`) |
 | Unblocks | — |
 

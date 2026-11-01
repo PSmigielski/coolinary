@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01-07, KIT-02-01, KIT-02-02, KIT-02-03, KIT-02-04 |
 | Unblocks | ADM-03, KIT-03-07 (re-match on new names) |
 

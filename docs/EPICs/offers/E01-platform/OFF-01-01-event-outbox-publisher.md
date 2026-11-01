@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01 (outbox and publisher pattern in Go) |
 | Unblocks | OFF-07-07, OFF-08-05, OFF-10-04 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-01, KIT-02 (default storage place and shelf life per storage place), KIT-04 (storage hint and 2D-code date from `ResolveBarcode`), KIT-10-01 (household timezone) |
 | Unblocks | KIT-07-03, KIT-07-04, KIT-07-06, GW-06 (add-item form) |
 

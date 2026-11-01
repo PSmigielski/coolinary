@@ -6,6 +6,7 @@
 | Epic | [GW-04 Household, profiles and invite routes](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-03-03, IDN-07 (`CreateInvite`, `ListInvites`, `CancelInvite`) |
 | Unblocks | MOB-03 |
 

@@ -6,6 +6,7 @@
 | Epic | [OFF-14 Household lifecycle](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-01-02, KIT-02 (catalogue.ingredient_merged) |
 | Unblocks | — |
 

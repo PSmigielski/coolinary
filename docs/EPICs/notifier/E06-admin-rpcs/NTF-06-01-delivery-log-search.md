@@ -6,6 +6,7 @@
 | Epic | [NTF-06 Admin RPCs](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | NTF-02-02 |
 | Unblocks | ADM-07-04 |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-02, MOB-01-04, MOB-04-02, IDN-02 (e-mail OTP), IDN-03 (link anonymous → account), GW-02 |
 | Unblocks | later sign-in screens |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-02 API client and error model](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-04, GW-01 (request context, idempotency keys) |
 | Unblocks | MOB-02-02, MOB-03-*, MOB-04-02, MOB-07-02 |
 

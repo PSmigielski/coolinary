@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-01, KIT-02 (unit conversion library, KIT-02-02), KIT-10-01 (timezone) |
 | Unblocks | GW-06 (fridge list), PLN-01 (stock snapshot), PLN-06, PLN-15 |
 

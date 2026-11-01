@@ -6,6 +6,7 @@
 | Epic | [GW-03 Free-tier AI quota and rate limits](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-01 |
 | Unblocks | GW-02-02, GW-02-06, GW-04-04, upload routes |
 

@@ -6,6 +6,7 @@
 | Epic | [GW-02 Auth and account routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-01-02, IDN-03 (anonymous claim), IDN-04 (memberId claim) |
 | Unblocks | GW-02-03 … GW-02-06, every route that needs `member_id` or refuses anonymous users |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-15 Shopping list](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-15-08 |
 | Unblocks | GW-09, MOB-05 |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-01-02, IDN-03 (anonymous accounts), GW-02 (`POST /api/auth/sign-in/anonymous`) |
 | Unblocks | MOB-01-04, MOB-04-02 |
 

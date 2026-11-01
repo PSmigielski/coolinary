@@ -6,6 +6,7 @@
 | Epic | [KIT-12 Savings](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-12-01, KIT-07-07 (cook events) |
 | Unblocks | KIT-12-03, KIT-12-04, KIT-12-05 |
 

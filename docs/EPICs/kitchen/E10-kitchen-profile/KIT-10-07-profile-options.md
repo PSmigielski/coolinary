@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-10-02 … KIT-10-06 |
 | Unblocks | GW-05 (`GET /v1/profile/options`) |
 

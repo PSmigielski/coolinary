@@ -6,6 +6,7 @@
 | Epic | [IDN-02 Sign-in with e-mail code](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-02-02, GW-02 (forwards the client IP in `x-forwarded-for`) |
 | Unblocks | IDN-03-01 |
 

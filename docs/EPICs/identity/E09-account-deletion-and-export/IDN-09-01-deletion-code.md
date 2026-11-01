@@ -6,6 +6,7 @@
 | Epic | [IDN-09 Account deletion and data export](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-02-01, NTF-02 (template `account_deletion_code`) |
 | Unblocks | IDN-09-02, GW-02 |
 

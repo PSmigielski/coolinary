@@ -6,6 +6,7 @@
 | Epic | [KIT-09 Expiry reminders](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-07-05 (expiry status), KIT-01-06 (plan from identity) |
 | Unblocks | KIT-09-02 |
 

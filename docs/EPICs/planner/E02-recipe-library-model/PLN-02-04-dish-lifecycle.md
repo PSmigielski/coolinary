@@ -6,6 +6,7 @@
 | Epic | [PLN-02 Recipe library model](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-02-01, PLN-02-02 |
 | Unblocks | PLN-03-03, PLN-03-07, PLN-08-04, PLN-09, PLN-11-02 |
 

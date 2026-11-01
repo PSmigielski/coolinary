@@ -6,6 +6,7 @@
 | Epic | [KIT-12 Savings](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-12-03 |
 | Unblocks | GW-12 (`GET /v1/savings/card`) |
 

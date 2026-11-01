@@ -6,6 +6,7 @@
 | Epic | [PLN-06 What can I make now](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-01-03, PLN-01-04, PLN-02-05, KIT-02 (GetIngredients: typical weights, density) |
 | Unblocks | PLN-06-02, PLN-07-04, PLN-08-03, PLN-15 |
 

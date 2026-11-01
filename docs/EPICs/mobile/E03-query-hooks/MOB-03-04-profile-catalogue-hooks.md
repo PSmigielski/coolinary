@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (household profile, catalogue), R2 (per-person profiles and targets) |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, MOB-04-01, GW-05 |
 | Unblocks | later onboarding and settings screens, the later on-device target calculator |
 

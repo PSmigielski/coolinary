@@ -6,6 +6,7 @@
 | Epic | [IDN-05 Plan and entitlements](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-05-01, IDN-07-02, IDN-07-04 |
 | Unblocks | — |
 

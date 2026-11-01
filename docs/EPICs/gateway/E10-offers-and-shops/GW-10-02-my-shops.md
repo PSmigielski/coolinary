@@ -6,6 +6,7 @@
 | Epic | [GW-10 Shops, offers, flyers and price matrix routes](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-10-01, OFF-04 (`ListMyShops`, `SetMyShops`, `GetShoppingPreferences`, `SetShoppingPreferences`) |
 | Unblocks | GW-10-03, GW-07-10, GW-10-05, MOB-03 |
 

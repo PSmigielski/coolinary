@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (list), R2 (offer badges shown from the response) |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, MOB-04-01, MOB-04-04, GW-08 |
 | Unblocks | MOB-05-02, later list screens |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-15 Shopping list](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-15-03, KIT-02 (GetIngredients) |
 | Unblocks | PLN-15-05, PLN-15-10, PLN-16-03, PLN-19-02 |
 

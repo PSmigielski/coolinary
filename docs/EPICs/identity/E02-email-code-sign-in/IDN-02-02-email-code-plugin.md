@@ -6,6 +6,7 @@
 | Epic | [IDN-02 Sign-in with e-mail code](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-02-01, NTF-02 (SendEmail with template `sign_in_code`) |
 | Unblocks | IDN-02-03, IDN-02-04, IDN-02-05, IDN-03-02, IDN-03-03, GW-02, MOB-01 |
 

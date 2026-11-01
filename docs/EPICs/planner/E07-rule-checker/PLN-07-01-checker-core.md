@@ -6,6 +6,7 @@
 | Epic | [PLN-07 Rule checker](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-02-02, PLN-01-03 |
 | Unblocks | PLN-07-02 … PLN-07-05, PLN-08-04, PLN-09, PLN-03-07 |
 

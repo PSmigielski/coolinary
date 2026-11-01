@@ -6,6 +6,7 @@
 | Epic | [OFF-12 Next chain adapters](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-05-02, OFF-05-03 |
 | Unblocks | OFF-08-02 for `aldi-pl` |
 

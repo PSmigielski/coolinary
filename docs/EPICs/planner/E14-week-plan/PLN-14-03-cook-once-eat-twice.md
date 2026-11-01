@@ -6,6 +6,7 @@
 | Epic | [PLN-14 Week plan](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-14-02, PLN-12-08, PLN-02 |
 | Unblocks | PLN-14-04, PLN-14-05, PLN-14-06, PLN-14-07, PLN-15-02, PLN-10 |
 

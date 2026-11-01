@@ -6,6 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01-01, AI-04 (`SubmitBatch`, `GetBatch`, `GetBatchResults`) |
 | Unblocks | KIT-02-08, KIT-03-05, KIT-06-05 |
 

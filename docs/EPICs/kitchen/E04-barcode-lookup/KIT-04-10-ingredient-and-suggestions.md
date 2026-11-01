@@ -6,6 +6,7 @@
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-09, KIT-03-04, KIT-02-03, KIT-10 (household timezone) |
 | Unblocks | KIT-07 (stock confirm), PLN-06 (scanned items count for recipes) |
 

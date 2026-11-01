@@ -6,6 +6,7 @@
 | Epic | [PLN-03 Library import, AI drafting and review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-02-03, PLN-05-02 |
 | Unblocks | ADM-04 (what to draft next) |
 

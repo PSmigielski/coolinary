@@ -10,7 +10,8 @@ PREFIXES = "GW|IDN|NTF|ADM|KIT|PLN|OFF|AI|MOB"
 TASK_RE = re.compile(rf"^({PREFIXES})-(\d\d)-(\d\d)-[a-z0-9-]+\.md$")
 REF_RE = re.compile(rf"\b({PREFIXES})-(\d\d)(?:-(\d\d))?\b")
 REQUIRED = ["## Goal", "## Business rules", "## Acceptance criteria", "## Errors"]
-FIELDS = ["Service", "Epic", "Release", "Size", "Depends on"]
+FIELDS = ["Service", "Epic", "Release", "Size", "Status", "Depends on"]
+STATUSES = ("todo", "in progress", "done", "blocked")
 
 tasks, epics, problems = {}, set(), []
 stats = Counter()
@@ -56,6 +57,8 @@ for f in sorted(root.rglob("*.md")):
         problems.append(f"{tid}: size '{size}'")
     if not re.match(r"R[123]\b", rel_tag):
         problems.append(f"{tid}: release '{rel_tag}'")
+    if head.get("Status", "") not in STATUSES:
+        problems.append(f"{tid}: status '{head.get('Status', '')}'")
     sizes[size] += 1
     releases[rel_tag] += 1
     decisions[pre] += text.count("DECISION NEEDED")

@@ -6,6 +6,7 @@
 | Epic | [AI-02 Cost tracking and spend limit](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-02-04 |
 | Unblocks | ADM-07 |
 

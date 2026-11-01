@@ -6,6 +6,7 @@
 | Epic | [AI-16 Receipt reading](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-16-01 |
 | Unblocks | AI-16-03 |
 

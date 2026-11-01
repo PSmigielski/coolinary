@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-06-01, KIT-06-02 (at least one importer), KIT-01-08, AI-09 (`match_nutrition_entries`) |
 | Unblocks | KIT-06-06 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-02-04, KIT-01-02, KIT-01-07, KIT-03-02 |
 | Unblocks | ADM-03 (merge screen), PLN-21 and OFF-14 (consume `catalogue.ingredient_merged`) |
 

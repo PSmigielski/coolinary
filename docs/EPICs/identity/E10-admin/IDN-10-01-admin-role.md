@@ -6,6 +6,7 @@
 | Epic | [IDN-10 Admin RPCs and admin role](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-04-01 |
 | Unblocks | IDN-01-04, IDN-10-02 … 04, ADM-02 |
 

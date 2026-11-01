@@ -6,6 +6,7 @@
 | Epic | [ADM-07 AI cost and system overview](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-01-05; IDN-10-04 (`IdentityAdminService.GetAccountStats`) |
 | Unblocks | ADM-07-02 |
 

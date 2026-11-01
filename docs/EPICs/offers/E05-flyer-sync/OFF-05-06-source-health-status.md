@@ -6,6 +6,7 @@
 | Epic | [OFF-05 Flyer source framework and sync scheduler](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-05-04, OFF-01-04 (notifier SendAlert) |
 | Unblocks | GW-10 (flyer status route), PLN-17 |
 

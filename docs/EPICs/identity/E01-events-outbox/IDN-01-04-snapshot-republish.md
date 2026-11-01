@@ -6,6 +6,7 @@
 | Epic | [IDN-01 Events: outbox and publisher](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-01-02, IDN-01-03, IDN-10-01 |
 | Unblocks | ADM-05 (button "republish household snapshots"), consumer bootstraps in KIT-13, PLN-21, OFF-14 |
 

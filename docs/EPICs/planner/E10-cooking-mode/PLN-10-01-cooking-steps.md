@@ -6,6 +6,7 @@
 | Epic | [PLN-10 Cooking mode and "cooked it"](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-02-06, PLN-04-04, PLN-08-01 |
 | Unblocks | GW-07 (`GET /v1/dishes/{id}/cooking`), PLN-12 (pot split text) |
 

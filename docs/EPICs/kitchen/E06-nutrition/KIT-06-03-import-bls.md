@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 (GATE: terms for a commercial app) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-06-01 |
 | Unblocks | KIT-06-05 |
 

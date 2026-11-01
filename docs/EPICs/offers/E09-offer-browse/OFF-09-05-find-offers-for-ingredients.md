@@ -6,6 +6,7 @@
 | Epic | [OFF-09 Offer browse, search and lookup by ingredient](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-07-07, OFF-04-01 |
 | Unblocks | PLN-17 (offer badges), PLN-18 (plan from deals) |
 

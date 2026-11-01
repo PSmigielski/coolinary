@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01 (migrations, outbox), KIT-02 (`ingredients` table), KIT-04 (`products` table) |
 | Unblocks | KIT-07-02 … KIT-07-09, KIT-12-01 |
 

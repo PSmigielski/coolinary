@@ -6,6 +6,7 @@
 | Epic | [AI-01 Claude provider foundation](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-01-01 |
 | Unblocks | AI-06-01, AI-13-02, AI-04-01 |
 

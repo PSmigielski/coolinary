@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | every admin task in OFF-02 … OFF-13, ADM-06 |
 

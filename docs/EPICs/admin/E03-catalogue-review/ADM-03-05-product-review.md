@@ -6,6 +6,7 @@
 | Epic | [ADM-03 Catalogue, matching and nutrition review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-02-03; KIT-05-05 (`ListProductReviews`, `GetSharedProduct`, `ResolveProduct`, `EditSharedProduct`) |
 | Unblocks | — |
 

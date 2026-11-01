@@ -6,6 +6,7 @@
 | Epic | [AI-09 Catalogue and library batch jobs](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | AI-04-03, AI-10-01 |
 | Unblocks | PLN-03 (AI drafting into the review queue) |
 

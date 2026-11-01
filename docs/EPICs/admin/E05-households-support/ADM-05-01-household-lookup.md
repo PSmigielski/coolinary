@@ -6,6 +6,7 @@
 | Epic | [ADM-05 Households and plans support](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-02-03; IDN-10-02 (`IdentityAdminService.FindAccount`), IDN-04 (`IdentityService.GetHousehold`) |
 | Unblocks | ADM-05-02, ADM-05-03 |
 

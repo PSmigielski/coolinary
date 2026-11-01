@@ -6,6 +6,7 @@
 | Epic | [PLN-10 Cooking mode and "cooked it"](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-05-06, PLN-08-03, PLN-02-05, KIT-07 (ConsumeStock) |
 | Unblocks | PLN-10-03, PLN-11-01, KIT-12 (used-before-expiry savings, via kitchen) |
 

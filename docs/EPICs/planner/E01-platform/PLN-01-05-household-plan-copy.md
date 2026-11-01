@@ -6,6 +6,7 @@
 | Epic | [PLN-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-01-02, IDN-05 (GetEntitlements) |
 | Unblocks | PLN-09, PLN-11, PLN-12, PLN-13, PLN-14, PLN-17, PLN-18, PLN-19, PLN-20, PLN-21-03 |
 

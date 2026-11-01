@@ -6,6 +6,7 @@
 | Epic | [GW-10 Shops, offers, flyers and price matrix routes](README.md) |
 | Release | R2 (receipt prices from R3) |
 | Size | M |
+| Status | todo |
 | Depends on | GW-08-01, GW-03-03, PLN-19 (`GetTripPriceMatrix`) |
 | Unblocks | MOB-03 (the phone's trip plan, a later frontend task) |
 

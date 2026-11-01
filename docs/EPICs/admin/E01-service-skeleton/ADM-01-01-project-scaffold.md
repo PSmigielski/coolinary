@@ -6,6 +6,7 @@
 | Epic | [ADM-01 Service skeleton](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | ADM-01-02, ADM-01-03, ADM-01-05 |
 

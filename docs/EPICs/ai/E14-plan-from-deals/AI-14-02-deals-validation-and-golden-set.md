@@ -6,6 +6,7 @@
 | Epic | [AI-14 Plan from deals](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-14-01, AI-03-05 |
 | Unblocks | plan from deals going live |
 

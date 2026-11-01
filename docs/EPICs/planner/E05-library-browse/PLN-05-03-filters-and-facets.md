@@ -6,6 +6,7 @@
 | Epic | [PLN-05 Library browse](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-05-01, PLN-04-01 |
 | Unblocks | GW-07, PLN-06-03 |
 

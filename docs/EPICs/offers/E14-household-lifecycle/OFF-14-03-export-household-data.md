@@ -6,6 +6,7 @@
 | Epic | [OFF-14 Household lifecycle](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-04-01, OFF-04-02, OFF-10-04 |
 | Unblocks | GW-02 (data export, README D9) |
 

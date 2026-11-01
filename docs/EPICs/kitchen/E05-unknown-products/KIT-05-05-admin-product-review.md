@@ -6,6 +6,7 @@
 | Epic | [KIT-05 Unknown products](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-05-02, KIT-01-07 |
 | Unblocks | ADM-03 |
 

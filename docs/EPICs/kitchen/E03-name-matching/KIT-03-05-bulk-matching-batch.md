@@ -6,6 +6,7 @@
 | Epic | [KIT-03 Name matching](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-03-04, KIT-01-08 |
 | Unblocks | OFF-07 (weekly flyer offers), PLN-03 (recipe import), KIT-08 receipts (R3) |
 

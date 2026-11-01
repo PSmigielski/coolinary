@@ -6,6 +6,7 @@
 | Epic | [AI-03 Prompts, golden sets and evals](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-03-03 |
 | Unblocks | AI-10-06, AI-11-06, AI-12-04, AI-14-02, AI-15-04, AI-17-02 |
 

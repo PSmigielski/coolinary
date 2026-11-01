@@ -6,6 +6,7 @@
 | Epic | [GW-10 Shops, offers, flyers and price matrix routes](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-05, GW-03-03, OFF-10 (`UploadUserFlyer`, `SubmitUserFlyerLink`, `GetUserFlyer`, `ConfirmUserFlyer`, `DeleteUserFlyer`) |
 | Unblocks | MOB-03, MOB-07 |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R2 (shops, my shops, offers, own flyer, price matrix, plan from deals), R3 (cheapest top-up) |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, MOB-07-03, GW-10 |
 | Unblocks | later offers screens and the later on-device trip planner |
 

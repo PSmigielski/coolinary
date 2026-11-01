@@ -6,6 +6,7 @@
 | Epic | [OFF-07 Offer extraction, validation and publishing](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | OFF-07-01, OFF-05-05, OFF-01-04, AI-04 (SubmitBatch, GetBatch, GetBatchResults), AI-13 (ExtractFlyerOffers) |
 | Unblocks | OFF-07-03 |
 

@@ -6,6 +6,7 @@
 | Epic | [GW-08 Shopping list routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-08-01, PLN-15 (`TickListLine`, `UntickListLine`) |
 | Unblocks | MOB-04 (ticks queued offline in the shop) |
 

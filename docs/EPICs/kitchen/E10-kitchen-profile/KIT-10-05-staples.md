@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-10-01, KIT-02 (`is_staple_candidate`) |
 | Unblocks | KIT-07-07, KIT-10-08, PLN-06, PLN-15 (never counted as missing) |
 

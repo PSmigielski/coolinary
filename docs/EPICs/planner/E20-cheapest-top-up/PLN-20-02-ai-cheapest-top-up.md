@@ -6,6 +6,7 @@
 | Epic | [PLN-20 Cheapest top-up](README.md) |
 | Release | R3 |
 | Size | L |
+| Status | todo |
 | Depends on | PLN-20-01, AI-17 (CheapestTopUp), PLN-19-02 |
 | Unblocks | PLN-20-04, GW-10 |
 

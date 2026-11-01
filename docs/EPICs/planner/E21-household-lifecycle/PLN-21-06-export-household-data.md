@@ -6,6 +6,7 @@
 | Epic | [PLN-21 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-15-01, PLN-08 |
 | Unblocks | GW-02 (data export) |
 

@@ -6,6 +6,7 @@
 | Epic | [IDN-08 Leaving and removing members](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-08-01, GW-02 (checks the key) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-05 Unknown products](README.md) |
 | Release | R1 (GATE: licence decision and an Open Food Facts app account) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-05-02, KIT-04-07, KIT-10-01 (`contribute_to_off` setting) |
 | Unblocks | — |
 

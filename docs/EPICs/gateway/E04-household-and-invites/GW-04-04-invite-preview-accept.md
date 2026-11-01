@@ -6,6 +6,7 @@
 | Epic | [GW-04 Household, profiles and invite routes](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-03-04, GW-01-03, IDN-07 (`GetInvitePreview`, `AcceptInvite`) |
 | Unblocks | MOB-01 (token refresh after joining), MOB-03 |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-19 Trip price matrix](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-19-02, OFF-11 (GetPrices, receipt source) |
 | Unblocks | — |
 

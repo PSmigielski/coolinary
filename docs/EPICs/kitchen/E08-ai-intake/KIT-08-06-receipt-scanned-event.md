@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-08-04, KIT-01 (outbox) |
 | Unblocks | OFF-11 (receipt prices, `receipt.scanned` consumer) |
 

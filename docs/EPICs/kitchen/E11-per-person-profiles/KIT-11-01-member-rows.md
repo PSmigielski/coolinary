@@ -6,6 +6,7 @@
 | Epic | [KIT-11 Per-person profiles](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01 (stream consumer), KIT-10-01, IDN-01-03 (event payloads) |
 | Unblocks | KIT-11-02 … 06, KIT-13-02, KIT-13-03 |
 

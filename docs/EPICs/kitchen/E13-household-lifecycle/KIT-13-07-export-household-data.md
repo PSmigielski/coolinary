@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07, KIT-08-05, KIT-10, KIT-11-06 (visibility), KIT-12 |
 | Unblocks | GW-02 (`POST /v1/me/export`, GW-02-06) |
 

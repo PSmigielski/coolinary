@@ -6,6 +6,7 @@
 | Epic | [ADM-06 Flyer sources, offers and shops review](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | ADM-06-02; OFF-08-01 (`CreateReviewSample`, `GetReviewSample`, `RecordReviewVerdict`, `AddMissedOffer`, `ListReviewSamples`), OFF-05-08 (`GetFlyerPage`) |
 | Unblocks | ADM-06-04, ADM-06-02 (`go_live`) |
 

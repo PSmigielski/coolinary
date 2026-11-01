@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-01-02, PLN-06 (`SuggestDishes`, extended) |
 | Unblocks | MOB-03 |
 

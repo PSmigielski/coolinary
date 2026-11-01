@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | OFF-02-03, OFF-03-01, OFF-05-04, OFF-05-05, OFF-07-02, OFF-07-07, OFF-08-03, OFF-11-03 |
 

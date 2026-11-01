@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 (members from R2, KIT-11-06) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-10-02 … KIT-10-06, KIT-01-06 (plan from identity) |
 | Unblocks | PLN-01 (profile snapshot cache), every planner feature |
 

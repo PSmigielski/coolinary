@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-03-01, GW-03-02, GW-01-03, PLN-08 (`ComposeDayPlan`, `ChooseMealOption`), PLN-13 (`CreateFamilyDayPlan`, R2) |
 | Unblocks | MOB-03 |
 

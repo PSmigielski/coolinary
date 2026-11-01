@@ -6,6 +6,7 @@
 | Epic | [NTF-01 Events consumer](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | NTF-01-01, NTF-01-02, NTF-02-02, NTF-03-02, NTF-04-01, NTF-04-02; IDN-09 (`account.deleted`) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [AI-09 Catalogue and library batch jobs](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-09-01 … AI-09-05, AI-03-03 |
 | Unblocks | the batch jobs going live |
 

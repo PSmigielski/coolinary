@@ -6,6 +6,7 @@
 | Epic | [KIT-11 Per-person profiles](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-11-01 |
 | Unblocks | KIT-11-03, KIT-11-04, KIT-11-05, GW-05 (`PUT /v1/profile/members/{memberId}`) |
 

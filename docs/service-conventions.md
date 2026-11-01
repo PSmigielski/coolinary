@@ -129,6 +129,21 @@ lint config next to its code, identical across services of the same language: `b
 `.golangci.yml` (Go), `[tool.ruff]` / `[tool.mypy]` in `pyproject.toml` (Python). Change all copies together. A
 `//nolint` or `# noqa` names the rule and says why on the same line or the one above.
 
+## Tests
+
+`make test s=<svc>` runs a service's tests (`scripts/test-service.sh`): `go test ./...` in a `golang` container for
+Go, `bun test` for Bun, `pytest` for `ai`. A task is not done until `make lint s=<svc>` and `make test s=<svc>` pass.
+
+- Every business rule and acceptance criterion in a task gets a test where it can be tested in code. Name the test
+  after the rule (`TestConsumeStock_OldestExpiryFirst`, `"rejects a target under 1,200 kcal"`).
+- Unit tests need nothing running. Tests that need Postgres or Redis read `TEST_DATABASE_URL`,
+  `TEST_REDIS_CACHE_URL` and `TEST_REDIS_STATE_URL` and **skip** when they are unset (`t.Skip`, `test.skipIf`,
+  `pytest.mark.skipif`). `make test` sets them only while `make dev` is up, pointing at a `<svc>_test` database
+  (created on first use) and Redis database 15, never at dev data. Each test cleans up what it creates.
+- Tests never call the real Claude API, Open Food Facts, retailer sites or Expo Push; use the `stub` LLM provider
+  and recorded fixtures.
+- Go: table tests, `_test.go` next to the code. Bun: `*.test.ts` next to the code. Python: `ai/tests/test_*.py`.
+
 ## Database migrations
 
 Each service owns its migrations and runs them at start-up under a Postgres advisory lock:

@@ -6,6 +6,7 @@
 | Epic | [IDN-07 Invites](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-07-01 |
 | Unblocks | — |
 

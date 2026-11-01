@@ -6,6 +6,7 @@
 | Epic | [PLN-16 Cuisine base pantry](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-16-02, PLN-15-04, PLN-15-08 |
 | Unblocks | GW-08 |
 

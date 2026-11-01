@@ -6,6 +6,7 @@
 | Epic | [OFF-05 Flyer source framework and sync scheduler](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-05-04, OFF-04-03 |
 | Unblocks | OFF-06-03, OFF-06-07 |
 

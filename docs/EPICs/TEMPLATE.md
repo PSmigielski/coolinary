@@ -12,6 +12,7 @@ short sentences, numbers stated exactly, no "should probably". Leave out a secti
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-01, KIT-02-01 |
 | Unblocks | GW-06-02 |
 
@@ -69,9 +70,14 @@ Background, links to sources, and any `DECISION NEEDED:` with the recommended ch
 
 `S` ≤ 1 day · `M` 2–3 days · `L` 4–5 days. Split anything larger.
 
+## Status
+
+`todo` → `in progress` → `done`, or `blocked` (with a dated note under "## Blocked" saying why). Only
+`scripts/epics/tasks.py` changes it (`start`, `done`, `block`); `scripts/epics/roadmap.sh` shows it in ROADMAP.md.
+
 ## Status markers
 
-- `DECISION NEEDED:` a choice the docs don't settle; the task states the recommended rule. Listed again in the
-  service README.
+- `Decided (Qnnn):` a settled choice; the rule is final (index in DECISIONS.md).
+- `DECISION NEEDED:` a choice the docs don't settle yet; the task states the recommended rule. Ask before building it.
 - `GATE:` work that must not go live until an outside condition is met (a licence checked, a retailer's terms
   approved, an access contract signed).

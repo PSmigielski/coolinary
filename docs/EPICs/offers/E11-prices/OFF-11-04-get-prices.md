@@ -6,6 +6,7 @@
 | Epic | [OFF-11 Prices](README.md) |
 | Release | R2 (receipt step R3) |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-11-01, OFF-11-03, OFF-04-01 |
 | Unblocks | PLN-19 (trip price matrix) |
 

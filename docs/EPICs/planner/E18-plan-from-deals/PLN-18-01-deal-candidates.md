@@ -6,6 +6,7 @@
 | Epic | [PLN-18 Plan from deals](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-04 (ListMyShops), OFF-09 (FindOffersForIngredients), PLN-13-01 |
 | Unblocks | PLN-18-02, PLN-18-03, PLN-20-01 |
 

@@ -6,6 +6,7 @@
 | Epic | [NTF-03 Push delivery](README.md) |
 | Release | R1 (R2 templates marked) |
 | Size | M |
+| Status | todo |
 | Depends on | NTF-02-01 |
 | Unblocks | NTF-03-02, KIT-09 (expiry reminders), PLN-17 (offer-ends reminders), KIT-12 (savings), IDN-07/IDN-08 (household pushes) |
 

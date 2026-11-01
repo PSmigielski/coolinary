@@ -6,6 +6,7 @@
 | Epic | [GW-05 Kitchen profile and catalogue routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-01-01, KIT-10 (`GetProfileOptions`), KIT-06 (`ListNutritionSources`) |
 | Unblocks | MOB-03 (onboarding screens) |
 

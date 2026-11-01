@@ -113,7 +113,7 @@ for f in sorted(root.rglob("*.md")):
             head[mm.group(1)] = mm.group(2)
     rel = (re.search(r"R[123]", head.get("Release", "")) or re.search("R1", "R1")).group(0)
     size = (re.match(r"[SML]", head.get("Size", "M")) or re.match("M", "M")).group(0)
-    tasks[tid] = dict(id=tid, pre=pre, epic=f"{pre}-{ep}", title=title, rel=rel, size=size,
+    tasks[tid] = dict(id=tid, pre=pre, epic=f"{pre}-{ep}", title=title, rel=rel, size=size, status=head.get("Status", "todo"),
                       path=f.relative_to(root).as_posix(), deps_raw=head.get("Depends on", ""), text=text)
     by_epic[f"{pre}-{ep}"].append(tid)
 
@@ -274,6 +274,6 @@ print("unresolved sample:", *unresolved[:25], sep="\n  ")
 
 if out:
     json.dump(dict(order=order, ms={k: M[v][0] for k, v in ms.items()},
-                   tasks={k: {x: v[x] for x in ("title", "rel", "size", "path", "pre")} for k, v in tasks.items()},
+                   tasks={k: {x: v[x] for x in ("title", "rel", "size", "path", "pre", "status")} for k, v in tasks.items()},
                    deps={k: sorted(v) for k, v in deps.items()}, inversions=inversions, cycles=cycles, forward=forward,
                    unresolved=unresolved, M=M), out.open("w"), indent=1)

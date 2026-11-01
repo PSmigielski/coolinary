@@ -6,6 +6,7 @@
 | Epic | [PLN-19 Trip price matrix](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-19-02, PLN-15-01 |
 | Unblocks | GW-10, PLN-20-03 |
 

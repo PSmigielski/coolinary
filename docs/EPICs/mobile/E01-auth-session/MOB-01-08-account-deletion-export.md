@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-01-07, MOB-02-01, GW-02 (`POST /v1/me/deletion-code`, `DELETE /v1/me`, `POST /v1/me/export`), IDN-09, MOB-03-03 (`useTransferOwnership`, R2: shared households start in R2) |
 | Unblocks | later settings screens |
 

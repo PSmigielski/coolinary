@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-03, KIT-03 (`MatchNames`) |
 | Unblocks | — |
 

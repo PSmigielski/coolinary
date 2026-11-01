@@ -6,6 +6,7 @@
 | Epic | [GW-02 Auth and account routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-02-01, GW-01-03, IDN-09 (`RequestAccountDeletion`, `DeleteAccount`) |
 | Unblocks | MOB-03 |
 

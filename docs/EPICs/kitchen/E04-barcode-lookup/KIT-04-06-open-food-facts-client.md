@@ -6,6 +6,7 @@
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 (GATE: licence check before production) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-01 |
 | Unblocks | KIT-04-07, KIT-04-09, KIT-06-07 |
 

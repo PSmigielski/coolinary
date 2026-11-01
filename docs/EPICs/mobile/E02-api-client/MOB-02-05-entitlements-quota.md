@@ -6,6 +6,7 @@
 | Epic | [MOB-02 API client and error model](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-04, MOB-02-02, GW-02 (`GET /v1/entitlements`), GW-03 (quota), IDN-05 |
 | Unblocks | later paywall and quota UI |
 

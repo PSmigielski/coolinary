@@ -6,6 +6,7 @@
 | Epic | [AI-08 Catalogue match pick](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-08-01, AI-03-03 |
 | Unblocks | matching going live |
 

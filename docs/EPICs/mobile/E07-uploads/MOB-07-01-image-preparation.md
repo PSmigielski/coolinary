@@ -6,6 +6,7 @@
 | Epic | [MOB-07 Uploads](README.md) |
 | Release | R1 (fridge, shelf, label), R2 (flyer pages), R3 (receipt) |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | MOB-07-02, MOB-07-03 |
 

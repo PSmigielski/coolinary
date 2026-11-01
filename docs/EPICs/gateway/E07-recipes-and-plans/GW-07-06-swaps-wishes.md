@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-03-03, GW-01-03, PLN-09 (`SwapMeal`, `ReplaceIngredient`, `WishMeal`) |
 | Unblocks | MOB-03 |
 

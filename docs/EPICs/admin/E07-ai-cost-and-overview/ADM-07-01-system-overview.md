@@ -6,6 +6,7 @@
 | Epic | [ADM-07 AI cost and system overview](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-01-05; KIT-01-07, PLN-01-06, OFF-01-06 (`GetQueueCounts`); NTF-06-02 (`ListAlerts`) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [GW-03 Free-tier AI quota and rate limits](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-03, IDN-05 (`GetEntitlements`) |
 | Unblocks | GW-03-02, GW-06-04/05/06/07, GW-07-04 |
 

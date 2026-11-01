@@ -6,6 +6,7 @@
 | Epic | [GW-12 Savings routes](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-12-01, KIT-12 (`GetSavingsCard`) |
 | Unblocks | MOB-03 |
 

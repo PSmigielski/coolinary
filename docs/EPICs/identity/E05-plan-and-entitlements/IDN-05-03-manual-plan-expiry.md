@@ -6,6 +6,7 @@
 | Epic | [IDN-05 Plan and entitlements](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-05-01 |
 | Unblocks | ADM-05 (time-limited Plus for testers and founding plans) |
 

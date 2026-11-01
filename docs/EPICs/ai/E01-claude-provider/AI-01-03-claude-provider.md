@@ -6,6 +6,7 @@
 | Epic | [AI-01 Claude provider foundation](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | AI-01-02 |
 | Unblocks | AI-01-04, AI-01-05, AI-04-01, every job epic |
 

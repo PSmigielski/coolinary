@@ -6,6 +6,7 @@
 | Epic | [PLN-08 AI day plan](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-08-01 … PLN-08-06 |
 | Unblocks | GW-07 (`POST /v1/plans/day`), GW-03 (quota counting), MOB-03 |
 

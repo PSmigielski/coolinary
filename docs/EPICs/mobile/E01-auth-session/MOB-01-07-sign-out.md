@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-02, MOB-03-01, MOB-04-01, MOB-06-03, GW-11 (`DELETE /v1/devices/{installationId}`) |
 | Unblocks | MOB-01-05, MOB-01-06, MOB-01-08 |
 

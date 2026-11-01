@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01 (request metadata, outbox) |
 | Unblocks | KIT-07-02 (timezone), KIT-09, KIT-10-02 … 09, GW-05 (`GET`/`PATCH /v1/profile`) |
 

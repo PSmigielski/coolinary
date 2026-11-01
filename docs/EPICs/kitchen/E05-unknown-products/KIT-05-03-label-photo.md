@@ -6,6 +6,7 @@
 | Epic | [KIT-05 Unknown products](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-05-01, AI-07 (`ReadProductLabel`) |
 | Unblocks | GW-06 (label route, counts as a photo scan), MOB-07 (uploads) |
 

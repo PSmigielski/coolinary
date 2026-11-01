@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-02-01 |
 | Unblocks | KIT-06-08 (nutrition), KIT-07 (stock consumption), PLN-12 / PLN-15 (scaling, list) |
 

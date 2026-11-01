@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-01, KIT-07-02 |
 | Unblocks | GW-06 (edit, remove), MOB-04 (offline edits and conflicts), KIT-12-02 |
 

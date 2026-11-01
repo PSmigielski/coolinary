@@ -6,6 +6,7 @@
 | Epic | [OFF-04 My shops and shopping preferences](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | GW-10, MOB-03 (the phone's trip plan reads them) |
 

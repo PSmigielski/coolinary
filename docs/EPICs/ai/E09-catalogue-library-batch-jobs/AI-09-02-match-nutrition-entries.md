@@ -6,6 +6,7 @@
 | Epic | [AI-09 Catalogue and library batch jobs](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-04-03 |
 | Unblocks | KIT-06 (ingredient → nutrition entry) |
 

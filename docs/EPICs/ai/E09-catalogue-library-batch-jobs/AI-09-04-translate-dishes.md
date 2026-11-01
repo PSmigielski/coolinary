@@ -6,6 +6,7 @@
 | Epic | [AI-09 Catalogue and library batch jobs](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-09-03 |
 | Unblocks | PLN-03 (library in every launch language) |
 

@@ -6,6 +6,7 @@
 | Epic | [AI-09 Catalogue and library batch jobs](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-04-03, AI-10-01 |
 | Unblocks | PLN-03, PLN-14 (leftovers and cook-once plans need the tags) |
 

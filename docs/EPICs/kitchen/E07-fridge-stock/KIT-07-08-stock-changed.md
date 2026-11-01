@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 (event); R2 (live notice for shared households) |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-01 (outbox, Redis Streams publisher), KIT-07-03, KIT-07-04, KIT-07-07 |
 | Unblocks | PLN-01 (stock snapshot cache), GW-09 (live updates), MOB-05 |
 

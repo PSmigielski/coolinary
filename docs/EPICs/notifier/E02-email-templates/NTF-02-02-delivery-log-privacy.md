@@ -6,6 +6,7 @@
 | Epic | [NTF-02 E-mail templates and languages](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | NTF-02-03, NTF-03-02, NTF-06-01 |
 

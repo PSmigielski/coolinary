@@ -6,6 +6,7 @@
 | Epic | [ADM-05 Households and plans support](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-05-01; IDN-09-02 (`IdentityAdminService.AdminDeleteAccount`) |
 | Unblocks | — |
 

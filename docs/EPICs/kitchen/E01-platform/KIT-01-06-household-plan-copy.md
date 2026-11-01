@@ -6,6 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-01-01, IDN-05 (`GetEntitlements`) |
 | Unblocks | KIT-09 (expiry reminders are Plus only), KIT-10-08, KIT-11, KIT-12, KIT-13-06 |
 

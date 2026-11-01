@@ -6,6 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | KIT-01-02 |
 | Unblocks | KIT-01-05, KIT-13 (household lifecycle) |
 

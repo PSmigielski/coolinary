@@ -6,6 +6,7 @@
 | Epic | [IDN-01 Events: outbox and publisher](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | IDN-01-02, IDN-01-03, IDN-04-02, every task that emits an event |
 

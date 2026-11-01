@@ -6,6 +6,7 @@
 | Epic | [PLN-03 Library import, AI drafting and review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-03-07, PLN-04-01 |
 | Unblocks | Launch gate (features.md §5 "Open points", Verification 16) |
 

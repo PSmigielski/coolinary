@@ -6,6 +6,7 @@
 | Epic | [KIT-09 Expiry reminders](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-09-01, KIT-10-01 (timezone), KIT-01 (job runner lock) |
 | Unblocks | KIT-09-03, KIT-12-04 (same pattern) |
 

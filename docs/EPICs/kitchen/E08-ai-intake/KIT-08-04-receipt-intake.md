@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R3 |
 | Size | L |
+| Status | todo |
 | Depends on | KIT-08-01, AI-16 (`ExtractReceipt`), KIT-04 (household products), KIT-03 (`MatchNames`), KIT-08-05 (memory lookup) |
 | Unblocks | GW-06 (`POST /v1/intake/receipt`), KIT-08-05, KIT-08-06 |
 

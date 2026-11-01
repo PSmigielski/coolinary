@@ -6,6 +6,7 @@
 | Epic | [KIT-05 Unknown products](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-04, KIT-04-05, KIT-04-09 |
 | Unblocks | KIT-05-02, KIT-05-03, KIT-07 (unpack mode with unknown items), GW-06 |
 

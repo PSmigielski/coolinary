@@ -6,6 +6,7 @@
 | Epic | [OFF-08 Accuracy gate and weekly spot-checks](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-07-07, OFF-05-05 |
 | Unblocks | — |
 

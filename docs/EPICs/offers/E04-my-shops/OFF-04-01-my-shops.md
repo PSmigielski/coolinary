@@ -6,6 +6,7 @@
 | Epic | [OFF-04 My shops and shopping preferences](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-03-03, OFF-03-04 |
 | Unblocks | OFF-04-03, OFF-09-01, OFF-11-04, PLN-17, PLN-18, PLN-19, GW-10 |
 

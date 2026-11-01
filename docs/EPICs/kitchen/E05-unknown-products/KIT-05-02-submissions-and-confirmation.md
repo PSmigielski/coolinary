@@ -6,6 +6,7 @@
 | Epic | [KIT-05 Unknown products](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | KIT-05-01 |
 | Unblocks | KIT-05-04, KIT-05-05, Verification 14 |
 

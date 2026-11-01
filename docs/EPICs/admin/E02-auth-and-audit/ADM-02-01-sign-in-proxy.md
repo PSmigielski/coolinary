@@ -6,6 +6,7 @@
 | Epic | [ADM-02 Admin sign-in, roles and audit log](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-01-04, ADM-01-05; IDN-02 (e-mail code routes, `TRUSTED_ORIGINS` includes the admin origin) |
 | Unblocks | ADM-02-02 |
 

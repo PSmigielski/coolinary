@@ -42,6 +42,8 @@ w("- **Milestones** end with something you can try in the app or the back office
 w("  M11, release 2 at M17, release 3 at M21.")
 w("- **Estimate** uses S = 1, M = 2.5, L = 4.5 developer-days. Weeks assume 5 working days and one developer.")
 w("- **After** lists the task's dependencies (task numbers in this file).")
+w("- **Status** comes from each task file (`todo`, `in progress`, `done`, `blocked`). Work through it with")
+w("  `/next-task` in Claude Code or `scripts/epics/run-tasks.sh` (see README.md, \"Working through the tasks\").")
 w("- **Flags:** `decision` = the task still has an open `DECISION NEEDED:` (none since the 1 November 2026 decisions,")
 w("  see [DECISIONS.md](DECISIONS.md));")
 w("  `gate` = it must not go live until an outside condition is met (licence, retailer terms, contract).")
@@ -53,15 +55,16 @@ w("")
 # Summary
 w("## Milestones")
 w("")
-w("| Milestone | Release | Done when | Tasks | Days | Weeks (cumulative) |")
-w("|---|---|---|---|---|---|")
+w("| Milestone | Release | Done when | Tasks | Done | Days | Weeks (cumulative) |")
+w("|---|---|---|---|---|---|---|")
 cum = 0.0
 for i, seq in enumerate(data["order"]):
     mid, rel, title, done = M[i]
     days = sum(DAYS[T[t]["size"]] for t in seq)
     cum += days
     first, last = (num[seq[0]], num[seq[-1]]) if seq else ("", "")
-    w(f"| [{mid} {title}](#{mid.lower()}-{title.lower().replace(' ', '-').replace(',', '').replace('/', '')}) | {rel} | {done} | {len(seq)} (#{first}–{last}) | {days:g} | {cum / 5:.0f} |")
+    ndone = sum(1 for t in seq if T[t].get("status") == "done")
+    w(f"| [{mid} {title}](#{mid.lower()}-{title.lower().replace(' ', '-').replace(',', '').replace('/', '')}) | {rel} | {done} | {len(seq)} (#{first}–{last}) | {ndone}/{len(seq)} | {days:g} | {cum / 5:.0f} |")
 w("")
 tot = sum(DAYS[T[t]["size"]] for t in T)
 by_rel = {}
@@ -88,15 +91,15 @@ for i, seq in enumerate(data["order"]):
         w("No tasks.")
         w("")
         continue
-    w("| # | Task | Title | Service | Size | After | Flags |")
-    w("|---|---|---|---|---|---|---|")
+    w("| # | Task | Title | Service | Size | After | Flags | Status |")
+    w("|---|---|---|---|---|---|---|---|")
     for t in seq:
         after = sorted((num[d] for d in D.get(t, []) if d in num), reverse=True)
         a = ", ".join(str(x) for x in sorted(after[:6]))
         if len(after) > 6:
             a += f" +{len(after) - 6}"
         title_ = T[t]["title"].replace("|", "\\|")
-        w(f"| {num[t]} | [{t}]({T[t]['path']}) | {title_} | {SVC[T[t]['pre']]} | {T[t]['size']} | {a} | {flags[t]} |")
+        w(f"| {num[t]} | [{t}]({T[t]['path']}) | {title_} | {SVC[T[t]['pre']]} | {T[t]['size']} | {a} | {flags[t]} | {T[t].get('status', 'todo')} |")
     w("")
 
 w("## Later releases that extend earlier tasks")

@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-01-01, KIT-01 (consumer pattern) |
 | Unblocks | OFF-01-03, OFF-04-04, OFF-11-02, OFF-14-01, OFF-14-02 |
 

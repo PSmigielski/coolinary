@@ -6,6 +6,7 @@
 | Epic | [AI-12 Family day plan](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-12-03, AI-03-05 |
 | Unblocks | family plans going live |
 

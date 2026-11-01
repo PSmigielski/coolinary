@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-06-01, KIT-01-02, KIT-02-02 |
 | Unblocks | PLN-04 (recalculate dish calories), KIT-06-06 |
 

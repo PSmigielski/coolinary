@@ -6,6 +6,7 @@
 | Epic | [IDN-03 Anonymous accounts and upgrade](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-04-02, IDN-02-03 |
 | Unblocks | IDN-03-02, MOB-01, GW-02 |
 

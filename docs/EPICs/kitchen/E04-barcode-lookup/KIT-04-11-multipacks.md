@@ -6,6 +6,7 @@
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-04-01, KIT-04-05, KIT-03-01 |
 | Unblocks | KIT-07 (stock amounts), Verification 14 ("… and a multipack are handled") |
 

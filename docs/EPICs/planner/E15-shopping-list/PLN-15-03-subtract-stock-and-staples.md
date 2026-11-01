@@ -6,6 +6,7 @@
 | Epic | [PLN-15 Shopping list](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-15-02, KIT-07 (ListStock), KIT-10 (GetPlanningProfile) |
 | Unblocks | PLN-15-04, PLN-15-10 |
 

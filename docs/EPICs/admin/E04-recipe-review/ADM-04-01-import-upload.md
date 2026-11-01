@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-01-05, ADM-02-03; PLN-03-01 (import file format), PLN-03-03 (`PlannerAdminService.ImportDishes`) |
 | Unblocks | ADM-04-03 |
 

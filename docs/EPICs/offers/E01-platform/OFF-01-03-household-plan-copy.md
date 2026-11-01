@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-01-04, IDN-05 (`GetEntitlements`) |
 | Unblocks | OFF-04-01, OFF-04-04, OFF-09-01, OFF-10-01 |
 

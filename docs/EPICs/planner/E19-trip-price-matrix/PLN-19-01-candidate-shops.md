@@ -6,6 +6,7 @@
 | Epic | [PLN-19 Trip price matrix](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-04 (ListMyShops) |
 | Unblocks | PLN-19-02, PLN-19-03 |
 

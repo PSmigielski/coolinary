@@ -6,6 +6,7 @@
 | Epic | [IDN-04 Households and members core](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-04-01 |
 | Unblocks | GW-02 (reads the claims), MOB-01 |
 

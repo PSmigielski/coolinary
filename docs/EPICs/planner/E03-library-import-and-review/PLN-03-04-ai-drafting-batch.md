@@ -6,6 +6,7 @@
 | Epic | [PLN-03 Library import, AI drafting and review](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | PLN-03-02, PLN-02-02, PLN-02-03, AI-04 (SubmitBatch, GetBatch, GetBatchResults), AI-09 (`draft_dishes`) |
 | Unblocks | PLN-03-05, PLN-03-06, ADM-04 (AI drafts) |
 

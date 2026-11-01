@@ -6,6 +6,7 @@
 | Epic | [OFF-11 Prices](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-11-01, OFF-01-05 |
 | Unblocks | OFF-11-04, OFF-07-05 (plausibility rule) |
 

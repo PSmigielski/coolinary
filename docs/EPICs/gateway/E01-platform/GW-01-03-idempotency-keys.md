@@ -6,6 +6,7 @@
 | Epic | [GW-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-02 |
 | Unblocks | MOB-04 (offline queue), every mutating route marked "idempotency required" |
 

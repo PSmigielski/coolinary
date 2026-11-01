@@ -6,6 +6,7 @@
 | Epic | [NTF-01 Events consumer](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | NTF-01-01; IDN-04 (`household.created`, `household.member_added`); IDN-01-03 (payloads of `household.member_removed` and `household.deleted`, emitted later by IDN-08/IDN-09) |
 | Unblocks | NTF-03-02 (household target) |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-07 Uploads](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-07-01, MOB-07-02, GW-10 (`POST /v1/flyers`), OFF-10 |
 | Unblocks | MOB-03-08 |
 

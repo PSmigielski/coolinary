@@ -6,6 +6,7 @@
 | Epic | [PLN-04 Dish nutrition and calories](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-04-01, PLN-01-01, KIT-06 (catalogue.nutrition_changed), KIT-02 (catalogue.ingredient_merged) |
 | Unblocks | — |
 

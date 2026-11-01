@@ -6,6 +6,7 @@
 | Epic | [PLN-08 AI day plan](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-08-01, PLN-08-03, PLN-07-01, PLN-07-02, PLN-07-03, PLN-07-04, PLN-01-03, PLN-02-06 |
 | Unblocks | GW-07 (manual meal route), PLN-15-10 (list follows plan) |
 

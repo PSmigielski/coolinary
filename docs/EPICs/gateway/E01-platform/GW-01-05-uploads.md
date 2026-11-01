@@ -6,6 +6,7 @@
 | Epic | [GW-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-02 |
 | Unblocks | GW-06-04, GW-06-05, GW-06-07, GW-10-04, MOB-07 |
 

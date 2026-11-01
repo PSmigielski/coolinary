@@ -6,6 +6,7 @@
 | Epic | [OFF-03 Postcode areas and flyer editions](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-03-02, OFF-02-03, OFF-02-04, OFF-03-04 |
 | Unblocks | OFF-04-01, GW-10, MOB-03 |
 

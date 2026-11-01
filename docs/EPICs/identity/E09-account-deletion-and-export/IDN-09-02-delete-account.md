@@ -6,6 +6,7 @@
 | Epic | [IDN-09 Account deletion and data export](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | IDN-09-01, IDN-01-01, IDN-04-01 |
 | Unblocks | IDN-03-04, GW-02, KIT-13, PLN-21, OFF-14, NTF-01, ADM-05-03 |
 

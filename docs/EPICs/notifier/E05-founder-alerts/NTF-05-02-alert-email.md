@@ -6,6 +6,7 @@
 | Epic | [NTF-05 Founder alerts](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | NTF-02-01 |
 | Unblocks | NTF-05-01 |
 

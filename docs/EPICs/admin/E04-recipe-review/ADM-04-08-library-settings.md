@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 (base pantries, coverage); R2 (no-cook extras) |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-04-03; PLN-16-01 (`ListBasePantries`, `SetBasePantry`), PLN-12-04 (`ListNoCookExtras`, `UpsertNoCookExtra`), PLN-03-09 (`GetLibraryCoverage`); KIT-02-05 (`SearchIngredients`) |
 | Unblocks | — |
 

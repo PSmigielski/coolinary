@@ -6,6 +6,7 @@
 | Epic | [PLN-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-01-01, PLN-01-02, KIT-10 (GetPlanningProfile, profile.changed) |
 | Unblocks | PLN-05-02, PLN-06, PLN-07, PLN-08, PLN-12 |
 

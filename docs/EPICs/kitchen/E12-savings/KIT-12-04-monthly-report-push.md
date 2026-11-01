@@ -6,6 +6,7 @@
 | Epic | [KIT-12 Savings](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-12-03, KIT-09-02 (scheduler, `reminder_runs`), NTF-03 (`SendPush`, template `savings_monthly`) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-09 Swaps, wishes, tool rewrite, restyle](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-07-05, PLN-02-04, PLN-04-01, AI-11 (RewriteDish) |
 | Unblocks | GW-07 (`POST /v1/dishes/{id}/rewrite`) |
 

@@ -6,6 +6,7 @@
 | Epic | [NTF-01 Events consumer](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-01 (outbox publisher, envelope and stream entry format on `events.identity`) |
 | Unblocks | NTF-01-02, NTF-01-03, NTF-01-04 |
 

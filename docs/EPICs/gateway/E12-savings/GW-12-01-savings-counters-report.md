@@ -6,6 +6,7 @@
 | Epic | [GW-12 Savings routes](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-03-03, KIT-12 (`GetSavings`, `ListSavingsReports`) |
 | Unblocks | MOB-03 |
 

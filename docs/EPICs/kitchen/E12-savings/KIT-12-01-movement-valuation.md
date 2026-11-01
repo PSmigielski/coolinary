@@ -6,6 +6,7 @@
 | Epic | [KIT-12 Savings](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-07-01 (movement columns), KIT-02-02 (`ToGrams`) |
 | Unblocks | KIT-12-02 |
 

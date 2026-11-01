@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-02, MOB-02-02 |
 | Unblocks | MOB-03-02 … MOB-03-09, MOB-01-07 |
 

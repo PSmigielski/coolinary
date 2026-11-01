@@ -6,6 +6,7 @@
 | Epic | [AI-04 Batch jobs](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-04-03 |
 | Unblocks | callers' batch pipelines |
 

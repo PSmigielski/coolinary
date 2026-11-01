@@ -6,6 +6,7 @@
 | Epic | [NTF-04 Devices and notification preferences](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | NTF-03-02, GW-11 (device routes), MOB-06 |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-17 Offer badges and offer-ends reminders](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-15-01, OFF-04 (ListMyShops), OFF-09 (FindOffersForIngredients), OFF-11 (GetPrices) |
 | Unblocks | PLN-17-02, PLN-17-03, PLN-17-04, PLN-15-07, PLN-18-04 |
 

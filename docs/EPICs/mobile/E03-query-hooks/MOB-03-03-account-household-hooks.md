@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (me, household, rename), R2 (profiles, invites, leave, remove) |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, GW-02, GW-04 |
 | Unblocks | later household screens |
 

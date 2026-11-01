@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 (stock move, used by the anonymous-account merge IDN-03-03); R2 (person data, invites IDN-07) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-13-01, KIT-07-03 (merge rule), KIT-11-01 (member rows), IDN-01-03 |
 | Unblocks | IDN-07-04 (join with fridge), IDN-03-03 (anonymous merge) |
 

@@ -6,6 +6,7 @@
 | Epic | [GW-08 Shopping list routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-03, PLN-15 (`GetList`, `AddListLine`, `UpdateListLine`, `RemoveListLine`, `ClearTickedLines`, `GetListChanges`) |
 | Unblocks | GW-08-02, GW-08-03, GW-09-02, MOB-03, MOB-04 |
 

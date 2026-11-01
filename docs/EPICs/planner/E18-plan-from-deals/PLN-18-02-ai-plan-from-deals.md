@@ -6,6 +6,7 @@
 | Epic | [PLN-18 Plan from deals](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | PLN-18-01, AI-14 (ComposeFromDeals), PLN-07, PLN-08, PLN-12-06 |
 | Unblocks | PLN-18-04, GW-10 |
 

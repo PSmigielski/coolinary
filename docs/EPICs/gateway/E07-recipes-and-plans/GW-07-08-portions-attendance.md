@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-07-05, PLN-12 (`SetMealAttendance`, `ListMealAttendance`, `SetAttendanceRule`, `DeleteAttendanceRule`, `GetMealPortions`, `GetScaledIngredients`), PLN-13 (family day plan) |
 | Unblocks | MOB-03 |
 

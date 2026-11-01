@@ -6,6 +6,7 @@
 | Epic | [PLN-03 Library import, AI drafting and review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-03-04 (planner_batches, poll job), AI-04, AI-09 (`suggest_effort_tags`) |
 | Unblocks | PLN-03-07, PLN-12, PLN-14 (keeps/freezes tags) |
 

@@ -6,6 +6,7 @@
 | Epic | [IDN-01 Events: outbox and publisher](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-01-01 |
 | Unblocks | All identity tasks that emit; consumers KIT-13, PLN-21, OFF-14, NTF-01 |
 

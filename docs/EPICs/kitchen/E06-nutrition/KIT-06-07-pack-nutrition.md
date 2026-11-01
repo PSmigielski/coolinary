@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-07, KIT-06-01 |
 | Unblocks | KIT-06-08 |
 

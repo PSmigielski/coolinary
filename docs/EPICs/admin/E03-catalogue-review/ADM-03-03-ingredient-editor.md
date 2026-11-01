@@ -6,6 +6,7 @@
 | Epic | [ADM-03 Catalogue, matching and nutrition review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-02-03; KIT-02-05/06 (`SearchIngredients`, `GetIngredients`), KIT-02-10 (`ListIngredients`, `CreateIngredient`, `UpdateIngredient`, `SetIngredientNames`, `ApproveMachineNames`, `SetMeasures`, `SetPackSizes`, `RetireIngredient`) |
 | Unblocks | ADM-03-01 (`new_ingredient`) |
 

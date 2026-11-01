@@ -6,6 +6,7 @@
 | Epic | [OFF-04 My shops and shopping preferences](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | OFF-04-01, OFF-01-03 (`PlanFor`), OFF-01-05 (job runner) |
 | Unblocks | — |
 

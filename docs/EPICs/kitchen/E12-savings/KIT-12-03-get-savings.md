@@ -6,6 +6,7 @@
 | Epic | [KIT-12 Savings](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-12-02 |
 | Unblocks | GW-12 (`GET /v1/savings`, `GET /v1/savings/reports`), KIT-12-04, KIT-12-05 |
 

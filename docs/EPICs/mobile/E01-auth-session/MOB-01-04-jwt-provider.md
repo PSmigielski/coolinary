@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-01-01, MOB-01-02, GW-02 (`GET /api/auth/token`) |
 | Unblocks | MOB-01-06, MOB-02-01, MOB-05-01 |
 

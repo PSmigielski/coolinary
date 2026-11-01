@@ -6,6 +6,7 @@
 | Epic | [IDN-02 Sign-in with e-mail code](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | IDN-02-02, IDN-09-01, IDN-05-04, IDN-01-02 (alerts) |
 

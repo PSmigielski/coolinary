@@ -6,6 +6,7 @@
 | Epic | [PLN-11 Library growth from well-rated AI dishes](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-11-01, PLN-03-07, PLN-03-05, PLN-03-06, PLN-02-04 |
 | Unblocks | PLN-11-03 |
 

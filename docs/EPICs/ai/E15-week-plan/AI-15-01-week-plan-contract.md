@@ -6,6 +6,7 @@
 | Epic | [AI-15 Week plan](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-12-01 |
 | Unblocks | AI-15-02; PLN-14 |
 

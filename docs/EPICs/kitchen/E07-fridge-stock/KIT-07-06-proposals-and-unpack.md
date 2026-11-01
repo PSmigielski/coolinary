@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-02, KIT-04 (barcode resolution incl. weighed and multipack codes), KIT-05 (unknown products), KIT-02 (pack sizes) |
 | Unblocks | GW-06 (unpack mode), KIT-08-01 |
 

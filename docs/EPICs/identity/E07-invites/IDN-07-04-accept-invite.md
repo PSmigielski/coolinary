@@ -6,6 +6,7 @@
 | Epic | [IDN-07 Invites](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | IDN-07-03, IDN-01-01, IDN-04-02 |
 | Unblocks | GW-04, KIT-13 (moves stock, copies the person's profile), PLN-21, OFF-14 |
 

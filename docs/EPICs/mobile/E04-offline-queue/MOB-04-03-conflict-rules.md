@@ -6,6 +6,7 @@
 | Epic | [MOB-04 Offline mutation queue](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-04-02, GW-01 (error codes), GW-08 (list versions), GW-06 |
 | Unblocks | MOB-05-02 |
 

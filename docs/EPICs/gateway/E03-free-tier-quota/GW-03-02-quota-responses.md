@@ -6,6 +6,7 @@
 | Epic | [GW-03 Free-tier AI quota and rate limits](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-03-01 |
 | Unblocks | GW-02-04, MOB-02 (QuotaReached error), MOB-03 |
 

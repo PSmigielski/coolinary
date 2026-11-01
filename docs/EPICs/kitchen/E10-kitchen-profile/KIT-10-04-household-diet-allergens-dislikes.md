@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-10-01, KIT-02 (ingredient ids for dislikes) |
 | Unblocks | KIT-10-08, KIT-11-04, PLN-07 (allergen and diet check) |
 

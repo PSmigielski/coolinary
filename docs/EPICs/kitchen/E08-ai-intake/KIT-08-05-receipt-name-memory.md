@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-08-04, KIT-07-03 (`AddStockItems` with `intake_ref`) |
 | Unblocks | KIT-08-04 rule 6.1 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-10-01, KIT-01 (outbox) |
 | Unblocks | PLN-01-03 (drop the cached snapshot), KIT-10-08 |
 

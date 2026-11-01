@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-02 (role `dietitian`), ADM-04-03; PLN-03-08 (`RecordDietitianCheck`, `GetDietitianReport`), PLN-03-07 (`ListDishes`) |
 | Unblocks | ADM-04-04 |
 

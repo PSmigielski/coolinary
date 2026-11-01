@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-01-04, MOB-02-01 |
 | Unblocks | MOB-04-02 |
 

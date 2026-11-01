@@ -6,6 +6,7 @@
 | Epic | [PLN-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-01 (Go consumer pattern) |
 | Unblocks | PLN-01-03, PLN-01-04, PLN-04-02, PLN-21 |
 

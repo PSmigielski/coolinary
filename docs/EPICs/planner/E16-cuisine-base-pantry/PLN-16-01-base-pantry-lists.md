@@ -6,6 +6,7 @@
 | Epic | [PLN-16 Cuisine base pantry](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-01, KIT-02 (GetIngredients) |
 | Unblocks | PLN-16-02, ADM-04 |
 

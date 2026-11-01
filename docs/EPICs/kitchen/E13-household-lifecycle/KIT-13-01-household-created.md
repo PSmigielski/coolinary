@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-01-04 (consumer), KIT-10-01 |
 | Unblocks | KIT-07 (stock state row), KIT-09 (timezone), KIT-11-01 |
 

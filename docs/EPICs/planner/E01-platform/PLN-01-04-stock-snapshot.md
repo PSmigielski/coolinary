@@ -6,6 +6,7 @@
 | Epic | [PLN-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-01-01, PLN-01-02, KIT-07 (ListStock, stock.changed) |
 | Unblocks | PLN-06, PLN-07-04, PLN-08, PLN-15 |
 

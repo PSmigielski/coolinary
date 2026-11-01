@@ -6,6 +6,7 @@
 | Epic | [PLN-03 Library import, AI drafting and review](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-01-02, KIT-03 (MatchNames) |
 | Unblocks | PLN-03-03, PLN-03-04, PLN-08-04 |
 

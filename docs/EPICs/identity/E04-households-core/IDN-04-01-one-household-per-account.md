@@ -6,6 +6,7 @@
 | Epic | [IDN-04 Households and members core](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | IDN-04-02 … IDN-04-05, IDN-07-04, IDN-08-01 |
 

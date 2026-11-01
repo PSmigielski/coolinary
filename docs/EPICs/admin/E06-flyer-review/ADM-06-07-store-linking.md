@@ -6,6 +6,7 @@
 | Epic | [ADM-06 Flyer sources, offers and shops review](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-03; OFF-03-05 (`ListStoreLinkQueue`, `LinkStore`, `UnlinkStore`) |
 | Unblocks | — |
 

@@ -6,6 +6,7 @@
 | Epic | [AI-06 Photo to items](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | AI-05-01, AI-01-08 |
 | Unblocks | KIT-08 (photo intake) |
 

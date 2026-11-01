@@ -6,6 +6,7 @@
 | Epic | [PLN-13 Family day plan](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | PLN-13-06, AI-12 (ComposeFamilyDay), PLN-07, PLN-08, PLN-12-06, PLN-12-07 |
 | Unblocks | GW-07, PLN-14-07 |
 

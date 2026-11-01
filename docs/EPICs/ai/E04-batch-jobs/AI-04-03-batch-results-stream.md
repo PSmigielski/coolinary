@@ -6,6 +6,7 @@
 | Epic | [AI-04 Batch jobs](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-04-02, AI-01-06, AI-02-03 |
 | Unblocks | AI-04-04; callers KIT-02, KIT-03, KIT-06, PLN-03, OFF-07 |
 

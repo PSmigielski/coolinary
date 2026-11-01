@@ -6,6 +6,7 @@
 | Epic | [KIT-11 Per-person profiles](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-11-02 |
 | Unblocks | KIT-11-06, PLN-12 (portions) |
 

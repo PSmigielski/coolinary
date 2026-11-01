@@ -6,6 +6,7 @@
 | Epic | [OFF-07 Offer extraction, validation and publishing](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | OFF-07-02 |
 | Unblocks | OFF-07-04, OFF-07-08, OFF-10-03 |
 

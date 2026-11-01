@@ -6,6 +6,7 @@
 | Epic | [AI-03 Prompts, golden sets and evals](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-01-02 |
 | Unblocks | every job epic, AI-03-02 |
 

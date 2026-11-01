@@ -6,6 +6,7 @@
 | Epic | [MOB-06 Push notifications](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-06-01, MOB-06-02, MOB-01-02, NTF-04 (`RegisterDevice` via GW-11 `PUT /v1/devices/{installationId}`) |
 | Unblocks | MOB-01-07, MOB-06-04 |
 

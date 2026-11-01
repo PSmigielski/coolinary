@@ -6,6 +6,7 @@
 | Epic | [GW-02 Auth and account routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-01, IDN-02 (e-mail OTP), IDN-03 (anonymous) |
 | Unblocks | MOB-01 |
 

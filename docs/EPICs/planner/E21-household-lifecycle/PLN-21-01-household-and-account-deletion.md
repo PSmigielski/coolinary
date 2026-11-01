@@ -6,6 +6,7 @@
 | Epic | [PLN-21 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-01, PLN-15-01 |
 | Unblocks | IDN-09 (deletion completes across services) |
 

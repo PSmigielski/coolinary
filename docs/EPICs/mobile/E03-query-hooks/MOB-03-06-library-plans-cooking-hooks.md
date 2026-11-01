@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (library, suggestions, day plan, swaps, cooked it), R2 (away, tool rewrite, family plan), R3 (week plan, restyle) |
 | Size | L |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, MOB-02-05, MOB-04-01, GW-07 |
 | Unblocks | later library, plan and cooking-mode screens |
 

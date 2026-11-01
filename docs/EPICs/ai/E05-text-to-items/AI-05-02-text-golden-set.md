@@ -6,6 +6,7 @@
 | Epic | [AI-05 Text to items](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-05-01, AI-03-03 |
 | Unblocks | typed and voice intake going live in R3 (KIT-08-03) |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-07 Uploads](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-07-01, MOB-02-01, MOB-02-02, GW-06 (intake routes) |
 | Unblocks | MOB-03-05, MOB-07-03 |
 

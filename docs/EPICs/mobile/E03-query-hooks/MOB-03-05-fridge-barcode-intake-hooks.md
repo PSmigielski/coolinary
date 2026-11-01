@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (stock, barcode, unknown products, photo, label), R3 (typed text, voice, receipt) |
 | Size | L |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, MOB-04-01, MOB-04-04, MOB-07-02, GW-06 |
 | Unblocks | later fridge, scan and unpack screens |
 

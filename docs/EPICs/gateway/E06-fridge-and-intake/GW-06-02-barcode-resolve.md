@@ -6,6 +6,7 @@
 | Epic | [GW-06 Fridge, barcode and intake routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-01-02, KIT-04 (`ResolveBarcode` extended, `ListHouseholdProducts`) |
 | Unblocks | MOB-03 (scan and unpack mode) |
 

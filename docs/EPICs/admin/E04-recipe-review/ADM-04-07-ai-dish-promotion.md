@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-04-03; PLN-11-02 (`PromoteCandidate`), PLN-11-03 (`ListPromotionCandidates`, `DismissCandidate`) |
 | Unblocks | — |
 

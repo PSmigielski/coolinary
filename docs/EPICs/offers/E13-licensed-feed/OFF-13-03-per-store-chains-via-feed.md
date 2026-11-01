@@ -6,6 +6,7 @@
 | Epic | [OFF-13 Licensed offers feed](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-13-02, OFF-05-07 |
 | Unblocks | — |
 

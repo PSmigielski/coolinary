@@ -6,6 +6,7 @@
 | Epic | [GW-09 Live shopping list](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-02-01, GW-03-04 |
 | Unblocks | GW-09-02, MOB-05 |
 

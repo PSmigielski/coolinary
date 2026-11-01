@@ -6,6 +6,7 @@
 | Epic | [ADM-02 Admin sign-in, roles and audit log](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-02-01, ADM-01-05; IDN-10-01 (`IdentityAdminService.IsAdmin`) |
 | Unblocks | every `/admin/v1/*` route |
 

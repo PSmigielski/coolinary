@@ -6,6 +6,7 @@
 | Epic | [NTF-02 E-mail templates and languages](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | NTF-02-01, NTF-02-03 |
 | Unblocks | IDN-02 (e-mail code sign-in) |
 

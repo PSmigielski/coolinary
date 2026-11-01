@@ -6,6 +6,7 @@
 | Epic | [ADM-03 Catalogue, matching and nutrition review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-03-03; KIT-02-09 (`MergeIngredients` with `dry_run`, event `catalogue.ingredient_merged`) |
 | Unblocks | — |
 

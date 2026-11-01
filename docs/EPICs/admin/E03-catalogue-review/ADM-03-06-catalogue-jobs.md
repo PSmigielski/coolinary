@@ -6,6 +6,7 @@
 | Epic | [ADM-03 Catalogue, matching and nutrition review](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-03; KIT-01-08 (`KitchenAdminService.StartCatalogueJob`, `ListCatalogueJobs`); AI-02-04 (`AiAdminService.GetSpendStatus`) |
 | Unblocks | ADM-03-02, ADM-03-03 (their queues are filled by these jobs) |
 

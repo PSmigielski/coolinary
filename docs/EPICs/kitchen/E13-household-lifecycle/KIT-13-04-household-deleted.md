@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07, KIT-08-05, KIT-09-02, KIT-10, KIT-11, KIT-12 (their tables), KIT-04/KIT-05 (household products erase hook) |
 | Unblocks | IDN-08, IDN-09 (deletion completes in kitchen) |
 

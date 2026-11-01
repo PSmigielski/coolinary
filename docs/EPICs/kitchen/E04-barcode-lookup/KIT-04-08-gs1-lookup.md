@@ -6,6 +6,7 @@
 | Epic | [KIT-04 Barcode lookup chain](README.md) |
 | Release | R1 (GATE: GS1 access terms and price for Poland and Germany) |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-04-01 |
 | Unblocks | KIT-04-09 |
 

@@ -6,6 +6,7 @@
 | Epic | [MOB-06 Push notifications](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | MOB-06-02, MOB-06-03, MOB-06-04 |
 

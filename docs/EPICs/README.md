@@ -32,6 +32,33 @@ docs/EPICs/
   and high ones by you, the rest at their recommended answer). Each task states its rule as `Decided (Qnnn):`;
   [DECISIONS.md](DECISIONS.md) lists every answer. A marker still reading `DECISION NEEDED:` is genuinely open.
 
+## Working through the tasks
+
+Tasks are built one at a time, in ROADMAP.md order, by Claude Code using the project's `/next-task` command
+(`.claude/skills/next-task/`, rules in `CLAUDE.md`).
+
+1. Start the dev stack (`make dev`) and make sure the working tree is clean: `/next-task` refuses to start on
+   changes that aren't from a task.
+2. **Interactive:** run `claude` in the repo and type `/next-task` (or `/next-task KIT-07-03` for a specific ready
+   task). Review, then repeat.
+3. **Unattended:** `scripts/epics/run-tasks.sh` runs one `claude -p "/next-task <id>"` per task, capped by
+   `--budget` dollars per task (default 5). It stops at the end of each milestone, on a blocked task or a failed
+   run. `--dry-run` shows what it would do. Run logs and costs: `.claude/state/runs/`.
+4. Each milestone is built on its own branch (`m01-foundations`, …), one commit per task. Review and merge it, then
+   continue.
+
+How it fits together:
+
+- `scripts/epics/tasks.py` holds the state: `next`, `show <ID>`, `start`, `done`, `block <ID> "<why>"`, `status`.
+  Status lives in each task file's `Status` row; ROADMAP.md shows it after `scripts/epics/roadmap.sh`.
+- A task is ready when every task in its "After" column is `done`. A `blocked` task is skipped; tasks that depend on
+  it wait. Unblock one by fixing the cause and running `tasks.py set <ID> todo`.
+- `make lint s=<svc>` and `make test s=<svc>` must pass for every service a task touched. The Stop hook
+  (`.claude/hooks/verify-task.sh`) checks this after a task is marked done, sends Claude back up to three times,
+  and blocks the task after the third failure.
+- Claude never makes a design decision on its own: an unclear task is blocked with a note saying what needs
+  deciding (under "## Blocked" in the task file).
+
 ## Decisions taken (1 November 2026)
 
 | # | Topic | Decision |

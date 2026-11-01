@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-01-04 (consumer), KIT-01-06 (plan from identity), KIT-10-09, KIT-11-04 (R2: allergen merge) |
 | Unblocks | PLN-01-03 (fresh snapshot after a plan change) |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-09 Swaps, wishes, tool rewrite, restyle](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-09-01, PLN-07-05, AI-11 (ModifyMeal) |
 | Unblocks | GW-07 |
 

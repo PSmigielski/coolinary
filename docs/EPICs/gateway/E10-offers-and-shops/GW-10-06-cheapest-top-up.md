@@ -6,6 +6,7 @@
 | Epic | [GW-10 Shops, offers, flyers and price matrix routes](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-10-05, GW-07-11, PLN-20 (`CreateCheapestTopUp`, `ApplyTopUp`) |
 | Unblocks | MOB-03 |
 

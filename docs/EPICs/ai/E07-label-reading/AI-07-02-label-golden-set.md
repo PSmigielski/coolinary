@@ -6,6 +6,7 @@
 | Epic | [AI-07 Product label reading](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-07-01, AI-03-03 |
 | Unblocks | label reading going live |
 

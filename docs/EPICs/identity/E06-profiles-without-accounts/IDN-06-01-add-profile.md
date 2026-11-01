@@ -6,6 +6,7 @@
 | Epic | [IDN-06 Profiles without accounts](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-04-04, IDN-04-05, IDN-05-01, IDN-01-01 |
 | Unblocks | GW-04, KIT-11 (per-person profile rows), PLN-12 (portions) |
 

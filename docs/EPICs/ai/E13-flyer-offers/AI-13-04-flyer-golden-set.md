@@ -6,6 +6,7 @@
 | Epic | [AI-13 Flyer offer extraction](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-13-02, AI-13-03, AI-03-03 |
 | Unblocks | each chain going live (OFF-08 gate) |
 

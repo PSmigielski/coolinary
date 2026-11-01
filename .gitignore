@@ -37,3 +37,8 @@ mobile/android/
 
 # make proto scratch output
 /.gen/
+
+# Claude Code: task-runner state, worktrees, personal settings
+/.claude/state/
+/.claude/worktrees/
+/.claude/settings.local.json

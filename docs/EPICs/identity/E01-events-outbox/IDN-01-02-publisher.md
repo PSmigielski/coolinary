@@ -6,6 +6,7 @@
 | Epic | [IDN-01 Events: outbox and publisher](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-01-01, NTF-05 (SendAlert) for the stuck-outbox alert |
 | Unblocks | KIT-13, PLN-21, OFF-14, NTF-01 (all consume `events.identity`) |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-20 Cheapest top-up](README.md) |
 | Release | R3 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-20-02, PLN-14-01, PLN-15-10, PLN-12-06 |
 | Unblocks | GW-10 |
 

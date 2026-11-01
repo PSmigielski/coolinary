@@ -6,6 +6,7 @@
 | Epic | [IDN-02 Sign-in with e-mail code](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-02-02 |
 | Unblocks | MOB-01, GW-02 |
 

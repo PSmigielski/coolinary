@@ -6,6 +6,7 @@
 | Epic | [ADM-06 Flyer sources, offers and shops review](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-03; OFF-02-07 (`ListShopReviews`, `ReviewShop`, `ReviewShopCorrection`), OFF-02-04 (`MarkNotDuplicate`, `ListShopMerges`) |
 | Unblocks | — |
 

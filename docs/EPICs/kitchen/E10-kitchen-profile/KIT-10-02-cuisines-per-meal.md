@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-10-01 |
 | Unblocks | KIT-10-08, PLN-05 (library filter), PLN-08 (AI composition in the chosen cuisine) |
 

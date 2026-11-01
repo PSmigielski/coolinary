@@ -6,6 +6,7 @@
 | Epic | [ADM-04 Recipe import and dish review](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | ADM-04-01 or ADM-04-02; PLN-03-07 (`ListDishes`, `ListReviewQueue`, `GetReviewItem`, `UpdateDraft`, `ApproveDish`, `RejectDish`), PLN-01-06 (`ListAdminChanges`) |
 | Unblocks | ADM-04-04, ADM-04-05, ADM-04-07 |
 

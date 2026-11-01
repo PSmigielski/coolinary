@@ -6,6 +6,7 @@
 | Epic | [KIT-13 Household lifecycle](README.md) |
 | Release | R1 (handler); data exists from R2 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-11-01 |
 | Unblocks | IDN-09 |
 

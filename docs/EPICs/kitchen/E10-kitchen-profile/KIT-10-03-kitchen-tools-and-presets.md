@@ -6,6 +6,7 @@
 | Epic | [KIT-10 Kitchen profile](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-10-01 |
 | Unblocks | KIT-10-07, KIT-10-08, PLN-07 (tool check), PLN-05 (tool filter) |
 

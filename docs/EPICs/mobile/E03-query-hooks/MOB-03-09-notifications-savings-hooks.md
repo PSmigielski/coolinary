@@ -6,6 +6,7 @@
 | Epic | [MOB-03 Query keys, hooks and cache rules](README.md) |
 | Release | R1 (notification preferences), R2 (savings), R3 (share card) |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-03-01, MOB-03-02, GW-11, GW-12 |
 | Unblocks | later settings and savings screens |
 

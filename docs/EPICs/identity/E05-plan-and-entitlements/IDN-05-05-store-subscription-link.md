@@ -6,6 +6,7 @@
 | Epic | [IDN-05 Plan and entitlements](README.md) |
 | Release | R1 |
 | Size | L |
+| Status | todo |
 | Depends on | IDN-05-01 |
 | Unblocks | Paywall purchase flow (frontend, later) |
 

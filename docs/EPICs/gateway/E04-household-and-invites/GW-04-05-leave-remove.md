@@ -6,6 +6,7 @@
 | Epic | [GW-04 Household, profiles and invite routes](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-01-03, IDN-08 (`LeaveHousehold`, `RemoveMember`, `TransferOwnership`, revocation key IDN-08-04) |
 | Unblocks | MOB-01, MOB-03 |
 

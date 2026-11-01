@@ -6,6 +6,7 @@
 | Epic | [ADM-07 AI cost and system overview](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-03; NTF-06 (`ListDeliveries`, `GetDeliveryStats`, `ListAlerts`, `AcknowledgeAlert`, `SendTestEmail`, `SendTestPush`) |
 | Unblocks | — |
 

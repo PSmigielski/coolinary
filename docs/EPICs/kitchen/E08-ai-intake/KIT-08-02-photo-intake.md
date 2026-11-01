@@ -6,6 +6,7 @@
 | Epic | [KIT-08 AI intake](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-08-01, AI-06 (`ExtractItemsFromPhoto`) |
 | Unblocks | GW-06 (`POST /v1/intake/photo`) |
 

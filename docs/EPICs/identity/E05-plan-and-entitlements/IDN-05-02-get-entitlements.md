@@ -6,6 +6,7 @@
 | Epic | [IDN-05 Plan and entitlements](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-05-01, IDN-04-04 |
 | Unblocks | GW-02 (`GET /v1/entitlements`), GW-03 (quota limits), MOB-03 (paywall data), KIT-01, PLN-01, OFF-01 (plan checks, Q004) |
 

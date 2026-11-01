@@ -6,6 +6,7 @@
 | Epic | [GW-11 Devices and notification preference routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-02-01, NTF-04 (`RegisterDevice`, `UnregisterDevice`) |
 | Unblocks | MOB-06 |
 

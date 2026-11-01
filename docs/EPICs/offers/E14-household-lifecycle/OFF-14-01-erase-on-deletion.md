@@ -6,6 +6,7 @@
 | Epic | [OFF-14 Household lifecycle](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-01-02, IDN-08 / IDN-09 (household.deleted, account.deleted) |
 | Unblocks | GDPR deletion end to end |
 

@@ -6,6 +6,7 @@
 | Epic | [AI-06 Photo to items](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-06-01, AI-03-03 |
 | Unblocks | photo intake going live |
 

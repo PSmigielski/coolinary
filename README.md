@@ -119,6 +119,12 @@ pushed commits touch and stops the push when something fails. It checks the work
 count too. `make lint-fix` fixes formatting and most simple issues; `git push --no-verify` skips the hook once.
 Generated code (`gen/`, sqlc `store/`, `src/coolinary/`, `auth-schema.ts`, Drizzle migrations) is never linted.
 
+## Planned work
+
+Every planned feature is a task in `docs/EPICs/` (start with `docs/EPICs/README.md`), built in the order of
+`docs/EPICs/ROADMAP.md`. Claude Code builds them one at a time: `/next-task` in an interactive session, or
+`scripts/epics/run-tasks.sh` unattended (stops after each milestone). `make test s=<svc>` runs a service's tests.
+
 ## Debugging (Zed)
 
 Start `make dev`, then in Zed open the debugger and pick a configuration from `.zed/debug.json`:

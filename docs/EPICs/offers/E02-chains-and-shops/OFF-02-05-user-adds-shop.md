@@ -6,6 +6,7 @@
 | Epic | [OFF-02 Chains and shops](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-02-02 |
 | Unblocks | OFF-02-07, OFF-10-05 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-03 Name matching](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | — |
 | Unblocks | KIT-02-04, KIT-03-02, KIT-04-07 (pack size parsing), KIT-04-11, KIT-05-02 |
 

@@ -6,6 +6,7 @@
 | Epic | [AI-11 Swaps, wishes, tool rewrite, restyle](README.md) |
 | Release | R1–R3 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-11-01 … AI-11-05, AI-03-05 |
 | Unblocks | each mode going live |
 

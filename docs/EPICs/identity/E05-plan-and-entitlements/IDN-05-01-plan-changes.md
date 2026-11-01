@@ -6,6 +6,7 @@
 | Epic | [IDN-05 Plan and entitlements](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-01-01 |
 | Unblocks | IDN-05-02 … IDN-05-05, IDN-10-03, kitchen/planner/offers plan copies (D5) |
 

@@ -6,6 +6,7 @@
 | Epic | [GW-04 Household, profiles and invite routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-02-01, IDN-04 (`GetHousehold`, `UpdateHousehold`) |
 | Unblocks | MOB-03 |
 

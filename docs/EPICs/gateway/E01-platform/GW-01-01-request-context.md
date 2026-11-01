@@ -6,6 +6,7 @@
 | Epic | [GW-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | — |
 | Unblocks | every gateway route task |
 

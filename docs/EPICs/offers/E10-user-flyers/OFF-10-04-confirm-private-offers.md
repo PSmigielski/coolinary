@@ -6,6 +6,7 @@
 | Epic | [OFF-10 User-supplied flyers](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-10-03, OFF-07-07 |
 | Unblocks | PLN-17, PLN-18 (offers.published with household_id) |
 

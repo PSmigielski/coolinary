@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-03-03, GW-10-02, PLN-18 (`CreatePlanFromDeals`), OFF-04 (`ListMyShops`, used by planner) |
 | Unblocks | MOB-03 |
 

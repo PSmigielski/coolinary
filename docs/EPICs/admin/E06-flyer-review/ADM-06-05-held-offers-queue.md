@@ -6,6 +6,7 @@
 | Epic | [ADM-06 Flyer sources, offers and shops review](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | ADM-06-03 (page images); OFF-07-06 (`ListHeldOffers`, `UpdateHeldOffer`, `ReleaseHeldOffer`, `RejectHeldOffer`, `RejectHeldOffers`); KIT-03-06 (`DecideMatch`) |
 | Unblocks | — |
 

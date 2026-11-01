@@ -6,6 +6,7 @@
 | Epic | [AI-10 Day plan composition and cuisine choices](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-02-01 |
 | Unblocks | AI-10-02, AI-09-03, AI-09-05, AI-11, AI-12, AI-14, AI-15, AI-17; PLN-08 |
 

@@ -6,6 +6,7 @@
 | Epic | [ADM-02 Admin sign-in, roles and audit log](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | ADM-02-02, ADM-02-03; IDN-10-01 (`IdentityAdminService.ListAdmins`, `make admin-grant` / `make admin-revoke`) |
 | Unblocks | — |
 

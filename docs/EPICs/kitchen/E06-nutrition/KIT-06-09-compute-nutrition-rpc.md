@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-06-08 |
 | Unblocks | PLN-04, PLN-10 (cooked with scanned products), PLN-12, Verification 16 |
 

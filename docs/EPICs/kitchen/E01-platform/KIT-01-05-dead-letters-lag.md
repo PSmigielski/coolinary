@@ -6,6 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-01-03, KIT-01-04, NTF-05 (SendAlert) |
 | Unblocks | — |
 

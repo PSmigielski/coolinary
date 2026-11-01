@@ -6,6 +6,7 @@
 | Epic | [IDN-09 Account deletion and data export](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-04-04 |
 | Unblocks | GW-02 (assembles the full export, D9) |
 

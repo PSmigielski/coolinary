@@ -6,6 +6,7 @@
 | Epic | [AI-05 Text to items](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-01-03, AI-01-06, AI-01-07, AI-01-09, AI-03-01 |
 | Unblocks | AI-06-01 (shared item rules, R1); KIT-08-03 (typed and voice intake, R3) |
 

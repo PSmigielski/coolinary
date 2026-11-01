@@ -6,6 +6,7 @@
 | Epic | [PLN-10 Cooking mode and "cooked it"](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-10-02, PLN-05-05 |
 | Unblocks | PLN-11-01 (ratings of AI dishes) |
 

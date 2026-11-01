@@ -6,6 +6,7 @@
 | Epic | [OFF-01 Platform](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | — (uses `internal/platform/rpc/client.go`) |
 | Unblocks | OFF-01-03, OFF-05-06, OFF-07-02, OFF-07-04, OFF-09-02, OFF-10-03 |
 

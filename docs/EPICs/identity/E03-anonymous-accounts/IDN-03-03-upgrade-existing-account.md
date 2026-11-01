@@ -6,6 +6,7 @@
 | Epic | [IDN-03 Anonymous accounts and upgrade](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | IDN-03-02 |
 | Unblocks | KIT-13 (moves stock on `household.member_added.brought_fridge_from`), MOB-01 |
 

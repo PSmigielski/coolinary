@@ -6,6 +6,7 @@
 | Epic | [GW-02 Auth and account routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-02-01, IDN-09 (`ExportUserData`), NTF-04 (`ExportUserData`), KIT-13, PLN-21, OFF-14 (`ExportHouseholdData`) |
 | Unblocks | MOB-03 |
 

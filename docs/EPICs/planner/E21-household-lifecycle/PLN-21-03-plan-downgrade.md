@@ -6,6 +6,7 @@
 | Epic | [PLN-21 Household lifecycle](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | PLN-01-01, PLN-01-03, PLN-01-05, PLN-12-06, KIT-11 (allergen merge on downgrade) |
 | Unblocks | — |
 

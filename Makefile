@@ -194,6 +194,20 @@ lint-contracts:
 lint-fix-contracts:
 	@$(BUF) format -w
 
+# ---------------------------------------------------------------- tests
+
+# scripts/test-service.sh per service: go test (in a container), bun test, pytest. Tests that need Postgres or Redis
+# run only while `make dev` is up, against a <svc>_test database and Redis database 15; otherwise they skip.
+TESTABLE := $(SERVICES) mobile
+
+.PHONY: test
+test: ## Run tests, all or some: make test s="kitchen ai" (needs `make dev` for Postgres/Redis tests)
+	@$(MAKE) --no-print-directory -k $(addprefix test-,$(or $(s),$(TESTABLE)))
+
+.PHONY: $(addprefix test-,$(TESTABLE))
+$(addprefix test-,$(TESTABLE)): test-%:
+	@./scripts/test-service.sh $*
+
 # ---------------------------------------------------------------- mobile
 
 .PHONY: mobile

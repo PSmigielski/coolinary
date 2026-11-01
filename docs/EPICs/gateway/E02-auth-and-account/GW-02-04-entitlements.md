@@ -6,6 +6,7 @@
 | Epic | [GW-02 Auth and account routes](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-02-01, GW-03-02, IDN-05 (`GetEntitlements`) |
 | Unblocks | MOB-03 (paywall and limits shown in the app) |
 

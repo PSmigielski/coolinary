@@ -6,6 +6,7 @@
 | Epic | [OFF-09 Offer browse, search and lookup by ingredient](README.md) |
 | Release | R2 |
 | Size | L |
+| Status | todo |
 | Depends on | OFF-07-07, OFF-04-01, OFF-03-04 |
 | Unblocks | OFF-09-02, OFF-09-03, OFF-09-04, GW-10 |
 

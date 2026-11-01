@@ -6,6 +6,7 @@
 | Epic | [KIT-07 Fridge stock](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-07-01, KIT-07-02, KIT-02 (`GetIngredients`), KIT-04 (product → ingredient link, pack size) |
 | Unblocks | GW-06 (add items), PLN-15 (tick a list line), KIT-07-06, KIT-08, KIT-12 |
 

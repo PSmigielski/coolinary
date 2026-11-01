@@ -6,6 +6,7 @@
 | Epic | [AI-11 Swaps, wishes, tool rewrite, restyle](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | AI-11-04 |
 | Unblocks | PLN-09 (restyle) |
 

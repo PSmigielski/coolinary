@@ -6,6 +6,7 @@
 | Epic | [GW-09 Live shopping list](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-09-01, PLN-15 (`list.changed`, `GetListChanges`), KIT-07 (`stock.changed`) |
 | Unblocks | MOB-05 |
 

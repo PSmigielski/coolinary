@@ -6,6 +6,7 @@
 | Epic | [KIT-09 Expiry reminders](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-09-02, NTF-03 (`SendPush`, templates `expiry_today` / `expiry_tomorrow`) |
 | Unblocks | — |
 

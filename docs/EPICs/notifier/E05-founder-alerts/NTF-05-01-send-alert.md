@@ -6,6 +6,7 @@
 | Epic | [NTF-05 Founder alerts](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | NTF-05-02 |
 | Unblocks | OFF-05 (flyer source failures), KIT-04 (lookup source down), NTF-01-01, NTF-03-03, NTF-06-02 |
 

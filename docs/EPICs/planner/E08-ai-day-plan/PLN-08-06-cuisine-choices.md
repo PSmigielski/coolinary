@@ -6,6 +6,7 @@
 | Epic | [PLN-08 AI day plan](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-08-04, PLN-08-05, PLN-08-01 |
 | Unblocks | PLN-08-07, PLN-15 (allowed purchases to the list) |
 

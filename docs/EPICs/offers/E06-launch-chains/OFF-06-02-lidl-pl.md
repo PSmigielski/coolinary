@@ -6,6 +6,7 @@
 | Epic | [OFF-06 Launch chain adapters](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | OFF-05-02, OFF-05-03 |
 | Unblocks | OFF-06-04, OFF-08-02 for `lidl-pl` |
 

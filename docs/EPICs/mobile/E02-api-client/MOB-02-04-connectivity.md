@@ -6,6 +6,7 @@
 | Epic | [MOB-02 API client and error model](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | MOB-01-01 (installs `expo-network`) |
 | Unblocks | MOB-02-02, MOB-04-02, MOB-05-01 |
 

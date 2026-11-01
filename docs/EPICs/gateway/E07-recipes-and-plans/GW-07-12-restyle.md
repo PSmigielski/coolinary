@@ -6,6 +6,7 @@
 | Epic | [GW-07 Recipe library, plans and cooking routes](README.md) |
 | Release | R3 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-03-03, PLN-09 (`RewriteDish`, kind `RESTYLE`) |
 | Unblocks | MOB-03 |
 

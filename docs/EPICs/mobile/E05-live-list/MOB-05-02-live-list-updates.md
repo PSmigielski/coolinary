@@ -6,6 +6,7 @@
 | Epic | [MOB-05 Live shopping list client](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | MOB-05-01, MOB-03-07, MOB-04-03, PLN-15 (list versions, `GetListChanges`), GW-08-01 (`GET /v1/list/changes`), GW-09 |
 | Unblocks | later list screens |
 

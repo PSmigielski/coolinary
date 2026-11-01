@@ -6,6 +6,7 @@
 | Epic | [AI-01 Claude provider foundation](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-01-03 |
 | Unblocks | every job epic; callers' fallbacks (KIT-08, PLN-08, OFF-07) |
 

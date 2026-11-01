@@ -6,6 +6,7 @@
 | Epic | [KIT-02 Ingredient catalogue](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | KIT-02-01 |
 | Unblocks | KIT-04-10 (scan suggestions), KIT-07 (default use-by), PLN-15 (round up to packs) |
 

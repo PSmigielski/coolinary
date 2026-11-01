@@ -6,6 +6,7 @@
 | Epic | [AI-07 Product label reading](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | AI-06-01 |
 | Unblocks | KIT-05 (naming unknown products) |
 

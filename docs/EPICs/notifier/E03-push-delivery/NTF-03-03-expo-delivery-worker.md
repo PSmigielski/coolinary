@@ -6,6 +6,7 @@
 | Epic | [NTF-03 Push delivery](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | NTF-03-02 |
 | Unblocks | NTF-03-04 |
 

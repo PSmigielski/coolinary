@@ -6,6 +6,7 @@
 | Epic | [PLN-06 What can I make now](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-06-01, PLN-05-04, PLN-05-06 |
 | Unblocks | PLN-06-03, PLN-08-02, PLN-08-05 |
 

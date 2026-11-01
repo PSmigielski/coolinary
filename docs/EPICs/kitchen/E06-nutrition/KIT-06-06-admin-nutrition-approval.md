@@ -6,6 +6,7 @@
 | Epic | [KIT-06 Nutrition](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-06-05, KIT-01-07, KIT-06-10 |
 | Unblocks | ADM-03, PLN-04 (dishes get calories once their ingredients are approved) |
 

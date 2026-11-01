@@ -6,6 +6,7 @@
 | Epic | [IDN-06 Profiles without accounts](README.md) |
 | Release | R2 |
 | Size | S |
+| Status | todo |
 | Depends on | IDN-06-01 |
 | Unblocks | GW-04, KIT-13 (deletes the person's diet and target) |
 

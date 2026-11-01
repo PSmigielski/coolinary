@@ -6,6 +6,7 @@
 | Epic | [NTF-04 Devices and notification preferences](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | NTF-02-02, NTF-04-01, NTF-04-02 |
 | Unblocks | GW-02 (data export, D9) |
 

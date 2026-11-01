@@ -6,6 +6,7 @@
 | Epic | [MOB-01 Auth session](README.md) |
 | Release | R1 |
 | Size | S |
+| Status | todo |
 | Depends on | GW-02 (`/api/auth/*` proxy), IDN-02 (e-mail OTP plugin), IDN-03 (anonymous plugin) |
 | Unblocks | MOB-01-02, MOB-01-03, MOB-01-04, MOB-01-05 |
 

@@ -6,6 +6,7 @@
 | Epic | [KIT-11 Per-person profiles](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | KIT-11-02, KIT-10-04, KIT-13-06 (plan-change handler), KIT-01-06 (plan from identity) |
 | Unblocks | KIT-11-06, PLN-13-01 (hard limits for a shared meal) |
 

@@ -6,6 +6,7 @@
 | Epic | [PLN-18 Plan from deals](README.md) |
 | Release | R2 |
 | Size | M |
+| Status | todo |
 | Depends on | PLN-18-01, PLN-13-06 |
 | Unblocks | PLN-18-02 |
 

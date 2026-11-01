@@ -6,6 +6,7 @@
 | Epic | [GW-06 Fridge, barcode and intake routes](README.md) |
 | Release | R1 |
 | Size | M |
+| Status | todo |
 | Depends on | GW-01-03, KIT-07 (`ListStock`, `AddStockItems`, `UpdateStockItem`, `RemoveStockItems`, `PreviewStockItems`, `SuggestStockDefaults`) |
 | Unblocks | MOB-03, MOB-04 (offline stock edits) |
 
