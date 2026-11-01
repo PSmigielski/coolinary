@@ -22,7 +22,7 @@ also be done in parallel.
 
 | Milestone | Release | Done when | Tasks | Done | Days | Weeks (cumulative) |
 |---|---|---|---|---|---|---|
-| [M1 Foundations](#m1-foundations) | R1 | Kitchen's event outbox and the Go consumers run, the gateway maps errors and idempotency keys, and ai answers through Claude with structured output, cost tracking and batches; the app has its typed API client. | 40 (#1–40) | 0/40 | 80.5 | 16 |
+| [M1 Foundations](#m1-foundations) | R1 | Kitchen's event outbox and the Go consumers run, the gateway maps errors and idempotency keys, and ai answers through Claude with structured output, cost tracking and batches; the app has its typed API client. | 40 (#1–40) | 1/40 | 80.5 | 16 |
 | [M2 Sign-in, households and plans](#m2-sign-in-households-and-plans) | R1 | Identity publishes household events; a phone starts anonymously, signs in with an e-mail code, keeps its household, and the gateway knows Free vs Plus; founder alerts arrive by e-mail. | 50 (#41–90) | 0/50 | 88 | 34 |
 | [M3 Back office](#m3-back-office) | R1 | An admin signs in at admin.<domain>; every action is in the audit log. | 13 (#91–103) | 0/13 | 25 | 39 |
 | [M4 Catalogue and kitchen profile](#m4-catalogue-and-kitchen-profile) | R1 | Ingredients are searchable in pl/de/en, names match to the catalogue, and onboarding saves cuisines, tools, diets and staples. | 38 (#104–141) | 0/38 | 77 | 54 |
@@ -55,7 +55,7 @@ Total: 558 tasks, about 1174 developer-days (235 weeks for one developer): R1 71
 
 | # | Task | Title | Service | Size | After | Flags | Status |
 |---|---|---|---|---|---|---|---|
-| 1 | [IDN-01-01](identity/E01-events-outbox/IDN-01-01-outbox-table-and-emit.md) | Outbox table and `emit()` helper | identity | S |  |  | todo |
+| 1 | [IDN-01-01](identity/E01-events-outbox/IDN-01-01-outbox-table-and-emit.md) | Outbox table and `emit()` helper | identity | S |  |  | done |
 | 2 | [IDN-01-03](identity/E01-events-outbox/IDN-01-03-event-types.md) | Identity event types and schemas | identity | S | 1 |  | todo |
 | 3 | [KIT-01-01](kitchen/E01-platform/KIT-01-01-request-metadata.md) | Request metadata and household guard | kitchen | S |  |  | todo |
 | 4 | [KIT-01-02](kitchen/E01-platform/KIT-01-02-event-envelope-outbox.md) | Event envelope and outbox writer | kitchen | M |  |  | todo |
