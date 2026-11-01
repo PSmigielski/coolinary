@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "household.member_added v1",
+  "description": "A person became a member of a household. An upsert by member_id.",
+  "type": "object",
+  "properties": {
+    "household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The household the event is about."
+    },
+    "member_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The member: one person in one household, with or without an account."
+    },
+    "user_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The member's account, or null for a profile."
+    },
+    "has_account": {
+      "type": "boolean",
+      "description": "True for owner and member, false for a profile."
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "member",
+        "profile"
+      ],
+      "description": "owner and member have an account; a profile is a person without one (a child, someone without a phone)."
+    },
+    "brought_fridge_from": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The household whose stock moves into this one, or null. Its household.deleted follows."
+    },
+    "previous_member_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The same person's member id in the household they came from, to carry over their settings, or null."
+    }
+  },
+  "required": [
+    "household_id",
+    "member_id",
+    "user_id",
+    "has_account",
+    "role",
+    "brought_fridge_from",
+    "previous_member_id"
+  ],
+  "additionalProperties": false
+}

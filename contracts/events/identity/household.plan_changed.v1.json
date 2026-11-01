@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "household.plan_changed v1",
+  "description": "A household's plan changed. Read the current plan from identity (GetEntitlements), Q004.",
+  "type": "object",
+  "properties": {
+    "household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The household the event is about."
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "plus"
+      ],
+      "description": "The plan from now on."
+    },
+    "previous_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "plus"
+      ],
+      "description": "The plan before this change."
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "default",
+        "manual",
+        "store"
+      ],
+      "description": "default: Free with nothing bought; manual: set by an admin; store: reserved for store purchases (IDN-05-05)."
+    }
+  },
+  "required": [
+    "household_id",
+    "plan",
+    "previous_plan",
+    "source"
+  ],
+  "additionalProperties": false
+}

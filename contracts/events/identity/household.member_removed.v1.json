@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "household.member_removed v1",
+  "description": "A person stopped being a member of a household.",
+  "type": "object",
+  "properties": {
+    "household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The household the event is about."
+    },
+    "member_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The member: one person in one household, with or without an account."
+    },
+    "user_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The member's account, or null for a profile."
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "left",
+        "removed",
+        "profile_deleted",
+        "plan_ended"
+      ],
+      "description": "plan_ended is reserved: identity doesn't emit it (members stay after a downgrade, Q187)."
+    },
+    "new_household_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The household the person moves to, or null if they move nowhere (a deleted profile)."
+    }
+  },
+  "required": [
+    "household_id",
+    "member_id",
+    "user_id",
+    "reason",
+    "new_household_id"
+  ],
+  "additionalProperties": false
+}

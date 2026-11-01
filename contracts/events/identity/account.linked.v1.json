@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "account.linked v1",
+  "description": "An anonymous account signed in with an e-mail code.",
+  "type": "object",
+  "properties": {
+    "anonymous_user_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "description": "The anonymous account that signed in."
+    },
+    "user_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "description": "The account it became or was merged into."
+    },
+    "household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The account's household after linking."
+    },
+    "anonymous_household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The anonymous account's household before linking."
+    },
+    "merged": {
+      "type": "boolean",
+      "description": "False: the anonymous account was upgraded in place (household_id = anonymous_household_id). True: it signed in to an existing account, its household's stock moved into that account's household and the anonymous household was deleted."
+    }
+  },
+  "required": [
+    "anonymous_user_id",
+    "user_id",
+    "household_id",
+    "anonymous_household_id",
+    "merged"
+  ],
+  "additionalProperties": false
+}

@@ -10,7 +10,8 @@
     "lint": "biome check --error-on-warnings && tsc --noEmit",
     "lint:fix": "biome check --write",
     "auth:schema": "DATABASE_URL=postgres://x@localhost/x BETTER_AUTH_URL=http://localhost BETTER_AUTH_SECRET=placeholder bun --bun x @better-auth/cli@1.4.21 generate --config src/auth.ts --output src/db/auth-schema.ts --yes",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "events:schemas": "bun scripts/export-event-schemas.ts"
   },
   "dependencies": {
     "@better-auth/expo": "1.7.14",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
     "@types/bun": "1.4.4",
+    "ajv": "8.20.0",
     "drizzle-kit": "0.31.11",
     "typescript": "7.0.2"
   }

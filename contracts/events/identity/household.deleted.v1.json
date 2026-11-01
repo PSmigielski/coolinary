@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "household.deleted v1",
+  "description": "A household and everything in it is gone. Delete its data.",
+  "type": "object",
+  "properties": {
+    "household_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+      "description": "The household the event is about."
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "owner_deleted",
+        "joined_other",
+        "linked_merge",
+        "anonymous_cleanup"
+      ]
+    }
+  },
+  "required": [
+    "household_id",
+    "reason"
+  ],
+  "additionalProperties": false
+}
