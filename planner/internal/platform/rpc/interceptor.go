@@ -64,7 +64,7 @@ func NewServerInterceptor(log *slog.Logger) connect.UnaryInterceptorFunc {
 			}
 			log.Log(ctx, lvl, "rpc", "method", req.Spec().Procedure, "code", c,
 				"duration_ms", time.Since(start).Milliseconds(),
-				"request_id", req.Header().Get("x-request-id"), "error", err)
+				"request_id", req.Header().Get(keyRequestID), "error", err)
 			return res, err
 		}
 	}
@@ -85,20 +85,4 @@ func NewClientInterceptor() connect.UnaryInterceptorFunc {
 			return res, err
 		}
 	}
-}
-
-type metadataKey struct{}
-
-// ForwardedHeaders are copied from an incoming request to outgoing calls.
-var ForwardedHeaders = []string{"x-user-id", "x-household-id", "x-plan", "x-request-id", "traceparent"}
-
-// WithMetadata stores the forwarded headers of an incoming request in ctx.
-func WithMetadata(ctx context.Context, get func(string) string) context.Context {
-	md := map[string]string{}
-	for _, k := range ForwardedHeaders {
-		if v := get(k); v != "" {
-			md[k] = v
-		}
-	}
-	return context.WithValue(ctx, metadataKey{}, md)
 }

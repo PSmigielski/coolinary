@@ -6,7 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
-| Status | todo |
+| Status | done |
 | Depends on | — |
 | Unblocks | KIT-01-06, KIT-01-07, KIT-01-08, every user-scoped kitchen RPC |
 

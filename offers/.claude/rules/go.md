@@ -48,7 +48,12 @@ service's name.
 - Build each client once in `main.go` and pass it to `New`:
   `aiv1connect.NewAiServiceClient(rpc.NewHTTPClient(), rpc.BaseURL(cfg.AIAddr), rpc.ClientOptions()...)`.
 - Every call has a deadline: `ctx, cancel := context.WithTimeout(ctx, 2*time.Second); defer cancel()`. The client
-  interceptor forwards `x-request-id`, `traceparent`, `x-user-id`, `x-household-id` and `x-plan` from `ctx`.
+  interceptor forwards `x-request-id`, `traceparent`, `x-user-id`, `x-household-id`, `x-plan`, `x-language` and
+  `x-admin-user-id` from `ctx`.
+- Read them with `rpc.UserID`, `rpc.HouseholdID`, `rpc.Plan` (`free` when missing), `rpc.Language` (primary
+  subtag, `en` when missing) and `rpc.AdminUserID`. A user-scoped RPC takes its household from
+  `rpc.CheckHousehold(ctx, req.Msg.GetHouseholdId())`, which refuses a mismatch with `x-household-id`. Log a
+  household id only as `rpc.HouseholdHash(id)`; never log the other values except `request_id`.
 - The call graph has no cycles (`docs/infrastructure.md`): `ai` and `notifier` call no one, and `planner` calls
   `kitchen` and `offers`, never the other way round.
 - **AI output is never trusted.** Check it with rules (allergens, tools at home, stock) before returning it, and

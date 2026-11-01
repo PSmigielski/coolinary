@@ -16,6 +16,7 @@ import (
 	kitchenv1 "coolinary/kitchen/gen/coolinary/kitchen/v1"
 	"coolinary/kitchen/gen/coolinary/kitchen/v1/kitchenv1connect"
 	"coolinary/kitchen/internal/kitchen/store"
+	"coolinary/kitchen/internal/platform/rpc"
 )
 
 const cacheTTL = 24 * time.Hour
@@ -35,14 +36,21 @@ func New(q *store.Queries, cache *redis.Client, log *slog.Logger) *Service {
 // ResolveBarcode walks the lookup chain. For now only the shared catalogue
 // is implemented; Open Food Facts and GS1 come with the barcode feature.
 func (s *Service) ResolveBarcode(ctx context.Context, req *connect.Request[kitchenv1.ResolveBarcodeRequest]) (*connect.Response[kitchenv1.ResolveBarcodeResponse], error) {
-	res, err := s.resolveBarcode(ctx, req.Msg.GetEan())
+	res, err := s.resolveBarcode(ctx, req.Msg.GetEan(), req.Msg.GetHouseholdId())
 	if err != nil {
 		return nil, err
 	}
 	return connect.NewResponse(res), nil
 }
 
-func (s *Service) resolveBarcode(ctx context.Context, ean string) (*kitchenv1.ResolveBarcodeResponse, error) {
+func (s *Service) resolveBarcode(ctx context.Context, ean, householdID string) (*kitchenv1.ResolveBarcodeResponse, error) {
+	// The household is optional here: the public route GET /v1/products/{ean} sends none and must keep working
+	// (KIT-04-09). When one is given, it must be valid and match the caller's.
+	if householdID != "" || rpc.HouseholdID(ctx) != "" {
+		if _, err := rpc.CheckHousehold(ctx, householdID); err != nil {
+			return nil, err
+		}
+	}
 	if len(ean) != 8 && len(ean) != 12 && len(ean) != 13 && len(ean) != 14 {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("ean must have 8, 12, 13 or 14 digits"))
 	}
