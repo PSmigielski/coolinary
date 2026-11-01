@@ -28,4 +28,4 @@ https://elysiajs.com/llms.txt
 - Adding a Better Auth plugin: add it in `src/auth.ts`, run `bun run auth:schema` (regenerates
   `src/db/auth-schema.ts`, never edit that file by hand), then `bun run db:generate` and commit the migration.
 - Origins the app calls from go in `TRUSTED_ORIGINS`, not in code.
-- Check: `bun run typecheck` in `identity/` (Bun is at `~/.bun/bin/bun`).
+- Check: `bun run lint` in `identity/` (Biome + `tsc`; Bun is at `~/.bun/bin/bun`), `bun run lint:fix` to format.

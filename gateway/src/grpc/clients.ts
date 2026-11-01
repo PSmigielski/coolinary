@@ -1,13 +1,14 @@
 // gRPC clients for the services the gateway calls. Channels connect lazily, so
 // the gateway starts even when a service is down.
-import { Client, credentials, type ChannelOptions } from "@grpc/grpc-js";
+
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { type ChannelOptions, Client, credentials } from "@grpc/grpc-js";
 import { config, type ServiceName } from "../config";
 import { IdentityServiceClient } from "../gen/coolinary/identity/v1/identity";
-import { NotifierServiceClient } from "../gen/coolinary/notifier/v1/notifier";
 import { KitchenServiceClient } from "../gen/coolinary/kitchen/v1/kitchen";
-import { PlannerServiceClient } from "../gen/coolinary/planner/v1/planner";
+import { NotifierServiceClient } from "../gen/coolinary/notifier/v1/notifier";
 import { OffersServiceClient } from "../gen/coolinary/offers/v1/offers";
+import { PlannerServiceClient } from "../gen/coolinary/planner/v1/planner";
 import { codeName, unary } from "./unary";
 
 // Keepalive pings detect dead connections after idle periods (see Bun HTTP/2 notes in docs/infrastructure.md).
@@ -39,25 +40,30 @@ export async function checkHealth(name: ServiceName, timeoutMs = 1000): Promise<
   }
   const c = client;
   try {
-    const statusCode = await unary<number>("grpc.health.v1.Health", "Check", (md, opts, cb) =>
-      c.makeUnaryRequest(
-        "/grpc.health.v1.Health/Check",
-        () => Buffer.from(new BinaryWriter().finish()), // empty HealthCheckRequest = whole server
-        (buf: Buffer) => {
-          const r = new BinaryReader(buf);
-          let s = 0;
-          while (r.pos < r.len) {
-            const [field, wire] = r.tag();
-            if (field === 1) s = r.int32();
-            else r.skip(wire);
-          }
-          return s;
-        },
-        {},
-        md,
-        opts,
-        cb,
-      ), { timeoutMs });
+    const statusCode = await unary<number>(
+      "grpc.health.v1.Health",
+      "Check",
+      (md, opts, cb) =>
+        c.makeUnaryRequest(
+          "/grpc.health.v1.Health/Check",
+          () => Buffer.from(new BinaryWriter().finish()), // empty HealthCheckRequest = whole server
+          (buf: Buffer) => {
+            const r = new BinaryReader(buf);
+            let s = 0;
+            while (r.pos < r.len) {
+              const [field, wire] = r.tag();
+              if (field === 1) s = r.int32();
+              else r.skip(wire);
+            }
+            return s;
+          },
+          {},
+          md,
+          opts,
+          cb,
+        ),
+      { timeoutMs },
+    );
     return SERVING_STATUS[statusCode] ?? "UNKNOWN";
   } catch (err) {
     const e = err as { code?: number };

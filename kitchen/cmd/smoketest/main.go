@@ -68,7 +68,7 @@ func main() {
 		if connect.CodeOf(err) == connect.CodeDeadlineExceeded {
 			return nil
 		}
-		return fmt.Errorf("want DeadlineExceeded, got %v", err)
+		return fmt.Errorf("want DeadlineExceeded, got %w", err)
 	})
 	step("cancel is propagated", func() error {
 		ctx, cancel := context.WithCancel(context.Background())
@@ -77,7 +77,7 @@ func main() {
 		if connect.CodeOf(err) == connect.CodeCanceled || errors.Is(err, context.Canceled) {
 			return nil
 		}
-		return fmt.Errorf("want Canceled, got %v", err)
+		return fmt.Errorf("want Canceled, got %w", err)
 	})
 	if *idle > 0 {
 		fmt.Printf("...  idle for %s\n", *idle)

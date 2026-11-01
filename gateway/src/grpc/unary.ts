@@ -1,6 +1,6 @@
 // Promise wrapper around grpc-js unary calls: deadline, metadata forwarding,
 // cancellation via AbortSignal, and client metrics.
-import { Metadata, status, type CallOptions, type ClientUnaryCall, type ServiceError } from "@grpc/grpc-js";
+import { type CallOptions, type ClientUnaryCall, Metadata, type ServiceError, status } from "@grpc/grpc-js";
 import { rpcClientDuration, rpcClientRequests } from "../lib/metrics";
 
 export type Invoke<Res> = (
@@ -30,7 +30,11 @@ export function unary<Res>(service: string, method: string, invoke: Invoke<Res>,
   return new Promise<Res>((resolve, reject) => {
     const call = invoke(md, { deadline }, (err, res) => {
       end();
-      rpcClientRequests.inc({ rpc_service: service, rpc_method: method, rpc_code: err ? codeName(err.code).toLowerCase() : "ok" });
+      rpcClientRequests.inc({
+        rpc_service: service,
+        rpc_method: method,
+        rpc_code: err ? codeName(err.code).toLowerCase() : "ok",
+      });
       if (err) reject(err);
       else resolve(res as Res);
     });

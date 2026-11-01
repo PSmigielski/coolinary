@@ -2,13 +2,13 @@
 // grpc.health.v1 and, in dev, server reflection.
 import { readFileSync } from "node:fs";
 import {
+  type handleUnaryCall,
+  type Metadata,
   Server,
   ServerCredentials,
-  status,
-  type Metadata,
   type ServiceDefinition,
+  status,
   type UntypedServiceImplementation,
-  type handleUnaryCall,
 } from "@grpc/grpc-js";
 import { config } from "../config";
 import { log } from "../lib/log";
@@ -61,8 +61,14 @@ export interface Registration {
 }
 
 export async function startGrpcServer(services: Registration[]) {
-  const server = new Server({ "grpc.keepalive_permit_without_calls": 1, "grpc.http2.min_ping_interval_without_data_ms": 10_000 });
-  const health = new Map<string, number>([["", HealthStatus.SERVING], ...services.map((s) => [s.name, HealthStatus.SERVING] as [string, number])]);
+  const server = new Server({
+    "grpc.keepalive_permit_without_calls": 1,
+    "grpc.http2.min_ping_interval_without_data_ms": 10_000,
+  });
+  const health = new Map<string, number>([
+    ["", HealthStatus.SERVING],
+    ...services.map((s) => [s.name, HealthStatus.SERVING] as [string, number]),
+  ]);
   for (const s of services) server.addService(s.definition, s.implementation);
   const h = healthService(health);
   server.addService(h.definition, h.implementation);
@@ -72,11 +78,19 @@ export async function startGrpcServer(services: Registration[]) {
     const { loadFileDescriptorSetFromBuffer } = await import("@grpc/proto-loader");
     const { ReflectionService } = await import("@grpc/reflection");
     const pkg = loadFileDescriptorSetFromBuffer(readFileSync("src/gen/descriptor.binpb"));
-    new ReflectionService(pkg, { services: [...services.map((s) => s.name), "grpc.health.v1.Health"] }).addToServer(server);
+    new ReflectionService(pkg, { services: [...services.map((s) => s.name), "grpc.health.v1.Health"] }).addToServer(
+      server,
+    );
   }
   await new Promise<void>((resolve, reject) =>
-    server.bindAsync(`0.0.0.0:${config.grpcPort}`, ServerCredentials.createInsecure(), (err) => (err ? reject(err) : resolve())),
+    server.bindAsync(`0.0.0.0:${config.grpcPort}`, ServerCredentials.createInsecure(), (err) =>
+      err ? reject(err) : resolve(),
+    ),
   );
-  log.info("gRPC server listening", { port: config.grpcPort, services: services.map((s) => s.name), reflection: config.grpcReflection });
+  log.info("gRPC server listening", {
+    port: config.grpcPort,
+    services: services.map((s) => s.name),
+    reflection: config.grpcReflection,
+  });
   return { server, health };
 }

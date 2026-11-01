@@ -1,10 +1,10 @@
 // coolinary.notifier.v1.NotifierService
 import { status } from "@grpc/grpc-js";
-import { NotifierServiceService, type NotifierServiceServer } from "./gen/coolinary/notifier/v1/notifier";
-import type { SendEmailRequest, SendEmailResponse } from "./gen/coolinary/notifier/v1/notifier";
 import { db } from "./db/client";
 import { deliveries } from "./db/schema";
-import { RpcError, unary, type Registration } from "./grpc/server";
+import type { SendEmailRequest, SendEmailResponse } from "./gen/coolinary/notifier/v1/notifier";
+import { type NotifierServiceServer, NotifierServiceService } from "./gen/coolinary/notifier/v1/notifier";
+import { type Registration, RpcError, unary } from "./grpc/server";
 import { sendEmail } from "./mailer";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,10 +15,14 @@ const implementation: NotifierServiceServer = {
     if (!req.subject) throw new RpcError(status.INVALID_ARGUMENT, "subject is required");
     try {
       const messageId = await sendEmail(req.to, req.subject, req.textBody, req.htmlBody);
-      await db.insert(deliveries).values({ channel: "email", recipient: req.to, subject: req.subject, status: "sent", providerId: messageId });
+      await db
+        .insert(deliveries)
+        .values({ channel: "email", recipient: req.to, subject: req.subject, status: "sent", providerId: messageId });
       return { messageId };
     } catch (err) {
-      await db.insert(deliveries).values({ channel: "email", recipient: req.to, subject: req.subject, status: "failed", error: String(err) });
+      await db
+        .insert(deliveries)
+        .values({ channel: "email", recipient: req.to, subject: req.subject, status: "failed", error: String(err) });
       throw new RpcError(status.UNAVAILABLE, `smtp: ${(err as Error).message}`);
     }
   }),

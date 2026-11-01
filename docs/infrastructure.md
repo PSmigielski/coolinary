@@ -16,6 +16,17 @@ and `features.md`; per-service rules are in `service-conventions.md`. Day-to-day
 - **Folder layout: self-contained services.** Each service has its own lockfile, Dockerfile and generated gRPC code;
   only `contracts/` is shared, so any service can move to its own repository.
 - **Zed** is the debugger front end.
+- **Events between services: Redis Streams** on `redis-state`, written through a transactional outbox in each producer
+  (identity, kitchen, offers). No message broker container.
+- **LLM provider: the Claude API** through the official `anthropic` Python SDK, only from `ai`. Claude Haiku 5.5 reads
+  and matches (text, photos, labels, receipts, flyers, catalogue matching, translation); Claude Sonnet 5.5 composes
+  for Plus households when it beats Haiku on the golden test set; Free day plans compose on Haiku. Bulk jobs use
+  Message Batches. The Claude API cannot pin inference to the EU, so the privacy policy says inference may run
+  outside the EU.
+- **A separate admin (back-office) service** in Bun + Elysia, reached at `admin.<domain>` by admin accounts only.
+
+The planned build of all of this is in `docs/EPICs/` (decisions in `docs/EPICs/README.md`, order in
+`docs/EPICs/ROADMAP.md`). Items below marked *(planned)* are designed there but not built yet.
 
 Constraints from the business model that shaped this: one founder, fixed costs ≤ €200/month before revenue (few,
 coarse services; one VPS running Compose); the app must work with AI off; AI cost caps per user; EU hosting and
@@ -25,16 +36,21 @@ health data kept on the phone.
 
 | Service | Runtime | Owns | Calls |
 |---|---|---|---|
-| `gateway` | Bun + Elysia | Public HTTP API for the app, JWT check, OpenAPI, `/api/auth/*` proxy to identity | identity, notifier, kitchen, planner, offers (health only to ai) |
-| `identity` | Bun + Elysia + Better Auth | Accounts, sessions, JWTs (JWKS), households, members | notifier |
-| `notifier` | Bun | E-mail (SMTP), later push; delivery log | — |
-| `kitchen` | Go | Catalogue, barcode lookup, nutrition, fridge stock, recipe library | ai, notifier |
-| `planner` | Go | Dish suggestions, day/week plans, portions, rule checks on AI output, shopping list, trip plan | kitchen, offers, ai |
-| `offers` | Go | Shops, flyers, offers, prices | ai, notifier |
-| `ai` | Python 3.14 + uv + FastAPI | Every LLM call, Langfuse tracing, result cache | — |
+| `gateway` | Bun + Elysia | Public HTTP API for the app, JWT check, OpenAPI, `/api/auth/*` proxy to identity, Free-tier AI quota and rate limits, live shopping-list WebSocket *(planned)* | identity, notifier, kitchen, planner, offers (health only to ai) |
+| `identity` | Bun + Elysia + Better Auth | Accounts (sign-in by e-mail code, anonymous accounts), sessions, JWTs (JWKS), households, members and profiles without accounts, invites, plan and entitlements, admin role | notifier |
+| `notifier` | Bun | E-mail (SMTP), push (Expo Push API) *(planned)*, devices and notification preferences, founder alerts, delivery log | — |
+| `kitchen` | Go | Ingredient catalogue, name matching, barcode lookup, nutrition tables and calculation, fridge stock and AI intake, expiry reminders, the kitchen profile with per-person kcal targets, savings ledger | identity, ai, notifier |
+| `planner` | Go | Recipe library (dishes, import and review, calories per dish), dish suggestions, rule checks on AI output, day/family/week plans, portions, cooking mode, shopping list, offer badges, trip price matrix | identity, kitchen, offers, ai, notifier |
+| `offers` | Go | Shops (OpenStreetMap), postcode areas and flyer editions, flyer sync, offers, prices | identity, kitchen, ai, notifier |
+| `ai` | Python 3.14 + uv + FastAPI | Every LLM call (Claude), structured output, batch jobs, Langfuse tracing, result cache, spend limit | — |
+| `admin` *(planned)* | Bun + Elysia | Back office: review queues, imports, manual plan switch, audit log | identity, notifier, kitchen, planner, offers, ai |
 
 - Service to service is gRPC only. The app talks HTTP to the gateway; the gateway proxies Better Auth's HTTP routes.
-- The call graph has no cycles; `ai` and `notifier` call no one.
+- The call graph has no cycles; `ai` and `notifier` call no one. kitchen, planner and offers read a household's plan from identity
+  (`GetEntitlements`) when they need it, instead of keeping a copy. Each service also exposes a `<Svc>AdminService` that
+  only `admin` calls.
+- Changes that several services must learn about (members joining or leaving, plan changes, account deletion,
+  catalogue merges, new offers) travel as events, not calls; see "Events" below.
 - The app never calls `ai` directly. AI features go through the Go service that owns them, which checks the AI output
   with rules (tools, allergens, stock) before anything is shown, and falls back to non-AI results when `ai` is down.
 - Each service runs as a single container (fixed IP). Scheduled jobs live in the owning service.
@@ -88,16 +104,31 @@ to the Connect protocol over Bun's `fetch`, which the Go servers already accept,
 **Postgres 18** (`postgres:18`): databases and roles `identity`, `notifier`, `kitchen`, `planner`, `offers`,
 `langfuse`, plus `postgres_exporter` (role `pg_monitor`). Created by `platform/postgres/initdb/01-databases.sh` on the
 first start of an empty volume (dev passwords `<name>-dev`, prod from secrets). Data lives under
-`/var/lib/postgresql/18/docker`; the volume mounts at `/var/lib/postgresql`. PostGIS isn't needed (distances are
-computed on the phone); pgvector comes with catalogue matching (`pgvector/pgvector:pg18`).
+`/var/lib/postgresql/18/docker`; the volume mounts at `/var/lib/postgresql`. The admin service adds an `admin`
+database *(planned, ADM-01)*; an existing volume needs it created by hand (`make psql s=postgres`). PostGIS isn't
+needed (distances are computed on the phone). pgvector isn't needed either: names are matched to the catalogue with
+`pg_trgm` candidates and a Claude Haiku pick, stored once for everyone.
 
 **Redis 8**, three instances because caching and state need opposite eviction rules:
 
 | Instance | Policy | Used for |
 |---|---|---|
 | `redis-cache` | `allkeys-lru`, no persistence | Barcode/catalogue caches, AI result cache, key prefix per service |
-| `redis-state` | `noeviction`, AOF | Free-tier AI quota, rate limits, pub/sub for the live shopping list |
+| `redis-state` | `noeviction`, AOF | Free-tier AI quota, rate limits, idempotency keys, event streams (`events.<producer>`), live notices (pub/sub `live.household.<id>`), AI spend counters |
 | `redis-langfuse` | `noeviction` (required by Langfuse) | Langfuse queues only (observability profile) |
+
+## Events *(planned)*
+
+- Producers: identity, kitchen and offers. Each writes events to an outbox table in the same transaction as the
+  change; a relay publishes them to its stream (`events.identity`, `events.kitchen`, `events.offers`). Planner
+  publishes no events.
+- Consumers read with Redis consumer groups, at least once, and drop duplicates by the event id. Streams keep about
+  7 days; a consumer that falls further behind resyncs from snapshots the owner republishes.
+- Events carry ids, codes and dates only, never names, e-mail addresses, free text or health data.
+- Live notices for the shared shopping list and fridge are separate: plain pub/sub on `live.household.<id>`, relayed
+  by the gateway WebSocket. Clients refetch when they miss one.
+- The event types, payloads and consumers are listed in `docs/EPICs/README.md` ("Events"); the conventions are in
+  `docs/service-conventions.md`.
 
 ## Network
 
@@ -116,6 +147,7 @@ machine's other projects use 172.16/12). Every container has a fixed address; on
 | `.20` | gateway | `.55` | redis-exporter |
 | `.21` | identity | `.60` | langfuse-web |
 | `.22` | notifier | `.61` | langfuse-worker |
+| `.23` | admin *(planned)* | | |
 | `.30` | kitchen | `.62` | clickhouse |
 | `.31` | planner | `.63` | seaweedfs |
 | `.32` | offers | `.64` | redis-langfuse |
@@ -124,7 +156,7 @@ machine's other projects use 172.16/12). Every container has a fixed address; on
   `GATEWAY_HOST_PORT` (3080; port 3000 is taken on this machine) for phones on the LAN, and the Bun inspector ports
   on 127.0.0.1 only.
 - **Prod:** only Caddy publishes `80`, `443/tcp`, `443/udp` with automatic TLS, routing `api.<domain>` → gateway,
-  `grafana.<domain>` → Grafana, `langfuse.<domain>` → Langfuse.
+  `grafana.<domain>` → Grafana, `langfuse.<domain>` → Langfuse, and `admin.<domain>` → admin *(planned)*.
 - Configs use DNS names (`kitchen:50051`); the fixed IPs are for host access, Zed and Prometheus.
 - With fixed IPs, `docker compose run <svc>` would clash with the running container; the Makefile uses `exec`.
 
@@ -195,9 +227,16 @@ Mailpit 1.32, Docker Compose ≥ 5.0. Image versions are set in `.env`.
 
 ## Not built yet
 
+Everything below is planned task by task in `docs/EPICs/` (order in `docs/EPICs/ROADMAP.md`).
+
 - Product features beyond the one RPC per service.
-- Gateway: Free-tier AI quota, rate limits, the live shopping-list WebSocket.
-- notifier: push (Expo Push API) and its RPC.
-- ai: a real LLM provider (`LLM_PROVIDER` only knows `stub`).
+- Events: outboxes, Redis Streams publishers and consumers (IDN-01, KIT-01, PLN-01, OFF-01, NTF-01).
+- identity: sign-in by e-mail code instead of passwords, anonymous accounts, invites, entitlements, account deletion.
+- Gateway: Free-tier AI quota, rate limits, idempotency keys, the live shopping-list WebSocket.
+- notifier: push (Expo Push API), devices and preferences, founder alerts.
+- ai: the Claude provider (`LLM_PROVIDER` only knows `stub` today), cost tracking and the spend limit (needs
+  `REDIS_STATE_URL` and `ANTHROPIC_API_KEY`), batch jobs.
+- admin: the whole service (ADM-01), its database, Caddy route and Prometheus target.
+- Remote push in the app needs a development build: Expo Go on SDK 58 does not receive remote push notifications.
 - Off-site copies of the nightly database backups; a container registry and CI.
-- Better Auth client in the app (comes with the first login screen).
+- Better Auth client in the app (MOB-01).

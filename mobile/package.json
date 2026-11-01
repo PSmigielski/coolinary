@@ -47,7 +47,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint",
+    "lint": "expo lint --max-warnings 0 && tsc --noEmit",
+    "lint:fix": "expo lint --fix",
     "api:types": "openapi-typescript ../contracts/openapi/gateway.json -o src/api/schema.d.ts",
     "typecheck": "tsc --noEmit"
   },

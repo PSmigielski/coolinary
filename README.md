@@ -27,12 +27,15 @@ Services talk to each other over gRPC; the app talks HTTP to the gateway.
 - `make`, `rsync`, `openssl`.
 - For the app: Bun (`curl -fsSL https://bun.sh/install | bash`) and Node 26, the current LTS (`.nvmrc`; with nvm:
   `nvm install && nvm use`). Only the Expo tooling runs on Node; every service runs in Docker.
+- For `make lint`: Bun and uv (`curl -LsSf https://astral.sh/uv/install.sh | sh`). The Go and buf linters run in
+  containers.
 - For editor support in Go files: Go (`sudo pacman -S go`). Nothing else: buf, grpcurl and all code generators
   run in containers.
 
 ## Start
 
 ```sh
+make hooks      # once per clone: lint what you push (see Linting)
 make dev        # services + Postgres + Redis + Mailpit, with hot reload
 make dev-full   # the same plus Prometheus, Grafana, Langfuse
 make ps         # status
@@ -91,11 +94,30 @@ Run `make help` for the full list.
 | `make sqlc` | Regenerate Go query code after changing `queries.sql` |
 | `make openapi` | Export the gateway's OpenAPI document and regenerate the app's API types |
 | `make mobile` | Start the Expo dev server |
+| `make lint` | Lint and type-check every service, the app and `contracts/` (or some: `s="kitchen ai"`) |
+| `make lint-fix` | Apply formatters and safe lint fixes (same `s=`) |
 
 Changing a contract: edit `contracts/coolinary/<svc>/v1/*.proto`, run `make proto`, implement, commit the generated
 code with it. Running services reload on their own; restart the Bun ones (`make dev`) to refresh their reflection data.
 
 Changing env files: running containers keep their old environment; run `make dev` again to recreate them.
+
+## Linting
+
+Every service has a linter, a type checker and a formatter check, configured in the service's own folder:
+
+| Folder | Checks | Config |
+|---|---|---|
+| `gateway/`, `identity/`, `notifier/` | Biome (lint, format, import order), `tsc` | `biome.json`, `tsconfig.json` |
+| `kitchen/`, `planner/`, `offers/` | golangci-lint (go vet, staticcheck, gosec, gofmt, import groups, ...) | `.golangci.yml` |
+| `ai/` | ruff (lint + format), mypy (strict) | `pyproject.toml` |
+| `mobile/` | ESLint (Expo config, no warnings allowed), `tsc` | `eslint.config.js`, `tsconfig.json` |
+| `contracts/` | buf lint (STANDARD), buf format | `buf.yaml` |
+
+`make hooks` sets `core.hooksPath` to `.githooks/`, whose `pre-push` hook runs `make lint` for the folders the
+pushed commits touch and stops the push when something fails. It checks the working tree, so uncommitted changes
+count too. `make lint-fix` fixes formatting and most simple issues; `git push --no-verify` skips the hook once.
+Generated code (`gen/`, sqlc `store/`, `src/coolinary/`, `auth-schema.ts`, Drizzle migrations) is never linted.
 
 ## Debugging (Zed)
 

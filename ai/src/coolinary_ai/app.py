@@ -1,6 +1,7 @@
 """Admin HTTP app on :8081 (/healthz, /metrics). Its lifespan starts and stops the gRPC server,
 so both share one event loop and one process (run with a single uvicorn worker)."""
 
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -11,7 +12,7 @@ from . import cache, grpc_server, log, tracing
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     log.setup()
     app.state.grpc = await grpc_server.start()
     yield

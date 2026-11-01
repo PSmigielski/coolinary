@@ -41,8 +41,7 @@ func code(err error) string {
 	if err == nil {
 		return "ok"
 	}
-	var ce *connect.Error
-	if errors.As(err, &ce) {
+	if ce, ok := errors.AsType[*connect.Error](err); ok {
 		return ce.Code().String()
 	}
 	return connect.CodeUnknown.String()

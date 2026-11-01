@@ -59,5 +59,5 @@ over gRPC; they check the output with rules before anything is shown. The app ne
   `.env.example`, `.env.dev` and `.env.prod`.
 - Logs: `log.info("msg", extra={...})` from `log.py`.
 - Style: Python 3.14, type hints everywhere, `X | None`, frozen dataclasses for internal types, line length 110.
-- Check, from `ai/`: `uv run ruff check` and `uv run pytest` (`asyncio_mode = auto`: tests are plain
-  `async def test_...`).
+- Check: `make lint s=ai` from the repo root (ruff check, ruff format, mypy strict; `make lint-fix s=ai` fixes
+  formatting), and `uv run pytest` from `ai/` (`asyncio_mode = auto`: tests are plain `async def test_...`).

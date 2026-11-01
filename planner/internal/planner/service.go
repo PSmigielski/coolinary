@@ -3,6 +3,7 @@ package planner
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 
 	"connectrpc.com/connect"
@@ -24,11 +25,16 @@ func New(q *store.Queries, log *slog.Logger) *Service { return &Service{q: q, lo
 // SuggestDishes lists library dishes for a meal. Ranking by stock on hand
 // (via kitchen) and expiry comes with the planner feature; share_on_hand is 0 for now.
 func (s *Service) SuggestDishes(ctx context.Context, req *connect.Request[plannerv1.SuggestDishesRequest]) (*connect.Response[plannerv1.SuggestDishesResponse], error) {
+	meal := req.Msg.GetMeal()
+	if _, ok := plannerv1.Meal_name[int32(meal)]; !ok {
+		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("unknown meal"))
+	}
 	limit := req.Msg.GetLimit()
 	if limit <= 0 || limit > 50 {
 		limit = 10
 	}
-	rows, err := s.q.ListDishesForMeal(ctx, store.ListDishesForMealParams{Meal: int16(req.Msg.GetMeal()), Limit: limit})
+	//nolint:gosec // G115: meal is a known Meal value (checked above), so it fits the smallint column
+	rows, err := s.q.ListDishesForMeal(ctx, store.ListDishesForMealParams{Meal: int16(meal), Limit: limit})
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}

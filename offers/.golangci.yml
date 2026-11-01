@@ -1,0 +1,64 @@
+# golangci-lint v2 config. Identical in kitchen, planner and offers; change all three together.
+# Run with `make lint s=kitchen` (in a container; Go isn't needed on the host). `make lint-fix s=kitchen` formats.
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: standard # errcheck, govet, ineffassign, staticcheck, unused
+  enable:
+    - bodyclose # HTTP response bodies are closed
+    - contextcheck # pass the request ctx on, never a fresh context.Background()
+    - errorlint # errors.Is / errors.As instead of == and type assertions
+    - exhaustive # switches over proto enums handle every value
+    - gocritic
+    - gosec
+    - misspell
+    - modernize # newer Go idioms (min/max, range over int, ...)
+    - nilerr # returning nil after checking err != nil
+    - noctx # outgoing HTTP calls carry a context
+    - nolintlint # every //nolint names the linter and says why
+    - protogetter # read proto fields with the nil-safe getters (req.Msg.GetEan())
+    - sloglint # slog key/value pairs, snake_case keys, constant messages
+    - unconvert
+    - usestdlibvars
+  settings:
+    exhaustive:
+      default-signifies-exhaustive: true
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    sloglint:
+      kv-only: true
+      no-global: all
+      static-msg: true
+      key-naming-case: snake
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - std-error-handling
+    paths:
+      - gen/
+    rules:
+      # Tests may use fixed inputs that gosec would flag elsewhere.
+      - path: _test\.go
+        linters: [gosec]
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+  settings:
+    gci:
+      # Import groups: standard library, third-party, this module (coolinary/<svc>/...).
+      sections:
+        - standard
+        - default
+        - localmodule
+  exclusions:
+    generated: lax
+    paths:
+      - gen/

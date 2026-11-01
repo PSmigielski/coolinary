@@ -6,7 +6,7 @@ Python 3.14 + uv + FastAPI. Every LLM call in the system. Callers are the Go ser
 - RPC: `AiService.ExtractItemsFromText`.
 - LLM providers live in `src/coolinary_ai/llm/`; only `stub` (rule-based) exists until a provider is chosen (`LLM_PROVIDER`).
 - Generated gRPC code: `src/coolinary/` (`make proto`, via `scripts/gen-proto.sh`).
-- Tests: `uv run pytest`; lint: `uv run ruff check`.
+- Tests: `uv run pytest`; lint: `make lint s=ai` from the repo root (ruff check + format, mypy strict).
 
 Runs with the rest of the stack: `make dev` from the repo root (hot reload, debugger). Settings: `.env.example`
 (all variables), `.env.dev` (dev), `.env.prod` (prod, secrets via `*_FILE`). Shared rules:

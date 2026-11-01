@@ -55,8 +55,13 @@ func (s *Server) Shutdown(ctx context.Context) error { return s.srv.Shutdown(ctx
 
 // Probe is used by the `healthcheck` subcommand (Docker HEALTHCHECK in distroless images).
 func Probe(port int) error {
-	client := &http.Client{Timeout: 3 * time.Second}
-	res, err := client.Get(fmt.Sprintf("http://127.0.0.1:%d/healthz", port))
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("http://127.0.0.1:%d/healthz", port), http.NoBody)
+	if err != nil {
+		return err
+	}
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}

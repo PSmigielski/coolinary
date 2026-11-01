@@ -11,13 +11,14 @@ export const sql = new SQL(config.databaseUrl, { max: 10 });
 export const db = drizzle({ client: sql, schema });
 
 export async function runMigrations() {
+  const lockKey = `${config.serviceName}:migrations`;
   const conn = await sql.reserve();
   try {
-    await conn`SELECT pg_advisory_lock(hashtext(${config.serviceName + ":migrations"}))`;
+    await conn`SELECT pg_advisory_lock(hashtext(${lockKey}))`;
     await migrate(db, { migrationsFolder: "drizzle" });
     log.info("migrations applied");
   } finally {
-    await conn`SELECT pg_advisory_unlock(hashtext(${config.serviceName + ":migrations"}))`;
+    await conn`SELECT pg_advisory_unlock(hashtext(${lockKey}))`;
     conn.release();
   }
 }

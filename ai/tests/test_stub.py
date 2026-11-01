@@ -2,7 +2,7 @@ from coolinary_ai.llm import Unit
 from coolinary_ai.llm.stub import StubProvider
 
 
-async def test_extracts_english_list():
+async def test_extracts_english_list() -> None:
     res = await StubProvider().extract_items("bought eggs, two peppers, some cheese and 500 g flour", "en")
     got = {(i.name, i.quantity, i.unit) for i in res.items}
     assert got == {
@@ -13,7 +13,7 @@ async def test_extracts_english_list():
     }
 
 
-async def test_extracts_polish_and_litres():
+async def test_extracts_polish_and_litres() -> None:
     res = await StubProvider().extract_items("kupiłem dwie papryki i 1 l mleka", "pl")
     assert [(i.name, i.quantity, i.unit) for i in res.items] == [
         ("papryki", 2.0, Unit.PIECE),

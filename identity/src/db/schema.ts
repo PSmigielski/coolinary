@@ -12,7 +12,9 @@ export const households = pgTable("households", {
   ownerUserId: text("owner_user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  plan: text("plan", { enum: ["free", "plus"] }).notNull().default("free"),
+  plan: text("plan", { enum: ["free", "plus"] })
+    .notNull()
+    .default("free"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

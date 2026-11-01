@@ -11,7 +11,7 @@ bun run api:types     # regenerate src/api/schema.d.ts from ../contracts/openapi
 bunx expo start       # then scan the QR code with Expo Go (phone on the same Wi-Fi)
 ```
 
-Checks: `bun run typecheck`, `bun run lint`, `bunx expo-doctor`.
+Checks: `bun run lint` (ESLint with no warnings allowed, then `tsc`), `bunx expo-doctor`.
 
 ## API URL
 

@@ -18,9 +18,14 @@ dependencies = [
 [dependency-groups]
 dev = [
     "debugpy>=1.8.22",
+    "mypy>=2.4.1",
     "pytest>=8",
     "pytest-asyncio>=1",
     "ruff>=0.17.3",
+    "types-grpcio>=1.85",
+    "types-grpcio-health-checking>=1.85",
+    "types-grpcio-reflection>=1.0",
+    "types-protobuf>=7.35",
     "watchfiles>=1.3",
 ]
 
@@ -39,3 +44,38 @@ asyncio_mode = "auto"
 [tool.ruff]
 line-length = 110
 extend-exclude = ["src/coolinary"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # import order
+    "B",       # bugbear
+    "UP",      # newer syntax for Python 3.14
+    "SIM",     # simplifications
+    "C4",      # comprehensions
+    "ASYNC",   # blocking calls inside async code
+    "BLE",     # blind `except Exception`
+    "S",       # security (bandit)
+    "PT",      # pytest style
+    "RUF",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]  # assert is how pytest checks
+
+[tool.ruff.lint.isort]
+known-first-party = ["coolinary", "coolinary_ai"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src/coolinary_ai", "tests"]
+mypy_path = "src"
+# The generated *_pb2_grpc.py modules have no type hints.
+untyped_calls_exclude = ["coolinary"]
+
+[[tool.mypy.overrides]]
+# Generated gRPC code (make proto); the .pyi stubs next to it are typed, the _grpc modules are not.
+module = "coolinary.*"
+ignore_errors = true

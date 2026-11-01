@@ -5,7 +5,9 @@ push blocking or CPU-heavy work to a thread (asyncio.to_thread) so neither serve
 """
 
 import time
+from collections.abc import Awaitable, Callable
 from dataclasses import asdict
+from typing import Any, cast
 
 import grpc
 from grpc_health.v1 import health, health_pb2, health_pb2_grpc
@@ -36,14 +38,20 @@ RPC_DURATION = Histogram(
 
 
 class MetricsInterceptor(grpc.aio.ServerInterceptor):
-    async def intercept_service(self, continuation, handler_call_details):
+    async def intercept_service(
+        self,
+        continuation: Callable[[grpc.HandlerCallDetails], Awaitable[grpc.RpcMethodHandler[Any, Any] | None]],
+        handler_call_details: grpc.HandlerCallDetails,
+    ) -> grpc.RpcMethodHandler[Any, Any] | None:
         handler = await continuation(handler_call_details)
         if handler is None or handler.unary_unary is None:
             return handler
         service, _, method = handler_call_details.method.lstrip("/").rpartition("/")
-        inner = handler.unary_unary
+        # Under grpc.aio the handler is a coroutine function taking an aio context;
+        # grpcio's stubs only describe the sync API.
+        inner = cast(Callable[[Any, grpc.aio.ServicerContext[Any, Any]], Awaitable[Any]], handler.unary_unary)
 
-        async def wrapped(request, context: grpc.aio.ServicerContext):
+        async def wrapped(request: Any, context: grpc.aio.ServicerContext[Any, Any]) -> Any:
             start = time.perf_counter()
             failed = False
             try:
@@ -65,12 +73,12 @@ class MetricsInterceptor(grpc.aio.ServerInterceptor):
         )
 
 
-def _to_proto(items: list[dict]) -> list[ai_pb2.ExtractedItem]:
+def _to_proto(items: list[dict[str, Any]]) -> list[ai_pb2.ExtractedItem]:
     out = []
     for i in items:
         q = None
         if i["quantity"] is not None:
-            q = common_pb2.Quantity(value=i["quantity"], unit=int(i["unit"]))
+            q = common_pb2.Quantity(value=i["quantity"], unit=cast(common_pb2.Unit, int(i["unit"])))
         out.append(ai_pb2.ExtractedItem(name=i["name"], quantity=q, confidence=i["confidence"]))
     return out
 
@@ -79,7 +87,13 @@ class AiServicer(ai_pb2_grpc.AiServiceServicer):
     def __init__(self) -> None:
         self.provider = get_provider(settings.llm_provider)
 
-    async def ExtractItemsFromText(self, request, context: grpc.aio.ServicerContext):
+    async def ExtractItemsFromText(
+        self,
+        request: ai_pb2.ExtractItemsFromTextRequest,
+        context: grpc.aio.ServicerContext[
+            ai_pb2.ExtractItemsFromTextRequest, ai_pb2.ExtractItemsFromTextResponse
+        ],
+    ) -> ai_pb2.ExtractItemsFromTextResponse:
         text = request.text.strip()
         if not text:
             await context.abort(grpc.StatusCode.INVALID_ARGUMENT, "text is required")
@@ -87,7 +101,8 @@ class AiServicer(ai_pb2_grpc.AiServiceServicer):
             await context.abort(
                 grpc.StatusCode.INVALID_ARGUMENT, f"text is longer than {MAX_TEXT} characters"
             )
-        md = dict(context.invocation_metadata() or ())
+        # Text metadata only; binary (-bin) keys carry bytes.
+        md = {k: v for k, v in context.invocation_metadata() or () if isinstance(v, str)}
         language = request.language or "en"
 
         k = cache.key("text_to_items", self.provider.name, language, text)

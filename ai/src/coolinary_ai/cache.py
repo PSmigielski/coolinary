@@ -1,5 +1,6 @@
 """AI result cache in redis-cache: the same request never costs twice."""
 
+import contextlib
 import hashlib
 import json
 from typing import Any
@@ -25,7 +26,5 @@ async def get_json(k: str) -> Any | None:
 
 
 async def set_json(k: str, value: Any, ttl: int = settings.cache_ttl_seconds) -> None:
-    try:
+    with contextlib.suppress(redis.RedisError):  # cache is best-effort
         await client.set(k, json.dumps(value), ex=ttl)
-    except redis.RedisError:
-        pass

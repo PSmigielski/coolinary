@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Runs `make lint` for every top-level folder touched by the commits being pushed.
+# Install once with `make hooks`; skip once with `git push --no-verify`.
+set -euo pipefail
+
+remote="$1"
+# Keep in sync with LINTABLE in the Makefile.
+lintable=(gateway identity notifier kitchen planner offers ai mobile contracts)
+
+head=$(git rev-parse -q --verify HEAD || true)
+not_head=""
+files=""
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+  if [[ "$local_sha" =~ ^0+$ ]]; then
+    continue # deleting a remote branch: nothing to check
+  fi
+  if [[ "$local_sha" != "$head" ]]; then
+    not_head=1
+  fi
+  # Files changed by the commits the remote doesn't have yet (works for new branches and force pushes too).
+  files+=$(git log --format= --name-only "$local_sha" --not --remotes="$remote")$'\n'
+done
+
+changed=()
+for dir in "${lintable[@]}"; do
+  if grep -q "^$dir/" <<<"$files"; then
+    changed+=("$dir")
+  fi
+done
+if [[ ${#changed[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+echo "pre-push: make lint s=\"${changed[*]}\""
+if [[ -n "$not_head" ]]; then
+  echo "pre-push: note: pushing commits that aren't checked out; the lint runs on the working tree" >&2
+elif [[ -n "$(git status --porcelain -- "${changed[@]}")" ]]; then
+  echo "pre-push: note: uncommitted changes in ${changed[*]} are linted too" >&2
+fi
+
+if ! make --no-print-directory lint s="${changed[*]}"; then
+  echo >&2
+  echo "pre-push: lint failed. Fix it (make lint-fix applies formatting and safe fixes), or skip with git push --no-verify." >&2
+  exit 1
+fi

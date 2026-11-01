@@ -22,6 +22,9 @@ export const config = {
   // Public URL of the API (through the gateway), used by Better Auth for links and cookies.
   authUrl: env("BETTER_AUTH_URL"),
   authSecret: env("BETTER_AUTH_SECRET"),
-  trustedOrigins: env("TRUSTED_ORIGINS", "coolinary://").split(",").map((s) => s.trim()).filter(Boolean),
+  trustedOrigins: env("TRUSTED_ORIGINS", "coolinary://")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean),
   notifierAddr: env("NOTIFIER_GRPC_ADDR", "notifier:50051"),
 } as const;

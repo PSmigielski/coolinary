@@ -6,8 +6,9 @@ SHELL := /bin/bash
 UID := $(shell id -u)
 GID := $(shell id -g)
 
-# Bun's installer adds ~/.bun/bin to interactive shells only; find it either way.
+# Bun's installer adds ~/.bun/bin to interactive shells only; find it either way. Same for uv.
 BUN := $(shell command -v bun 2>/dev/null || echo $(HOME)/.bun/bin/bun)
+UV  := $(shell command -v uv 2>/dev/null || echo $(HOME)/.local/bin/uv)
 
 DEV  := docker compose -f docker-compose.dev.yml
 PROD := docker compose -f docker-compose.prod.yml
@@ -15,6 +16,7 @@ PROD := docker compose -f docker-compose.prod.yml
 GO_SERVICES  := kitchen planner offers
 BUN_SERVICES := gateway identity notifier
 SERVICES     := $(BUN_SERVICES) $(GO_SERVICES) ai
+LINTABLE     := $(SERVICES) mobile contracts
 
 # Code generators and grpcurl run from containers; nothing to install on the host.
 PROTOGEN := docker run --rm --user $(UID):$(GID) -v $(CURDIR):/workspace
@@ -131,6 +133,66 @@ sqlc: ## Regenerate sqlc query code in the Go services
 openapi: ## Export the gateway OpenAPI document and regenerate the app's API types
 	cd gateway && $(BUN) install --frozen-lockfile && $(BUN) scripts/export-openapi.ts ../contracts/openapi/gateway.json
 	@if [ -d mobile/node_modules ]; then cd mobile && $(BUN) run api:types; fi
+
+# ---------------------------------------------------------------- lint
+
+# Go and buf run from pinned images (Go isn't needed on the host); Bun and uv run on the host.
+# Go caches live outside the repo, so later runs only re-check what changed.
+GOLANGCI_LINT_VERSION := v2.15.0
+LINT_CACHE := $(or $(XDG_CACHE_HOME),$(HOME)/.cache)/coolinary-lint
+GOLANGCI = docker run --rm --user $(UID):$(GID) -e HOME=/tmp -e GOTOOLCHAIN=local -e GOFLAGS=-buildvcs=false \
+	-e GOCACHE=/cache/go-build -e GOMODCACHE=/cache/go-mod -e GOLANGCI_LINT_CACHE=/cache/golangci \
+	-v $(LINT_CACHE):/cache -v $(CURDIR)/$*:/src -w /src golangci/golangci-lint:$(GOLANGCI_LINT_VERSION)-alpine golangci-lint
+BUF = docker run --rm --user $(UID):$(GID) -e BUF_CACHE_DIR=/tmp/buf -v $(CURDIR)/contracts:/workspace -w /workspace \
+	bufbuild/buf:$(BUF_VERSION)
+
+.PHONY: lint
+lint: ## Lint + type-check everything (the pre-push hook runs this), or some: make lint s="kitchen ai"
+	@$(MAKE) --no-print-directory -k -j4 --output-sync=target $(addprefix lint-,$(or $(s),$(LINTABLE)))
+
+.PHONY: lint-fix
+lint-fix: ## Apply formatters and safe lint fixes: make lint-fix (or s=gateway)
+	@$(MAKE) --no-print-directory -k $(addprefix lint-fix-,$(or $(s),$(LINTABLE)))
+
+.PHONY: hooks
+hooks: ## Install the git hooks in .githooks (pre-push runs make lint on what you push)
+	git config core.hooksPath .githooks
+	@echo "pre-push hook on; skip it once with: git push --no-verify"
+
+# Bun services and the app: Biome / ESLint + tsc, from each package.json ("lint", "lint:fix").
+.PHONY: $(addprefix lint-,$(BUN_SERVICES) mobile) $(addprefix lint-fix-,$(BUN_SERVICES) mobile)
+$(addprefix lint-,$(BUN_SERVICES) mobile): lint-%:
+	@echo "── lint $*"
+	@cd $* && $(BUN) install --frozen-lockfile --silent && $(BUN) run --silent lint
+$(addprefix lint-fix-,$(BUN_SERVICES) mobile): lint-fix-%:
+	@cd $* && $(BUN) install --frozen-lockfile --silent && $(BUN) run --silent lint:fix
+
+# Go services: golangci-lint (.golangci.yml, identical in all three), which includes go vet and gofmt.
+.PHONY: $(addprefix lint-,$(GO_SERVICES)) $(addprefix lint-fix-,$(GO_SERVICES))
+$(addprefix lint-,$(GO_SERVICES)): lint-%: | $(LINT_CACHE)
+	@echo "── lint $*"
+	@$(GOLANGCI) run
+$(addprefix lint-fix-,$(GO_SERVICES)): lint-fix-%: | $(LINT_CACHE)
+	@$(GOLANGCI) run --fix
+
+$(LINT_CACHE):
+	@mkdir -p $@
+
+# Python: ruff (lint + format) and mypy, configured in ai/pyproject.toml.
+.PHONY: lint-ai lint-fix-ai
+lint-ai:
+	@echo "── lint ai"
+	@cd ai && $(UV) run --locked -q ruff check -q && $(UV) run --locked -q ruff format -q --check && $(UV) run --locked -q mypy
+lint-fix-ai:
+	@cd ai && $(UV) run --locked -q ruff check --fix && $(UV) run --locked -q ruff format
+
+# Contracts: buf lint (STANDARD) and buf format.
+.PHONY: lint-contracts lint-fix-contracts
+lint-contracts:
+	@echo "── lint contracts"
+	@$(BUF) lint && $(BUF) format --diff --exit-code
+lint-fix-contracts:
+	@$(BUF) format -w
 
 # ---------------------------------------------------------------- mobile
 

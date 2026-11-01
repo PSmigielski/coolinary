@@ -8,7 +8,7 @@ const min = levels[(config.logLevel as Level) in levels ? (config.logLevel as Le
 function write(level: Level, msg: string, fields: Record<string, unknown> = {}) {
   if (levels[level] < min) return;
   const line = JSON.stringify({ time: new Date().toISOString(), level, service: config.serviceName, msg, ...fields });
-  (level === "error" ? process.stderr : process.stdout).write(line + "\n");
+  (level === "error" ? process.stderr : process.stdout).write(`${line}\n`);
 }
 
 export const log = {

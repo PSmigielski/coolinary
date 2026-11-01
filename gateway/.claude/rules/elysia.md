@@ -75,5 +75,5 @@ details (they can contain database errors).
   `.env.prod`.
 - Logs: `log.info(msg, fields)` from `src/lib/log.ts`. Never log e-mail addresses, free text from users or health data.
 - `src/gen/` is generated: never edit it; change `contracts/` and run `make proto`.
-- Check: `bun run typecheck` in `gateway/` (Bun is at `~/.bun/bin/bun`). Test routes without a port with
+- Check: `bun run lint` in `gateway/` (Biome + `tsc`; Bun is at `~/.bun/bin/bun`), `bun run lint:fix` to format. Test routes without a port with
   `createApp().handle(new Request("http://localhost/v1/..."))` under `bun test`.

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -27,8 +28,8 @@ import (
 func main() {
 	if len(os.Args) > 1 && os.Args[1] == "healthcheck" {
 		port := 8081
-		if p := os.Getenv("ADMIN_PORT"); p != "" {
-			fmt.Sscanf(p, "%d", &port)
+		if p, err := strconv.Atoi(os.Getenv("ADMIN_PORT")); err == nil {
+			port = p
 		}
 		if err := admin.Probe(port); err != nil {
 			fmt.Fprintln(os.Stderr, err)
@@ -85,7 +86,7 @@ func run() error {
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")
-		shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		shutdownCtx, cancel := context.WithTimeout(context.WithoutCancel(gctx), 10*time.Second)
 		defer cancel()
 		_ = grpcSrv.Shutdown(shutdownCtx)
 		return adminSrv.Shutdown(shutdownCtx)

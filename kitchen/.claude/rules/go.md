@@ -77,6 +77,9 @@ service's name.
 - Scheduled jobs (flyer sync, expiry checks) live in the owning service: another `g.Go(...)` in `main.go` that
   stops on `gctx.Done()`.
 - Imports in three groups: standard library, third-party, `coolinary/<svc>/...`. Code is `gofmt`ed.
-- Go isn't installed on the host: with `make dev` running, check with
-  `docker compose -f docker-compose.dev.yml exec <svc> sh -c 'go vet ./... && go test ./...'` from the repo root.
+- Lint: `make lint s=<svc>` from the repo root runs golangci-lint (`.golangci.yml`, identical in all three) in a
+  container: go vet, staticcheck, gosec, getters on proto messages, ctx passing, slog key/value style, gofmt and
+  the import groups. `make lint-fix s=<svc>` formats. `//nolint:<linter> // why` only with a reason.
+- Go isn't installed on the host: with `make dev` running, test with
+  `docker compose -f docker-compose.dev.yml exec <svc> go test ./...` from the repo root.
   Tests are table-driven `_test.go` files next to the code.

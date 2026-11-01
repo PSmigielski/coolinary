@@ -1,7 +1,8 @@
 // grpc.health.v1.Health/Check, with the two tiny messages encoded by hand, so no .proto
 // file has to be read at runtime (the bundled prod image has none).
-import { status, type ServiceDefinition, type handleUnaryCall } from "@grpc/grpc-js";
+
 import { BinaryReader, BinaryWriter, WireType } from "@bufbuild/protobuf/wire";
+import { type handleUnaryCall, type ServiceDefinition, status } from "@grpc/grpc-js";
 
 export const HealthStatus = { UNKNOWN: 0, SERVING: 1, NOT_SERVING: 2 } as const;
 
@@ -28,9 +29,11 @@ const definition: ServiceDefinition = {
     path: "/grpc.health.v1.Health/Check",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (m: CheckRequest) => Buffer.from(new BinaryWriter().tag(1, WireType.LengthDelimited).string(m.service).finish()),
+    requestSerialize: (m: CheckRequest) =>
+      Buffer.from(new BinaryWriter().tag(1, WireType.LengthDelimited).string(m.service).finish()),
     requestDeserialize: (b: Buffer): CheckRequest => ({ service: readField(b, 1, (r) => r.string(), "") }),
-    responseSerialize: (m: CheckResponse) => Buffer.from(new BinaryWriter().tag(1, WireType.Varint).int32(m.status).finish()),
+    responseSerialize: (m: CheckResponse) =>
+      Buffer.from(new BinaryWriter().tag(1, WireType.Varint).int32(m.status).finish()),
     responseDeserialize: (b: Buffer): CheckResponse => ({ status: readField(b, 1, (r) => r.int32(), 0) }),
   },
 };

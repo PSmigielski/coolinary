@@ -51,6 +51,7 @@ func Load() (Config, error) {
 // get returns the env var, or the trimmed content of the file named by KEY_FILE.
 func get(key, def string) string {
 	if path := os.Getenv(key + "_FILE"); path != "" {
+		//nolint:gosec // G703: the path comes from this service's own env (X_FILE), set by the operator
 		if b, err := os.ReadFile(path); err == nil {
 			return strings.TrimSpace(string(b))
 		}

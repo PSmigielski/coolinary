@@ -9,7 +9,10 @@ export async function createPersonalHousehold(user: { id: string; name: string }
       .insert(households)
       .values({ name: user.name ? `${user.name}'s home` : "My home", ownerUserId: user.id })
       .returning({ id: households.id });
-    await tx.insert(householdMembers).values({ householdId: h!.id, userId: user.id, displayName: user.name || "Me", role: "owner" });
+    if (!h) throw new Error("household insert returned no row");
+    await tx
+      .insert(householdMembers)
+      .values({ householdId: h.id, userId: user.id, displayName: user.name || "Me", role: "owner" });
   });
 }
 

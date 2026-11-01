@@ -1,10 +1,10 @@
 // Bun -> Go gRPC smoke test: health, unary call, deadline, cancel and (optional) a
 // call after an idle gap on the same channel. Usage: bun scripts/smoke.ts [idleSeconds]
 import { credentials } from "@grpc/grpc-js";
-import { channelOptions, checkHealth, clients } from "../src/grpc/clients";
-import { KitchenServiceClient } from "../src/gen/coolinary/kitchen/v1/kitchen";
-import { codeName, unary } from "../src/grpc/unary";
 import type { ResolveBarcodeResponse } from "../src/gen/coolinary/kitchen/v1/kitchen";
+import { KitchenServiceClient } from "../src/gen/coolinary/kitchen/v1/kitchen";
+import { channelOptions, checkHealth, clients } from "../src/grpc/clients";
+import { codeName, unary } from "../src/grpc/unary";
 
 const idleSeconds = Number(process.argv[2] ?? 0);
 let failed = false;
@@ -21,8 +21,12 @@ async function step(name: string, fn: () => Promise<void>) {
 }
 
 const resolve = (timeoutMs = 2000, signal?: AbortSignal) =>
-  unary<ResolveBarcodeResponse>("kitchen", "ResolveBarcode", (md, o, cb) =>
-    clients.kitchen.resolveBarcode({ ean: "9520000000017", householdId: "" }, md, o, cb), { timeoutMs, signal });
+  unary<ResolveBarcodeResponse>(
+    "kitchen",
+    "ResolveBarcode",
+    (md, o, cb) => clients.kitchen.resolveBarcode({ ean: "9520000000017", householdId: "" }, md, o, cb),
+    { timeoutMs, signal },
+  );
 
 await step("health check", async () => {
   const s = await checkHealth("kitchen");
@@ -38,8 +42,12 @@ await step("deadline fires (no answer)", async () => {
   const blackhole = new KitchenServiceClient("10.77.0.99:50051", credentials.createInsecure(), channelOptions);
   const t0 = performance.now();
   try {
-    await unary<ResolveBarcodeResponse>("kitchen", "ResolveBarcode", (md, o, cb) =>
-      blackhole.resolveBarcode({ ean: "9520000000017", householdId: "" }, md, o, cb), { timeoutMs: 300 });
+    await unary<ResolveBarcodeResponse>(
+      "kitchen",
+      "ResolveBarcode",
+      (md, o, cb) => blackhole.resolveBarcode({ ean: "9520000000017", householdId: "" }, md, o, cb),
+      { timeoutMs: 300 },
+    );
     throw new Error("call succeeded against an unreachable address");
   } catch (err) {
     const code = (err as { code?: number }).code;

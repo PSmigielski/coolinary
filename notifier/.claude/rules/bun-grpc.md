@@ -55,5 +55,5 @@ Bun + `@grpc/grpc-js` + Drizzle (identity also runs Elysia for Better Auth only)
   `.env.prod`.
 - Logs: `log.info(msg, fields)`. Never log e-mail addresses, free text from users or health data.
 - Metrics use the shared names in `docs/service-conventions.md`; the `unary()` wrapper already counts every RPC.
-- Check: `bun run typecheck` in the service folder (Bun is at `~/.bun/bin/bun`). Tests: `bun test` against the
-  plain functions the handlers call.
+- Check: `bun run lint` in the service folder (Biome + `tsc`; Bun is at `~/.bun/bin/bun`), `bun run lint:fix` to
+  format. Tests: `bun test` against the plain functions the handlers call.

@@ -61,7 +61,8 @@ func (s *Server) Serve() error {
 		s.mux.Handle(grpcreflect.NewHandlerV1(reflector))
 		s.mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 	}
-	ln, err := net.Listen("tcp", s.srv.Addr)
+	var lc net.ListenConfig
+	ln, err := lc.Listen(context.Background(), "tcp", s.srv.Addr)
 	if err != nil {
 		return err
 	}
