@@ -133,6 +133,8 @@ lint config next to its code, identical across services of the same language: `b
 
 `make test s=<svc>` runs a service's tests (`scripts/test-service.sh`): `go test ./...` in a `golang` container for
 Go, `bun test` for Bun, `pytest` for `ai`. A task is not done until `make lint s=<svc>` and `make test s=<svc>` pass.
+Tests are written first (red, green, refactor); `.claude/rules/testing.md` has the workflow and what a good test
+looks like.
 
 - Every business rule and acceptance criterion in a task gets a test where it can be tested in code. Name the test
   after the rule (`TestConsumeStock_OldestExpiryFirst`, `"rejects a target under 1,200 kcal"`).

@@ -30,8 +30,9 @@ Start with `README.md`. Product rules: `docs/features.md`, `docs/business-model.
   rely on memory).
 - No personal data, user free text or health data in logs, traces or events. Age, height and weight never leave the
   phone; the server sees only a postcode, never a position.
-- Tests: "Tests" in `docs/service-conventions.md`. A task is done only when `make lint s=<svc>` and
-  `make test s=<svc>` pass for every service it touched (a Stop hook checks this during `/next-task`).
+- Tests: write them first (`.claude/rules/testing.md`); what to test is "Tests" in `docs/service-conventions.md`. A
+  task is done only when `make lint s=<svc>` and `make test s=<svc>` pass for every service it touched (a Stop
+  hook checks this during `/next-task`).
 - Never call real outside services in tests or by hand (Claude API, Open Food Facts, retailer sites, Expo Push).
 
 ## Commands

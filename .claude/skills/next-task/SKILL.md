@@ -44,9 +44,14 @@ changes uncommitted, and stop with `BLOCKED <id>: <reason>`.
 
 ## 5. Build
 
-- Contracts first (`contracts/…`, then `make proto`), then migrations and queries (`make sqlc`), then code.
+Test first, as `.claude/rules/testing.md` describes.
+
+- Contracts first (`contracts/…`, then `make proto`), then migrations and queries (`make sqlc`), so tests compile
+  against the real types.
+- Then one business rule or acceptance criterion at a time: write its test (named as `docs/service-conventions.md`
+  "Tests" describes), run it and see it fail for the expected reason, write the code until it passes, refactor.
+  Note which tests you saw fail first, for the commit message.
 - Gateway routes: `make openapi`. App API types come from it.
-- Write tests for the business rules and acceptance criteria as `docs/service-conventions.md` "Tests" describes.
 - Only this task. A sketch detail that doesn't fit the code may be corrected; note it for the commit message.
 
 ## 6. Verify
@@ -68,6 +73,7 @@ changes uncommitted, and stop with `BLOCKED <id>: <reason>`.
    <two or three lines on what was built>
 
    Acceptance: <criteria proven by tests or checks>
+   Tests first: <tests seen failing before their code was written; parts exempt from test-first, or "none">
    Manual checks: <criteria left for a person, or "none">
    Sketch changes: <deviations from the task's sketches, or "none">
    ```
