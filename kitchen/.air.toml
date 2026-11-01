@@ -1,0 +1,20 @@
+# Hot reload for dev: rebuild without optimisations and run under a headless Delve
+# server on :2345 (attach from Zed, see .zed/debug.json). Output stays out of the repo.
+root = "."
+tmp_dir = "/tmp/air"
+
+[build]
+  cmd = "go build -gcflags='all=-N -l' -o /tmp/air/server ./cmd/server"
+  entrypoint = ["dlv", "exec", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient", "--continue", "/tmp/air/server"]
+  include_ext = ["go", "sql"]
+  exclude_dir = ["tmp", "vendor"]
+  delay = 300
+  kill_delay = "2s"
+  send_interrupt = true
+  stop_on_error = true
+
+[log]
+  time = false
+
+[misc]
+  clean_on_exit = true

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package coolinary.planner.v1;
+
+// Dish matching, day and week plans, portions and shopping lists.
+service PlannerService {
+  // "What can I make now": library dishes ranked by share of ingredients on hand.
+  rpc SuggestDishes(SuggestDishesRequest) returns (SuggestDishesResponse);
+}
+
+message SuggestDishesRequest {
+  string household_id = 1;
+  Meal meal = 2;
+  int32 limit = 3;
+}
+
+message SuggestDishesResponse {
+  repeated DishSuggestion suggestions = 1;
+}
+
+message DishSuggestion {
+  string dish_id = 1;
+  string name = 2;
+  // 0.0 to 1.0: share of the dish's ingredients that are at home.
+  double share_on_hand = 3;
+  int32 kcal_per_portion = 4;
+}
+
+enum Meal {
+  MEAL_UNSPECIFIED = 0;
+  MEAL_BREAKFAST = 1;
+  MEAL_DINNER = 2;
+  MEAL_SUPPER = 3;
+}

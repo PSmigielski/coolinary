@@ -1,0 +1,28 @@
+// Run from Zed's command palette: "task: spawn".
+[
+  { "label": "dev: start", "command": "make dev", "allow_concurrent_runs": false },
+  { "label": "dev: start with monitoring + Langfuse", "command": "make dev-full", "allow_concurrent_runs": false },
+  { "label": "dev: stop", "command": "make down" },
+  { "label": "dev: status", "command": "make ps" },
+  { "label": "dev: logs (all)", "command": "make logs", "use_new_terminal": true },
+  {
+    "label": "dev: logs (service of current file)",
+    "command": "make logs s=$(echo \"$ZED_RELATIVE_FILE\" | cut -d/ -f1)",
+    "use_new_terminal": true
+  },
+  { "label": "proto: lint + generate", "command": "make proto" },
+  { "label": "test: gRPC smoke tests", "command": "make smoke" },
+  {
+    "label": "debug Bun: gateway (browser)",
+    "command": "make debug s=gateway && xdg-open 'https://debug.bun.sh/#localhost:6499/gateway'"
+  },
+  {
+    "label": "debug Bun: identity (browser)",
+    "command": "make debug s=identity && xdg-open 'https://debug.bun.sh/#localhost:6500/identity'"
+  },
+  {
+    "label": "debug Bun: notifier (browser)",
+    "command": "make debug s=notifier && xdg-open 'https://debug.bun.sh/#localhost:6501/notifier'"
+  },
+  { "label": "mobile: expo start", "command": "make mobile", "use_new_terminal": true }
+]

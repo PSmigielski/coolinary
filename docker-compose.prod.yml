@@ -1,0 +1,308 @@
+# Production. Run with `make secrets` (once) then `make prod`.
+# Includes the base file and overrides what differs (needs Docker Compose >= 5.0).
+# Only Caddy publishes ports (80, 443/tcp, 443/udp). Secrets come from ./secrets (gitignored).
+name: coolinary-prod
+
+include:
+  - docker-compose.abstract.yml
+
+# Our own seven images: non-root, read-only root filesystem, no capabilities.
+x-hardened: &hardened
+  restart: unless-stopped
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+
+# Third-party images keep the capabilities their entrypoints need.
+x-third-party: &third-party
+  restart: unless-stopped
+  security_opt: ["no-new-privileges:true"]
+
+secrets:
+  postgres_password: { file: ./secrets/postgres_password }
+  identity_db_password: { file: ./secrets/identity_db_password }
+  notifier_db_password: { file: ./secrets/notifier_db_password }
+  kitchen_db_password: { file: ./secrets/kitchen_db_password }
+  planner_db_password: { file: ./secrets/planner_db_password }
+  offers_db_password: { file: ./secrets/offers_db_password }
+  langfuse_db_password: { file: ./secrets/langfuse_db_password }
+  postgres_exporter_db_password: { file: ./secrets/postgres_exporter_db_password }
+  identity_database_url: { file: ./secrets/identity_database_url }
+  notifier_database_url: { file: ./secrets/notifier_database_url }
+  kitchen_database_url: { file: ./secrets/kitchen_database_url }
+  planner_database_url: { file: ./secrets/planner_database_url }
+  offers_database_url: { file: ./secrets/offers_database_url }
+  better_auth_secret: { file: ./secrets/better_auth_secret }
+  smtp_url: { file: ./secrets/smtp_url }
+  langfuse_public_key: { file: ./secrets/langfuse_public_key }
+  langfuse_secret_key: { file: ./secrets/langfuse_secret_key }
+  trace_hash_salt: { file: ./secrets/trace_hash_salt }
+  grafana_admin_password: { file: ./secrets/grafana_admin_password }
+
+volumes:
+  pg-backups:
+  caddy-data:
+  caddy-config:
+
+services:
+  # ---------------------------------------------------------------- data
+  postgres:
+    <<: *third-party
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      DB_PASSWORD_DIR: /run/secrets   # read by platform/postgres/initdb/01-databases.sh
+    secrets:
+      - postgres_password
+      - identity_db_password
+      - notifier_db_password
+      - kitchen_db_password
+      - planner_db_password
+      - offers_db_password
+      - langfuse_db_password
+      - postgres_exporter_db_password
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - effective_cache_size=768MB
+      - -c
+      - work_mem=8MB
+      - -c
+      - maintenance_work_mem=64MB
+      - -c
+      - max_connections=100
+      - -c
+      - wal_compression=on
+      - -c
+      - log_min_duration_statement=500ms
+    shm_size: 256mb
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 1G }
+
+  redis-cache:
+    <<: *third-party
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 320M }
+
+  redis-state:
+    <<: *third-party
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 320M }
+
+  pg-backup:
+    <<: *third-party
+    image: ${POSTGRES_IMAGE}
+    entrypoint: ["/backup.sh"]
+    volumes:
+      - ./platform/postgres/backup.sh:/backup.sh:ro
+      - pg-backups:/backups
+    secrets: [postgres_password]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 256M }
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.13
+
+  # ---------------------------------------------------------------- our services
+  gateway:
+    <<: *hardened
+    image: coolinary/gateway:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./gateway/.env.prod]
+    environment:
+      AUTH_ISSUER: https://api.${DOMAIN}
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 256M }
+
+  identity:
+    <<: *hardened
+    image: coolinary/identity:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./identity/.env.prod]
+    environment:
+      BETTER_AUTH_URL: https://api.${DOMAIN}
+    secrets: [identity_database_url, better_auth_secret]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 256M }
+
+  notifier:
+    <<: *hardened
+    image: coolinary/notifier:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./notifier/.env.prod]
+    secrets: [notifier_database_url, smtp_url]
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 192M }
+
+  kitchen:
+    <<: *hardened
+    image: coolinary/kitchen:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./kitchen/.env.prod]
+    secrets: [kitchen_database_url]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 192M }
+
+  planner:
+    <<: *hardened
+    image: coolinary/planner:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./planner/.env.prod]
+    secrets: [planner_database_url]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 192M }
+
+  offers:
+    <<: *hardened
+    image: coolinary/offers:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./offers/.env.prod]
+    secrets: [offers_database_url]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 192M }
+
+  ai:
+    <<: *hardened
+    image: coolinary/ai:${TAG:-latest}
+    build:
+      target: prod
+    env_file: [./ai/.env.prod]
+    secrets: [langfuse_public_key, langfuse_secret_key, trace_hash_salt]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 384M }
+
+  # ---------------------------------------------------------------- edge
+  caddy:
+    <<: *third-party
+    image: ${CADDY_IMAGE}
+    ports:
+      # Host ports default to 80/443; override only for a local test next to another proxy.
+      - "${HTTP_HOST_PORT:-80}:80"
+      - "${HTTPS_HOST_PORT:-443}:443"
+      - "${HTTPS_HOST_PORT:-443}:443/udp"   # HTTP/3
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./platform/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      gateway:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 256M }
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.2
+
+  # ---------------------------------------------------------------- observability (always on in prod)
+  prometheus:
+    <<: *third-party
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=30d
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 1G }
+
+  grafana:
+    <<: *third-party
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+      GF_SERVER_ROOT_URL: https://grafana.${DOMAIN}
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    secrets: [grafana_admin_password]
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 384M }
+
+  cadvisor:
+    <<: *third-party
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 256M }
+
+  node-exporter:
+    <<: *third-party
+    image: ${NODE_EXPORTER_IMAGE}
+    profiles: [observability]
+    command: ["--path.rootfs=/host"]
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+    deploy:
+      resources:
+        limits: { cpus: "0.25", memory: 64M }
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.53
+
+  postgres-exporter:
+    <<: *third-party
+    environment:
+      DATA_SOURCE_PASS_FILE: /run/secrets/postgres_exporter_db_password
+    secrets: [postgres_exporter_db_password]
+
+  redis-exporter:
+    <<: *third-party
+
+  clickhouse:
+    <<: *third-party
+    env_file: [./secrets/clickhouse.env]
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 4G }
+
+  seaweedfs:
+    <<: *third-party
+    env_file: [./secrets/langfuse.env]
+    deploy:
+      resources:
+        limits: { cpus: "1", memory: 512M }
+
+  redis-langfuse:
+    <<: *third-party
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 640M }
+
+  langfuse-web:
+    <<: *third-party
+    env_file: [./secrets/langfuse.env]
+    environment:
+      AUTH_DISABLE_SIGNUP: "true"
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 2G }
+
+  langfuse-worker:
+    <<: *third-party
+    env_file: [./secrets/langfuse.env]
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 2G }

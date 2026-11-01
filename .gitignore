@@ -1,0 +1,39 @@
+# secrets and local env
+/secrets/
+.env.local
+*.env.local
+
+# dependencies and build output
+node_modules/
+dist/
+tmp/
+bin/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+coverage/
+
+# expo
+mobile/.expo/
+mobile/web-build/
+mobile/ios/
+mobile/android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# editors / OS
+.DS_Store
+.idea/
+*.swp
+
+# backups made locally
+/backups/
+
+# make proto scratch output
+/.gen/

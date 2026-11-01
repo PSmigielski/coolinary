@@ -1,0 +1,375 @@
+# Base definition shared by docker-compose.dev.yml and docker-compose.prod.yml (they `include` it).
+# - One bridge network with a fixed address per container (table in docs/infrastructure.md).
+# - No published ports and no build targets here; dev and prod add those.
+# - Healthcheck commands live in each image; this file only sets timing.
+# - Monitoring and Langfuse are in the `observability` profile.
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-app-healthcheck: &app-healthcheck
+  interval: 15s
+  timeout: 3s
+  retries: 5
+  start_period: 20s
+
+x-app: &app
+  init: true
+  logging: *logging
+  healthcheck: *app-healthcheck
+
+x-depends-on-data: &depends-on-data
+  postgres:
+    condition: service_healthy
+  redis-cache:
+    condition: service_healthy
+  redis-state:
+    condition: service_healthy
+
+x-langfuse-depends-on: &langfuse-depends-on
+  postgres:
+    condition: service_healthy
+  clickhouse:
+    condition: service_healthy
+  seaweedfs:
+    condition: service_healthy
+  redis-langfuse:
+    condition: service_healthy
+
+networks:
+  coolinary:
+    name: coolinary
+    ipam:
+      config:
+        - subnet: ${NET_PREFIX:-10.77.0}.0/24
+          ip_range: ${NET_PREFIX:-10.77.0}.128/25
+          gateway: ${NET_PREFIX:-10.77.0}.1
+
+volumes:
+  postgres-data:
+  redis-state-data:
+  prometheus-data:
+  grafana-data:
+  clickhouse-data:
+  clickhouse-logs:
+  seaweedfs-data:
+
+services:
+  # ---------------------------------------------------------------- data (.10-.19)
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    logging: *logging
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      # Postgres 18 keeps data under /var/lib/postgresql/18/docker.
+      - postgres-data:/var/lib/postgresql
+      - ./platform/postgres/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.10
+
+  redis-cache:
+    image: ${REDIS_IMAGE}
+    logging: *logging
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./platform/redis/cache.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.11
+
+  redis-state:
+    image: ${REDIS_IMAGE}
+    logging: *logging
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./platform/redis/state.conf:/usr/local/etc/redis/redis.conf:ro
+      - redis-state-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.12
+
+  # ---------------------------------------------------------------- Bun services (.20-.29)
+  gateway:
+    <<: *app
+    build:
+      context: ./gateway
+      args:
+        BUN_VERSION: ${BUN_VERSION}
+    depends_on:
+      redis-cache:
+        condition: service_healthy
+      redis-state:
+        condition: service_healthy
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.20
+
+  identity:
+    <<: *app
+    build:
+      context: ./identity
+      args:
+        BUN_VERSION: ${BUN_VERSION}
+    depends_on: *depends-on-data
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.21
+
+  notifier:
+    <<: *app
+    build:
+      context: ./notifier
+      args:
+        BUN_VERSION: ${BUN_VERSION}
+    depends_on: *depends-on-data
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.22
+
+  # ---------------------------------------------------------------- Go services (.30-.39)
+  kitchen:
+    <<: *app
+    build:
+      context: ./kitchen
+      args: &go-build-args
+        GO_VERSION: ${GO_VERSION}
+        AIR_VERSION: ${AIR_VERSION}
+        DELVE_VERSION: ${DELVE_VERSION}
+    depends_on: *depends-on-data
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.30
+
+  planner:
+    <<: *app
+    build:
+      context: ./planner
+      args: *go-build-args
+    depends_on: *depends-on-data
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.31
+
+  offers:
+    <<: *app
+    build:
+      context: ./offers
+      args: *go-build-args
+    depends_on: *depends-on-data
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.32
+
+  # ---------------------------------------------------------------- AI (.40)
+  ai:
+    <<: *app
+    build:
+      context: ./ai
+      args:
+        PYTHON_VERSION: ${PYTHON_VERSION}
+        UV_VERSION: ${UV_VERSION}
+    depends_on:
+      redis-cache:
+        condition: service_healthy
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.40
+
+  # ---------------------------------------------------------------- monitoring (.50-.69), profile: observability
+  prometheus:
+    image: ${PROMETHEUS_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-15d}
+      - --web.enable-lifecycle
+    volumes:
+      - ./platform/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9090/-/ready"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.50
+
+  grafana:
+    image: ${GRAFANA_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    environment:
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./platform/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./platform/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.51
+
+  cadvisor:
+    image: ${CADVISOR_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    privileged: true
+    devices:
+      - /dev/kmsg
+    command:
+      - --docker_only=true
+      - --housekeeping_interval=15s
+      # Keep only what the dashboards use (cpu, memory, network); the rest costs a lot of memory.
+      - --disable_metrics=advtcp,cpu_topology,cpuset,disk,diskIO,hugetlb,memory_numa,percpu,perf_event,process,referenced_memory,resctrl,sched,tcp,udp
+      - --store_container_labels=false
+      - --whitelisted_container_labels=com.docker.compose.service,com.docker.compose.project
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.52
+
+  postgres-exporter:
+    image: ${POSTGRES_EXPORTER_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    environment:
+      DATA_SOURCE_URI: postgres:5432/postgres?sslmode=disable
+      DATA_SOURCE_USER: postgres_exporter
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.54
+
+  redis-exporter:
+    image: ${REDIS_EXPORTER_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    # Multi-target mode: Prometheus asks for /scrape?target=redis://<instance>:6379
+    environment:
+      REDIS_EXPORTER_INCL_SYSTEM_METRICS: "true"
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.55
+
+  langfuse-web:
+    image: ${LANGFUSE_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    depends_on: *langfuse-depends-on
+    environment:
+      HOSTNAME: 0.0.0.0  # Next.js otherwise binds only to the container hostname
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/public/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.60
+
+  langfuse-worker:
+    image: ${LANGFUSE_WORKER_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    depends_on: *langfuse-depends-on
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.61
+
+  clickhouse:
+    image: ${CLICKHOUSE_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    user: "101:101"
+    environment:
+      CLICKHOUSE_DB: default
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - clickhouse-logs:/var/log/clickhouse-server
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.62
+
+  # S3-compatible store for Langfuse events and media (MinIO's community edition is archived).
+  seaweedfs:
+    image: ${SEAWEEDFS_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    entrypoint: ["/bin/sh", "/etc/seaweedfs/start.sh"]
+    volumes:
+      - ./platform/langfuse/seaweedfs-start.sh:/etc/seaweedfs/start.sh:ro
+      - seaweedfs-data:/data
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/bucket-ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.63
+
+  redis-langfuse:
+    image: ${REDIS_IMAGE}
+    profiles: [observability]
+    logging: *logging
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./platform/redis/langfuse.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.64

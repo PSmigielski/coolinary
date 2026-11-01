@@ -1,0 +1,16 @@
+# Generates ts-proto messages + @grpc/grpc-js service definitions into ./src/gen (committed).
+# Plugins are local, pinned in contracts/Dockerfile. Run via `make proto`.
+version: v2
+plugins:
+  - local: protoc-gen-ts_proto
+    out: src/gen
+    opt:
+      - outputServices=grpc-js
+      - esModuleInterop=true
+      - env=node
+      - forceLong=number
+      - useOptionals=messages
+inputs:
+  - directory: ../contracts
+    exclude_paths:
+      - ../contracts/grpc   # health.proto: reflection only, not generated

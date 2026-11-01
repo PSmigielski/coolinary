@@ -1,0 +1,19 @@
+# Generates Go + connect-go code for every contract into ./gen (committed).
+# Plugins are local, pinned in contracts/Dockerfile. Run via `make proto`.
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: coolinary/kitchen/gen
+plugins:
+  - local: protoc-gen-go
+    out: gen
+    opt: paths=source_relative
+  - local: protoc-gen-connect-go
+    out: gen
+    opt: paths=source_relative
+inputs:
+  - directory: ../contracts
+    exclude_paths:
+      - ../contracts/grpc   # health.proto: reflection only, not generated

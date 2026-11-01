@@ -1,0 +1,39 @@
+// Attach Zed's debugger to the dev containers (`make dev` must be running).
+// Go: Delve runs headless in each container (air restarts it on every change: re-attach).
+// Python: debugpy in the ai container (watchfiles restarts it on every change: re-attach).
+// Bun: Zed can't debug Bun yet (zed#49033). Use the "debug Bun" tasks in .zed/tasks.json,
+//      which open Bun's browser debugger (debug.bun.sh).
+[
+  {
+    "label": "kitchen (Go): attach",
+    "adapter": "Delve",
+    "request": "attach",
+    "mode": "remote",
+    "tcp_connection": { "host": "10.77.0.30", "port": 2345 },
+    "substitutePath": [{ "from": "$ZED_WORKTREE_ROOT/kitchen", "to": "/app" }]
+  },
+  {
+    "label": "planner (Go): attach",
+    "adapter": "Delve",
+    "request": "attach",
+    "mode": "remote",
+    "tcp_connection": { "host": "10.77.0.31", "port": 2345 },
+    "substitutePath": [{ "from": "$ZED_WORKTREE_ROOT/planner", "to": "/app" }]
+  },
+  {
+    "label": "offers (Go): attach",
+    "adapter": "Delve",
+    "request": "attach",
+    "mode": "remote",
+    "tcp_connection": { "host": "10.77.0.32", "port": 2345 },
+    "substitutePath": [{ "from": "$ZED_WORKTREE_ROOT/offers", "to": "/app" }]
+  },
+  {
+    "label": "ai (Python): attach",
+    "adapter": "Debugpy",
+    "request": "attach",
+    "connect": { "host": "10.77.0.40", "port": 5678 },
+    "pathMappings": [{ "localRoot": "$ZED_WORKTREE_ROOT/ai", "remoteRoot": "/app" }],
+    "justMyCode": false
+  }
+]

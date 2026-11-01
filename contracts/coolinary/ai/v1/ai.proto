@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package coolinary.ai.v1;
+
+import "coolinary/common/v1/common.proto";
+
+// Every LLM call goes through this service. Callers are the Go services that
+// own each feature; they check AI output with rules before it is shown.
+service AiService {
+  // "bought eggs, two peppers, some cheese" -> items the user confirms.
+  rpc ExtractItemsFromText(ExtractItemsFromTextRequest) returns (ExtractItemsFromTextResponse);
+}
+
+message ExtractItemsFromTextRequest {
+  string text = 1;
+  // BCP 47 language tag, e.g. "pl" or "de".
+  string language = 2;
+  string household_id = 3;
+}
+
+message ExtractItemsFromTextResponse {
+  repeated ExtractedItem items = 1;
+  string model = 2;
+  bool cached = 3;
+}
+
+message ExtractedItem {
+  string name = 1;
+  coolinary.common.v1.Quantity quantity = 2;
+  float confidence = 3;
+}

@@ -1,0 +1,16 @@
+# Loads the dashboard JSON files mounted at /var/lib/grafana/dashboards.
+# Change dashboards in the repo, not in the UI (UI edits cannot be saved).
+apiVersion: 1
+
+providers:
+  - name: coolinary
+    orgId: 1
+    type: file
+    folder: Coolinary
+    folderUid: coolinary
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false

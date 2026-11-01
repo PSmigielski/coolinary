@@ -1,0 +1,13 @@
+# Shared gRPC contracts. Lint with `make proto`, check compatibility with `make proto-breaking`.
+# grpc/ holds the standard health protocol (third-party, used only for reflection).
+version: v2
+lint:
+  use:
+    - STANDARD
+  ignore:
+    - grpc
+breaking:
+  use:
+    - FILE
+  ignore:
+    - grpc

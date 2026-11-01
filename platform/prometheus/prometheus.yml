@@ -1,0 +1,61 @@
+# Scrape config shared by dev and prod. Retention is set on the command line.
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Our services: /metrics on the admin port 8081 (docs/service-conventions.md).
+  - job_name: services
+    static_configs:
+      - targets: ["gateway:8081"]
+        labels: { service: gateway, runtime: bun }
+      - targets: ["identity:8081"]
+        labels: { service: identity, runtime: bun }
+      - targets: ["notifier:8081"]
+        labels: { service: notifier, runtime: bun }
+      - targets: ["kitchen:8081"]
+        labels: { service: kitchen, runtime: go }
+      - targets: ["planner:8081"]
+        labels: { service: planner, runtime: go }
+      - targets: ["offers:8081"]
+        labels: { service: offers, runtime: go }
+      - targets: ["ai:8081"]
+        labels: { service: ai, runtime: python }
+
+  # Per-container CPU, memory and network.
+  - job_name: cadvisor
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  # Host metrics: node-exporter runs in prod only. DNS discovery means no DOWN target in dev.
+  - job_name: node
+    dns_sd_configs:
+      - names: ["node-exporter"]
+        type: A
+        port: 9100
+
+  - job_name: postgres
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+        labels: { instance: postgres }
+
+  # redis_exporter in multi-target mode: one exporter, three Redis instances.
+  - job_name: redis
+    metrics_path: /scrape
+    static_configs:
+      - targets:
+          - redis://redis-cache:6379
+          - redis://redis-state:6379
+          - redis://redis-langfuse:6379
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        regex: redis://([^:]+):.*
+        target_label: instance
+      - target_label: __address__
+        replacement: redis-exporter:9121

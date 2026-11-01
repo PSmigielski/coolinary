@@ -1,0 +1,153 @@
+# Development: hot reload + debuggers. Run with `make dev` (or `make dev-full` for monitoring + Langfuse).
+# Includes the base file and overrides what differs (needs Docker Compose >= 5.0).
+#
+# Reach containers from the Linux host by IP (see docs/infrastructure.md). Published ports:
+#   - gateway on ${GATEWAY_HOST_PORT} (default 3080) on all interfaces, so a phone on the LAN can reach the API
+#   - Bun inspectors on 127.0.0.1 (6499 gateway, 6500 identity, 6501 notifier), used by debug.bun.sh
+name: coolinary
+
+include:
+  - docker-compose.abstract.yml
+
+x-go-dev: &go-dev
+  build:
+    target: dev
+  cap_add: [SYS_PTRACE]           # Delve
+  security_opt: ["seccomp:unconfined"]
+  healthcheck:
+    start_period: 90s             # first air build
+    interval: 10s
+
+# Bun: `bun --watch` by default; `make debug s=<svc>` sets <SVC>_INSPECT=1 to run under the
+# inspector instead (without --watch: Bun leaves the inspector port busy after a reload).
+x-bun-command: &bun-command
+  - sh
+  - -c
+  - 'if [ "$$BUN_INSPECT" = "1" ]; then exec bun --inspect=0.0.0.0:6499/$$SERVICE_NAME src/index.ts; else exec bun --watch src/index.ts; fi'
+
+volumes:
+  go-mod:
+  go-build:
+
+services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: postgres-dev
+
+  gateway:
+    image: coolinary/gateway:dev
+    build:
+      target: dev
+    env_file: [./gateway/.env.dev]
+    environment:
+      BUN_INSPECT: ${GATEWAY_INSPECT:-0}
+    command: *bun-command
+    volumes:
+      - ./gateway:/app
+      - /app/node_modules
+    ports:
+      - "${GATEWAY_HOST_PORT:-3080}:3000"
+      - "127.0.0.1:6499:6499"
+
+  identity:
+    image: coolinary/identity:dev
+    build:
+      target: dev
+    env_file: [./identity/.env.dev]
+    environment:
+      BUN_INSPECT: ${IDENTITY_INSPECT:-0}
+    command: *bun-command
+    volumes:
+      - ./identity:/app
+      - /app/node_modules
+    ports:
+      - "127.0.0.1:6500:6499"
+
+  notifier:
+    image: coolinary/notifier:dev
+    build:
+      target: dev
+    env_file: [./notifier/.env.dev]
+    environment:
+      BUN_INSPECT: ${NOTIFIER_INSPECT:-0}
+    command: *bun-command
+    volumes:
+      - ./notifier:/app
+      - /app/node_modules
+    ports:
+      - "127.0.0.1:6501:6499"
+
+  kitchen:
+    <<: *go-dev
+    image: coolinary/kitchen:dev
+    env_file: [./kitchen/.env.dev]
+    volumes:
+      - ./kitchen:/app
+      - go-mod:/go/pkg/mod
+      - go-build:/root/.cache/go-build
+
+  planner:
+    <<: *go-dev
+    image: coolinary/planner:dev
+    env_file: [./planner/.env.dev]
+    volumes:
+      - ./planner:/app
+      - go-mod:/go/pkg/mod
+      - go-build:/root/.cache/go-build
+
+  offers:
+    <<: *go-dev
+    image: coolinary/offers:dev
+    env_file: [./offers/.env.dev]
+    volumes:
+      - ./offers:/app
+      - go-mod:/go/pkg/mod
+      - go-build:/root/.cache/go-build
+
+  ai:
+    image: coolinary/ai:dev
+    build:
+      target: dev
+    env_file: [./ai/.env.dev]
+    volumes:
+      - ./ai:/app
+    healthcheck:
+      start_period: 60s
+
+  mailpit:
+    image: ${MAILPIT_IMAGE}
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+    networks:
+      coolinary:
+        ipv4_address: ${NET_PREFIX:-10.77.0}.3
+
+  # ---------------------------------------------------------------- observability (make dev-full)
+  grafana:
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+
+  postgres-exporter:
+    environment:
+      DATA_SOURCE_PASS: postgres_exporter-dev
+
+  clickhouse:
+    environment:
+      CLICKHOUSE_USER: clickhouse
+      CLICKHOUSE_PASSWORD: clickhouse-dev
+
+  seaweedfs:
+    env_file: [./platform/langfuse/langfuse.dev.env]
+
+  langfuse-web:
+    env_file: [./platform/langfuse/langfuse.dev.env]
+
+  langfuse-worker:
+    env_file: [./platform/langfuse/langfuse.dev.env]

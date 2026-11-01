@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package coolinary.common.v1;
+
+// Money in minor units (cents) with an ISO 4217 currency code.
+message Money {
+  int64 amount_minor = 1;
+  string currency = 2;
+}
+
+// An amount of an ingredient or product.
+message Quantity {
+  double value = 1;
+  Unit unit = 2;
+}
+
+enum Unit {
+  UNIT_UNSPECIFIED = 0;
+  UNIT_GRAM = 1;
+  UNIT_MILLILITRE = 2;
+  UNIT_PIECE = 3;
+}
+
+message PageRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message PageResponse {
+  string next_page_token = 1;
+}

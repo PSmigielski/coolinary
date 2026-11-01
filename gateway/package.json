@@ -1,0 +1,25 @@
+{
+  "name": "@coolinary/gateway",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "build": "bun build src/index.ts src/healthcheck.ts --target=bun --outdir=dist --sourcemap=linked",
+    "typecheck": "tsc --noEmit",
+    "openapi": "bun scripts/export-openapi.ts ../contracts/openapi/gateway.json",
+    "smoke": "bun scripts/smoke.ts"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.16.0",
+    "@elysiajs/openapi": "1.4.16",
+    "@grpc/grpc-js": "1.14.7",
+    "elysia": "1.4.30",
+    "jose": "6.2.14",
+    "prom-client": "15.1.3"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.4",
+    "typescript": "7.0.2"
+  }
+}

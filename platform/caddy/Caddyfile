@@ -1,0 +1,28 @@
+# Edge proxy (prod only): automatic HTTPS, HTTP/3. Only this container publishes ports.
+# DOMAIN comes from the repo-root .env. Names under .localhost get Caddy's internal
+# certificates automatically, which is what the local prod smoke test uses.
+
+(common) {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+}
+
+api.{$DOMAIN} {
+	import common
+	reverse_proxy gateway:3000
+}
+
+grafana.{$DOMAIN} {
+	import common
+	reverse_proxy grafana:3000
+}
+
+langfuse.{$DOMAIN} {
+	import common
+	reverse_proxy langfuse-web:3000
+}

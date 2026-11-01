@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package coolinary.offers.v1;
+
+import "coolinary/common/v1/common.proto";
+
+// Shops, flyers, offers and prices.
+service OffersService {
+  rpc ListOffers(ListOffersRequest) returns (ListOffersResponse);
+}
+
+message ListOffersRequest {
+  // Postcode-level area only; exact location never leaves the phone.
+  string postcode = 1;
+  string country_code = 2;
+  coolinary.common.v1.PageRequest page = 3;
+}
+
+message ListOffersResponse {
+  repeated Offer offers = 1;
+  coolinary.common.v1.PageResponse page = 2;
+}
+
+message Offer {
+  string id = 1;
+  string shop_id = 2;
+  string product_name = 3;
+  coolinary.common.v1.Money price = 4;
+  // Free text such as "2+1" or "with app or card".
+  string conditions = 5;
+  // ISO dates (YYYY-MM-DD).
+  string valid_from = 6;
+  string valid_to = 7;
+  string source_url = 8;
+}

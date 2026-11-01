@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package coolinary.kitchen.v1;
+
+import "coolinary/common/v1/common.proto";
+
+// Catalogue, products, nutrition and the household's stock.
+service KitchenService {
+  // Resolves a scanned EAN through the lookup chain:
+  // household products, shared catalogue, Open Food Facts, GS1.
+  rpc ResolveBarcode(ResolveBarcodeRequest) returns (ResolveBarcodeResponse);
+}
+
+message ResolveBarcodeRequest {
+  string ean = 1;
+  string household_id = 2;
+}
+
+message ResolveBarcodeResponse {
+  bool found = 1;
+  Product product = 2;
+  ResolveSource source = 3;
+}
+
+message Product {
+  string ean = 1;
+  string name = 2;
+  string brand = 3;
+  coolinary.common.v1.Quantity pack_size = 4;
+}
+
+enum ResolveSource {
+  RESOLVE_SOURCE_UNSPECIFIED = 0;
+  RESOLVE_SOURCE_HOUSEHOLD = 1;
+  RESOLVE_SOURCE_SHARED_CATALOGUE = 2;
+  RESOLVE_SOURCE_OPEN_FOOD_FACTS = 3;
+  RESOLVE_SOURCE_GS1 = 4;
+}
