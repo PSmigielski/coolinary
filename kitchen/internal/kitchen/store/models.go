@@ -8,6 +8,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Outbox struct {
+	ID          pgtype.UUID
+	Type        string
+	Version     int32
+	HouseholdID pgtype.UUID
+	Payload     []byte
+	OccurredAt  pgtype.Timestamptz
+	PublishedAt pgtype.Timestamptz
+	Attempts    int32
+	LastError   pgtype.Text
+}
+
 type Product struct {
 	Ean       string
 	Name      string

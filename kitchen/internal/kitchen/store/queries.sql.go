@@ -37,3 +37,30 @@ func (q *Queries) GetProductByEAN(ctx context.Context, ean string) (GetProductBy
 	)
 	return i, err
 }
+
+const insertOutboxEvent = `-- name: InsertOutboxEvent :exec
+INSERT INTO outbox (id, type, version, household_id, payload, occurred_at)
+VALUES ($1, $2, $3, $4, $5, $6)
+`
+
+type InsertOutboxEventParams struct {
+	ID          pgtype.UUID
+	Type        string
+	Version     int32
+	HouseholdID pgtype.UUID
+	Payload     []byte
+	OccurredAt  pgtype.Timestamptz
+}
+
+// Only events.Add calls this, always with a transaction's Queries (q.WithTx(tx)).
+func (q *Queries) InsertOutboxEvent(ctx context.Context, arg InsertOutboxEventParams) error {
+	_, err := q.db.Exec(ctx, insertOutboxEvent,
+		arg.ID,
+		arg.Type,
+		arg.Version,
+		arg.HouseholdID,
+		arg.Payload,
+		arg.OccurredAt,
+	)
+	return err
+}
