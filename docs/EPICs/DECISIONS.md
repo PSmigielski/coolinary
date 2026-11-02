@@ -11,7 +11,7 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
   `Decided` rule and this line together.
 - **Severity** of the items that were triaged: 5 critical, 42 high, 78 medium, 78 low; 28 were asked before triage.
 
-231 decisions: 12 you chose, 63 you confirmed, 156 default.
+235 decisions: 12 you chose, 67 you confirmed, 156 default.
 
 ## Where you chose differently from the recommendation
 
@@ -87,6 +87,10 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
 | Q044 | high | How long should an unused anonymous account and its fridge be kept before it is deleted? | 30 days without use (identity's draft) | you confirmed | [IDN-03-04](identity/E03-anonymous-accounts/IDN-03-04-stale-anonymous-cleanup.md), [MOB-01-03](mobile/E01-auth-session/MOB-01-03-anonymous-start.md) |
 | Q045 | high | Should members' daily calorie targets be kept out of the phone's unencrypted offline cache? | Yes; read them from secure storage or refetch | you confirmed | [MOB-03-01](mobile/E03-query-hooks/MOB-03-01-query-keys-cache-rules.md) |
 | Q229 | high | If kitchen, planner or offers can't reach identity for a household's plan, what do they do? | Fall back to the plan in the signed-in user's token (x-plan, ≤ 15 min old), Free if missing; jobs skip the household until their next run. | you confirmed | [KIT-01-06](kitchen/E01-platform/KIT-01-06-household-plan-copy.md), [PLN-01-05](planner/E01-platform/PLN-01-05-household-plan-copy.md), [OFF-01-03](offers/E01-platform/OFF-01-03-household-plan-copy.md), [OFF-04-04](offers/E04-my-shops/OFF-04-04-plan-change-rules.md) |
+| Q232 | medium | PLN-01-01 copies kitchen's consumer but its rules differ (group start `$`, read 100, dead after 5 deliveries, newer version and malformed JSON dead at once, Redis retry every 2 s, cleanup 03:30 UTC). Which wins? | Planner's rules; the API, envelope type and metric names stay kitchen's. | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
+| Q233 | low | Planner's lag metric: the task's `events_lag_seconds{stream}` or Q041's `events_consumer_lag{stream,group}`? | Q041's name, in entries from XINFO GROUPS (as KIT-01-05), refreshed every minute. | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
+| Q234 | medium | The `dead_events` sketch can't hold malformed entries (invalid JSON, no event id). How are dead entries stored? | Keyed by (stream, entry_id); nullable event_id; raw envelope as text. | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
+| Q235 | low | Unknown event types in planner: result label `unknown` (task) or `skipped` (kitchen)? | `skipped`, with kitchen's other labels (ok, duplicate, error, dead). | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
 
 ### M3 Back office (R1)
 

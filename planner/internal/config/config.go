@@ -18,6 +18,8 @@ type Config struct {
 	RedisStateURL  string
 	LogLevel       string
 	GRPCReflection bool
+	// EventStreams are the redis-state streams this service consumes (EVENT_STREAMS, comma-separated).
+	EventStreams []string
 
 	// Addresses of services this one calls (host:port).
 	KitchenAddr string
@@ -35,6 +37,7 @@ func Load() (Config, error) {
 		RedisStateURL:  get("REDIS_STATE_URL", ""),
 		LogLevel:       get("LOG_LEVEL", "info"),
 		GRPCReflection: get("GRPC_REFLECTION", "false") == "true",
+		EventStreams:   getList("EVENT_STREAMS", "events.identity,events.kitchen,events.offers"),
 		KitchenAddr:    get("KITCHEN_GRPC_ADDR", "kitchen:50051"),
 		OffersAddr:     get("OFFERS_GRPC_ADDR", "offers:50051"),
 		AIAddr:         get("AI_GRPC_ADDR", "ai:50051"),
@@ -60,6 +63,17 @@ func get(key, def string) string {
 		return v
 	}
 	return def
+}
+
+// getList splits a comma-separated value into its non-empty, trimmed items.
+func getList(key, def string) []string {
+	var out []string
+	for item := range strings.SplitSeq(get(key, def), ",") {
+		if item = strings.TrimSpace(item); item != "" {
+			out = append(out, item)
+		}
+	}
+	return out
 }
 
 func getInt(key string, def int) int {

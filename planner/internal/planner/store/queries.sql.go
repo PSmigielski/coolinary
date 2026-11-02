@@ -7,7 +7,74 @@ package store
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
+
+const deleteProcessedEvents = `-- name: DeleteProcessedEvents :execrows
+DELETE FROM processed_events WHERE processed_at < $1::timestamptz
+`
+
+func (q *Queries) DeleteProcessedEvents(ctx context.Context, cutoff pgtype.Timestamptz) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteProcessedEvents, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const insertDeadEvent = `-- name: InsertDeadEvent :exec
+INSERT INTO dead_events (stream, entry_id, event_id, type, envelope, last_error, deliveries)
+VALUES ($1, $2, $3, $4, $5, $6, $7)
+ON CONFLICT (stream, entry_id) DO NOTHING
+`
+
+type InsertDeadEventParams struct {
+	Stream     string
+	EntryID    string
+	EventID    pgtype.UUID
+	Type       string
+	Envelope   string
+	LastError  string
+	Deliveries int32
+}
+
+// The stream consumer parks an entry it gives up on, then acknowledges it. An entry already parked (its XACK failed
+// before) is kept as it is.
+func (q *Queries) InsertDeadEvent(ctx context.Context, arg InsertDeadEventParams) error {
+	_, err := q.db.Exec(ctx, insertDeadEvent,
+		arg.Stream,
+		arg.EntryID,
+		arg.EventID,
+		arg.Type,
+		arg.Envelope,
+		arg.LastError,
+		arg.Deliveries,
+	)
+	return err
+}
+
+const insertProcessedEvent = `-- name: InsertProcessedEvent :execrows
+INSERT INTO processed_events (event_id, stream, type)
+VALUES ($1, $2, $3)
+ON CONFLICT (event_id) DO NOTHING
+`
+
+type InsertProcessedEventParams struct {
+	EventID pgtype.UUID
+	Stream  string
+	Type    string
+}
+
+// The stream consumer records an event in its handler's transaction. 0 rows: the event was already applied (an
+// uncommitted row of another transaction makes this wait for that transaction's end).
+func (q *Queries) InsertProcessedEvent(ctx context.Context, arg InsertProcessedEventParams) (int64, error) {
+	result, err := q.db.Exec(ctx, insertProcessedEvent, arg.EventID, arg.Stream, arg.Type)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
 
 const listDishesForMeal = `-- name: ListDishesForMeal :many
 SELECT id, name, kcal_per_portion

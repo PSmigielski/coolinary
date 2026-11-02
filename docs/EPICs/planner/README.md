@@ -256,6 +256,10 @@ Settled answers (full list in [DECISIONS.md](../DECISIONS.md)); each task states
 
 | Task | Decision |
 |---|---|
+| [PLN-01-01](E01-platform/PLN-01-01-event-consumer.md) | Q232 — where the rules below differ from kitchen's code (group start, read size, 5 deliveries, dead at once, Redis retry, cleanup time), these rules win; the API, envelope type and metric names stay kitchen's. |
+| [PLN-01-01](E01-platform/PLN-01-01-event-consumer.md) | Q235 — counted with kitchen's result label `skipped`. |
+| [PLN-01-01](E01-platform/PLN-01-01-event-consumer.md) | Q234 — keyed by stream entry, so malformed entries (no JSON, no event id) fit too. CREATE TABLE dead_events ( stream      text NOT NULL, entry_id    text NOT NULL, event_id    uuid,                      -- NULL when the envelope has no valid id type        … |
+| [PLN-01-01](E01-platform/PLN-01-01-event-consumer.md) | Q232 — planner's numbered rules win over kitchen's code where they differ; API, envelope type and metric names stay kitchen's. Decided (Q233): the lag metric is Q041's `events_consumer_lag{stream,group}` in entries (as KIT-01-05 defines it), not a seconds … |
 | [PLN-01-05](E01-platform/PLN-01-05-household-plan-copy.md) | Q004 — planner asks identity each time instead of keeping a local copy fed by `household.plan_changed`. This adds the call planner → identity (no cycle: identity calls only notifier). |
 | [PLN-01-05](E01-platform/PLN-01-05-household-plan-copy.md) | Q229 — a request falls back to the `x-plan` metadata from the signed-in user's token (at most 15 minutes old); when that is missing too, the household is treated as Free. Counted in `planner_plan_lookup_failures_total{context="request"}`. Requests that work … |
 | [PLN-01-06](E01-platform/PLN-01-06-admin-service.md) | Q016 — . |

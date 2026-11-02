@@ -20,6 +20,7 @@ import (
 	"coolinary/planner/internal/platform/admin"
 	"coolinary/planner/internal/platform/cache"
 	"coolinary/planner/internal/platform/db"
+	"coolinary/planner/internal/platform/events"
 	"coolinary/planner/internal/platform/log"
 	"coolinary/planner/internal/platform/rpc"
 	"coolinary/planner/migrations"
@@ -79,10 +80,20 @@ func run() error {
 		{Name: "redis_cache", Fn: func(ctx context.Context) error { return redisCache.Ping(ctx).Err() }},
 		{Name: "redis_state", Fn: func(ctx context.Context) error { return redisState.Ping(ctx).Err() }},
 	}, logger)
+	hostname, err := os.Hostname()
+	if err != nil {
+		return fmt.Errorf("hostname for the event consumer: %w", err)
+	}
+	// Handlers are registered by the tasks that need them (consumer.Handle before Run). /healthz doesn't depend on
+	// the consumer; redis_state above covers Redis.
+	consumer := events.NewConsumer(pool, redisState, logger, events.ConsumerOptions{
+		Streams: cfg.EventStreams, Group: cfg.ServiceName, Name: hostname,
+	})
 
 	g, gctx := errgroup.WithContext(ctx)
 	g.Go(grpcSrv.Serve)
 	g.Go(adminSrv.Serve)
+	g.Go(func() error { return consumer.Run(gctx) })
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")

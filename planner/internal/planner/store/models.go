@@ -8,10 +8,28 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type DeadEvent struct {
+	Stream     string
+	EntryID    string
+	EventID    pgtype.UUID
+	Type       string
+	Envelope   string
+	LastError  string
+	Deliveries int32
+	CreatedAt  pgtype.Timestamptz
+}
+
 type Dish struct {
 	ID             string
 	Name           string
 	Meal           int16
 	KcalPerPortion int32
 	CreatedAt      pgtype.Timestamptz
+}
+
+type ProcessedEvent struct {
+	EventID     pgtype.UUID
+	Stream      string
+	Type        string
+	ProcessedAt pgtype.Timestamptz
 }
