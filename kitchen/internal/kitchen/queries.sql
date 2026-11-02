@@ -37,3 +37,13 @@ WHERE published_at IS NULL;
 -- At most 10,000 published rows older than the cutoff per run; unpublished rows are never deleted.
 DELETE FROM outbox
 WHERE id IN (SELECT old.id FROM outbox AS old WHERE old.published_at < sqlc.arg(cutoff)::timestamptz LIMIT 10000);
+
+-- name: InsertProcessedEvent :execrows
+-- The stream consumer records an event in its handler's transaction. 0 rows: the event was already applied (an
+-- uncommitted row of another transaction makes this wait for that transaction's end).
+INSERT INTO processed_events (event_id, stream, type)
+VALUES ($1, $2, $3)
+ON CONFLICT (event_id) DO NOTHING;
+
+-- name: DeleteProcessedEvents :execrows
+DELETE FROM processed_events WHERE processed_at < sqlc.arg(cutoff)::timestamptz;

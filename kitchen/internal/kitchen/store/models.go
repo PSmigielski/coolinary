@@ -20,6 +20,13 @@ type Outbox struct {
 	LastError   pgtype.Text
 }
 
+type ProcessedEvent struct {
+	EventID     pgtype.UUID
+	Stream      string
+	Type        string
+	ProcessedAt pgtype.Timestamptz
+}
+
 type Product struct {
 	Ean       string
 	Name      string

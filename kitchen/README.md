@@ -7,6 +7,9 @@ Go. Ingredient catalogue, barcode lookup chain (household → shared catalogue �
 - Migrations: `migrations/*.sql` (goose, embedded, run at start-up). Queries: `internal/kitchen/queries.sql` → `make sqlc`.
 - Events: `events.Add` (`internal/platform/events`) writes to the `outbox` table in the change's transaction; the
   event types and payload structs are in `types.go`. Handler tests build their Queries on `eventstest.RequireTx`.
+  The relay publishes them to `events.kitchen`. `events.Consumer` reads the streams in `EVENT_STREAMS` (group
+  `kitchen`) and runs the handlers registered with `consumer.Handle(type, version, fn)` once per event
+  (`processed_events`).
 - `go run ./cmd/smoketest [-idle 600s]`: Go → Bun gRPC smoke test (`make smoke`).
 
 Runs with the rest of the stack: `make dev` from the repo root (hot reload, debugger). Settings: `.env.example`

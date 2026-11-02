@@ -11,6 +11,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deleteProcessedEvents = `-- name: DeleteProcessedEvents :execrows
+DELETE FROM processed_events WHERE processed_at < $1::timestamptz
+`
+
+func (q *Queries) DeleteProcessedEvents(ctx context.Context, cutoff pgtype.Timestamptz) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteProcessedEvents, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const deletePublishedOutbox = `-- name: DeletePublishedOutbox :execrows
 DELETE FROM outbox
 WHERE id IN (SELECT old.id FROM outbox AS old WHERE old.published_at < $1::timestamptz LIMIT 10000)
@@ -77,6 +89,28 @@ func (q *Queries) InsertOutboxEvent(ctx context.Context, arg InsertOutboxEventPa
 		arg.OccurredAt,
 	)
 	return err
+}
+
+const insertProcessedEvent = `-- name: InsertProcessedEvent :execrows
+INSERT INTO processed_events (event_id, stream, type)
+VALUES ($1, $2, $3)
+ON CONFLICT (event_id) DO NOTHING
+`
+
+type InsertProcessedEventParams struct {
+	EventID pgtype.UUID
+	Stream  string
+	Type    string
+}
+
+// The stream consumer records an event in its handler's transaction. 0 rows: the event was already applied (an
+// uncommitted row of another transaction makes this wait for that transaction's end).
+func (q *Queries) InsertProcessedEvent(ctx context.Context, arg InsertProcessedEventParams) (int64, error) {
+	result, err := q.db.Exec(ctx, insertProcessedEvent, arg.EventID, arg.Stream, arg.Type)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const listenOutbox = `-- name: ListenOutbox :exec

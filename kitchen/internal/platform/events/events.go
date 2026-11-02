@@ -16,6 +16,13 @@
 // Calling Add with Queries that aren't a transaction's is a programming error; tests catch it with
 // eventstest.RequireTx. The relay (KIT-01-03) publishes the rows in id order.
 //
+// The Consumer (KIT-01-04) applies other services' events: each registered Handler runs in one transaction with
+// the record that makes a second delivery of the same event a no-op.
+//
+//	consumer.Handle("household.plan_changed", 1, func(ctx context.Context, q *store.Queries, e events.Envelope) error {
+//		... decode e.Payload, write with q ...
+//	})
+//
 // Planner and offers copy this package (PLN-01-01, OFF-01-01) and keep it identical, except the store import path,
 // Producer and types.go, which lists each service's own event types.
 package events

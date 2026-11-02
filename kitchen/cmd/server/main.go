@@ -81,11 +81,20 @@ func run() error {
 		{Name: "redis_state", Fn: func(ctx context.Context) error { return redisState.Ping(ctx).Err() }},
 	}, logger)
 	relay := events.NewRelay(pool, redisState, logger, events.RelayOptions{})
+	hostname, err := os.Hostname()
+	if err != nil {
+		return fmt.Errorf("hostname for the event consumer: %w", err)
+	}
+	// Handlers are registered by the tasks that need them (consumer.Handle before Run).
+	consumer := events.NewConsumer(pool, redisState, logger, events.ConsumerOptions{
+		Streams: cfg.EventStreams, Group: cfg.ServiceName, Name: hostname,
+	})
 
 	g, gctx := errgroup.WithContext(ctx)
 	g.Go(grpcSrv.Serve)
 	g.Go(adminSrv.Serve)
 	g.Go(func() error { return relay.Run(gctx) })
+	g.Go(func() error { return consumer.Run(gctx) })
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")
