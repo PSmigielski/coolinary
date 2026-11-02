@@ -11,6 +11,20 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deletePublishedOutbox = `-- name: DeletePublishedOutbox :execrows
+DELETE FROM outbox
+WHERE id IN (SELECT old.id FROM outbox AS old WHERE old.published_at < $1::timestamptz LIMIT 10000)
+`
+
+// At most 10,000 published rows older than the cutoff per run; unpublished rows are never deleted.
+func (q *Queries) DeletePublishedOutbox(ctx context.Context, cutoff pgtype.Timestamptz) (int64, error) {
+	result, err := q.db.Exec(ctx, deletePublishedOutbox, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const getProductByEAN = `-- name: GetProductByEAN :one
 SELECT ean, name, brand, pack_value, pack_unit
 FROM products
@@ -63,4 +77,96 @@ func (q *Queries) InsertOutboxEvent(ctx context.Context, arg InsertOutboxEventPa
 		arg.OccurredAt,
 	)
 	return err
+}
+
+const listenOutbox = `-- name: ListenOutbox :exec
+LISTEN outbox
+`
+
+// The relay's own connection subscribes to the NOTIFY the outbox trigger sends on commit.
+func (q *Queries) ListenOutbox(ctx context.Context) error {
+	_, err := q.db.Exec(ctx, listenOutbox)
+	return err
+}
+
+const lockUnpublishedOutbox = `-- name: LockUnpublishedOutbox :many
+SELECT id, type, version, household_id, payload, occurred_at, published_at, attempts, last_error
+FROM outbox
+WHERE published_at IS NULL
+ORDER BY id
+LIMIT $1
+FOR UPDATE SKIP LOCKED
+`
+
+// One relay pass: the oldest unpublished rows in id order, locked until the pass's transaction ends. Rows another
+// relay holds are skipped.
+func (q *Queries) LockUnpublishedOutbox(ctx context.Context, limit int32) ([]Outbox, error) {
+	rows, err := q.db.Query(ctx, lockUnpublishedOutbox, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Outbox
+	for rows.Next() {
+		var i Outbox
+		if err := rows.Scan(
+			&i.ID,
+			&i.Type,
+			&i.Version,
+			&i.HouseholdID,
+			&i.Payload,
+			&i.OccurredAt,
+			&i.PublishedAt,
+			&i.Attempts,
+			&i.LastError,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const markOutboxFailed = `-- name: MarkOutboxFailed :exec
+UPDATE outbox SET attempts = attempts + 1, last_error = $2 WHERE id = $1
+`
+
+type MarkOutboxFailedParams struct {
+	ID        pgtype.UUID
+	LastError pgtype.Text
+}
+
+func (q *Queries) MarkOutboxFailed(ctx context.Context, arg MarkOutboxFailedParams) error {
+	_, err := q.db.Exec(ctx, markOutboxFailed, arg.ID, arg.LastError)
+	return err
+}
+
+const markOutboxPublished = `-- name: MarkOutboxPublished :exec
+UPDATE outbox SET published_at = now() WHERE id = ANY($1::uuid[])
+`
+
+func (q *Queries) MarkOutboxPublished(ctx context.Context, ids []pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, markOutboxPublished, ids)
+	return err
+}
+
+const outboxBacklog = `-- name: OutboxBacklog :one
+SELECT count(*) AS pending, min(occurred_at)::timestamptz AS oldest
+FROM outbox
+WHERE published_at IS NULL
+`
+
+type OutboxBacklogRow struct {
+	Pending int64
+	Oldest  pgtype.Timestamptz
+}
+
+func (q *Queries) OutboxBacklog(ctx context.Context) (OutboxBacklogRow, error) {
+	row := q.db.QueryRow(ctx, outboxBacklog)
+	var i OutboxBacklogRow
+	err := row.Scan(&i.Pending, &i.Oldest)
+	return i, err
 }

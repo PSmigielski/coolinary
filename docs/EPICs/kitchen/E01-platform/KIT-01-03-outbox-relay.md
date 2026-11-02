@@ -6,7 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
-| Status | todo |
+| Status | done |
 | Depends on | KIT-01-02 |
 | Unblocks | KIT-01-05, every kitchen event (planner and offers consume them) |
 

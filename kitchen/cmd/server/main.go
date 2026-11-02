@@ -20,6 +20,7 @@ import (
 	"coolinary/kitchen/internal/platform/admin"
 	"coolinary/kitchen/internal/platform/cache"
 	"coolinary/kitchen/internal/platform/db"
+	"coolinary/kitchen/internal/platform/events"
 	"coolinary/kitchen/internal/platform/log"
 	"coolinary/kitchen/internal/platform/rpc"
 	"coolinary/kitchen/migrations"
@@ -79,10 +80,12 @@ func run() error {
 		{Name: "redis_cache", Fn: func(ctx context.Context) error { return redisCache.Ping(ctx).Err() }},
 		{Name: "redis_state", Fn: func(ctx context.Context) error { return redisState.Ping(ctx).Err() }},
 	}, logger)
+	relay := events.NewRelay(pool, redisState, logger, events.RelayOptions{})
 
 	g, gctx := errgroup.WithContext(ctx)
 	g.Go(grpcSrv.Serve)
 	g.Go(adminSrv.Serve)
+	g.Go(func() error { return relay.Run(gctx) })
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")
