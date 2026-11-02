@@ -6,7 +6,7 @@
 | Epic | [KIT-01 Platform](README.md) |
 | Release | R1 |
 | Size | M |
-| Status | todo |
+| Status | done |
 | Depends on | KIT-01-01 |
 | Unblocks | KIT-01-05, KIT-02-09, KIT-02-10, KIT-03-06, KIT-05-05, KIT-06-06, ADM-03 |
 

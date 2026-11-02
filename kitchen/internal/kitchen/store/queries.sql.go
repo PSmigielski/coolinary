@@ -11,6 +11,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deleteAdminChangesBefore = `-- name: DeleteAdminChangesBefore :execrows
+DELETE FROM admin_changes WHERE created_at < $1::timestamptz
+`
+
+func (q *Queries) DeleteAdminChangesBefore(ctx context.Context, cutoff pgtype.Timestamptz) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAdminChangesBefore, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const deleteProcessedEvents = `-- name: DeleteProcessedEvents :execrows
 DELETE FROM processed_events WHERE processed_at < $1::timestamptz
 `
@@ -64,6 +76,33 @@ func (q *Queries) GetProductByEAN(ctx context.Context, ean string) (GetProductBy
 	return i, err
 }
 
+const insertAdminChange = `-- name: InsertAdminChange :exec
+INSERT INTO admin_changes (admin_user_id, action, entity_type, entity_id, before, after)
+VALUES ($1, $2, $3, $4, $5, $6)
+`
+
+type InsertAdminChangeParams struct {
+	AdminUserID string
+	Action      string
+	EntityType  string
+	EntityID    string
+	Before      []byte
+	After       []byte
+}
+
+// Only recordAdminChange calls this, always with a transaction's Queries (q.WithTx(tx)).
+func (q *Queries) InsertAdminChange(ctx context.Context, arg InsertAdminChangeParams) error {
+	_, err := q.db.Exec(ctx, insertAdminChange,
+		arg.AdminUserID,
+		arg.Action,
+		arg.EntityType,
+		arg.EntityID,
+		arg.Before,
+		arg.After,
+	)
+	return err
+}
+
 const insertOutboxEvent = `-- name: InsertOutboxEvent :exec
 INSERT INTO outbox (id, type, version, household_id, payload, occurred_at)
 VALUES ($1, $2, $3, $4, $5, $6)
@@ -111,6 +150,59 @@ func (q *Queries) InsertProcessedEvent(ctx context.Context, arg InsertProcessedE
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const listAdminChanges = `-- name: ListAdminChanges :many
+SELECT id, admin_user_id, action, entity_type, entity_id, before, after, created_at
+FROM admin_changes
+WHERE entity_type = $1
+  AND entity_id = $2
+  AND ($3::bigint = 0 OR id < $3::bigint)
+ORDER BY id DESC
+LIMIT $4
+`
+
+type ListAdminChangesParams struct {
+	EntityType string
+	EntityID   string
+	AfterID    int64
+	RowLimit   int32
+}
+
+// One entity's history, newest first. after_id is the page token: the last id of the previous page, or 0 for the
+// first page.
+func (q *Queries) ListAdminChanges(ctx context.Context, arg ListAdminChangesParams) ([]AdminChange, error) {
+	rows, err := q.db.Query(ctx, listAdminChanges,
+		arg.EntityType,
+		arg.EntityID,
+		arg.AfterID,
+		arg.RowLimit,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AdminChange
+	for rows.Next() {
+		var i AdminChange
+		if err := rows.Scan(
+			&i.ID,
+			&i.AdminUserID,
+			&i.Action,
+			&i.EntityType,
+			&i.EntityID,
+			&i.Before,
+			&i.After,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listenOutbox = `-- name: ListenOutbox :exec

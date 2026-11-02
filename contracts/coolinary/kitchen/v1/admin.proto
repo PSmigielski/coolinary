@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package coolinary.kitchen.v1;
+
+import "coolinary/common/v1/common.proto";
+
+// Back-office RPCs, called only by the admin service (decision 9). Every call needs x-admin-user-id metadata;
+// without it kitchen answers PERMISSION_DENIED. RPCs that change data record who changed what in admin_changes.
+service KitchenAdminService {
+  // The change history of one catalogue entity, newest first.
+  rpc ListAdminChanges(ListAdminChangesRequest) returns (ListAdminChangesResponse);
+  // One count per work queue, for the admin overview (ADM-07-01).
+  rpc GetQueueCounts(GetQueueCountsRequest) returns (GetQueueCountsResponse);
+  // Feature RPCs are added by KIT-01-05, KIT-02-09, KIT-02-10, KIT-03-06, KIT-05-05, KIT-06-06.
+}
+
+message ListAdminChangesRequest {
+  string entity_type = 1;
+  string entity_id = 2;
+  // 50 per page by default, at most 200.
+  coolinary.common.v1.PageRequest page = 3;
+}
+
+message ListAdminChangesResponse {
+  repeated AdminChange changes = 1;
+  coolinary.common.v1.PageResponse page = 2;
+}
+
+// One change an admin made to a catalogue entity.
+message AdminChange {
+  int64 id = 1;
+  string admin_user_id = 2;
+  // The name of the RPC that made the change.
+  string action = 3;
+  string entity_type = 4;
+  string entity_id = 5;
+  // The entity's catalogue fields as JSON before and after the change; empty on create and on delete.
+  string before_json = 6;
+  string after_json = 7;
+  // RFC 3339, UTC.
+  string created_at = 8;
+}
+
+message GetQueueCountsRequest {}
+
+message GetQueueCountsResponse {
+  // Open items per queue, by stable key: match_reviews, nutrition_suggestions, unreviewed_names, product_reviews,
+  // parked_items, open_batches, dead_letters. A queue whose feature isn't built yet is left out.
+  map<string, int64> counts = 1;
+  // RFC 3339, UTC.
+  string computed_at = 2;
+}

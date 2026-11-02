@@ -4,6 +4,10 @@ Go. Ingredient catalogue, barcode lookup chain (household → shared catalogue �
 
 - gRPC `50051` (connect-go: gRPC and Connect/HTTP on one port), admin `8081`, Delve `2345` in dev.
 - RPC: `KitchenService.ResolveBarcode` (try `9520000000017`).
+- Admin RPC: `KitchenAdminService` (`ListAdminChanges`, `GetQueueCounts`), same port, called only by admin and
+  refused without `x-admin-user-id`. Admin RPCs that change data call `recordAdminChange` in their transaction
+  (`admin_changes`, kept 3 years). Try `make grpc s=kitchen d='{}' flags="-H x-admin-user-id:a1"
+  args=coolinary.kitchen.v1.KitchenAdminService/GetQueueCounts`.
 - Migrations: `migrations/*.sql` (goose, embedded, run at start-up). Queries: `internal/kitchen/queries.sql` → `make sqlc`.
 - Events: `events.Add` (`internal/platform/events`) writes to the `outbox` table in the change's transaction; the
   event types and payload structs are in `types.go`. Handler tests build their Queries on `eventstest.RequireTx`.

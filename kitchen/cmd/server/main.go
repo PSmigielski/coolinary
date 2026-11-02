@@ -74,6 +74,9 @@ func run() error {
 	grpcSrv := rpc.NewServer(cfg.GRPCPort, cfg.GRPCReflection, logger)
 	path, handler := kitchenv1connect.NewKitchenServiceHandler(svc, rpc.Options(logger)...)
 	grpcSrv.Handle(kitchenv1connect.KitchenServiceName, path, handler)
+	backOffice := kitchen.NewAdmin(pool, logger)
+	path, handler = kitchenv1connect.NewKitchenAdminServiceHandler(backOffice, rpc.AdminOptions(logger)...)
+	grpcSrv.Handle(kitchenv1connect.KitchenAdminServiceName, path, handler)
 
 	adminSrv := admin.NewServer(cfg.AdminPort, []admin.Check{
 		{Name: "postgres", Fn: pool.Ping},
@@ -95,6 +98,7 @@ func run() error {
 	g.Go(adminSrv.Serve)
 	g.Go(func() error { return relay.Run(gctx) })
 	g.Go(func() error { return consumer.Run(gctx) })
+	g.Go(func() error { backOffice.RunCleanup(gctx); return nil })
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")

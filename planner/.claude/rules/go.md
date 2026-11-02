@@ -41,7 +41,8 @@ service's name.
   returned id as `next_page_token`.
 - Pass `ctx` everywhere. Never use `context.Background()` inside a request.
 - A new RPC starts in `contracts/coolinary/<svc>/v1/*.proto`, then `make proto`, then the method. Mount new
-  services in `main.go` with `rpc.Options(logger)`.
+  services in `main.go` with `rpc.Options(logger)`, and the `<Svc>AdminService` with `rpc.AdminOptions(logger)`,
+  which refuses any call without `x-admin-user-id` (`PERMISSION_DENIED`, `admin only`).
 
 ## Calling other services
 

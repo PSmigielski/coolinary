@@ -22,7 +22,7 @@ also be done in parallel.
 
 | Milestone | Release | Done when | Tasks | Done | Days | Weeks (cumulative) |
 |---|---|---|---|---|---|---|
-| [M1 Foundations](#m1-foundations) | R1 | Kitchen's event outbox and the Go consumers run, the gateway maps errors and idempotency keys, and ai answers through Claude with structured output, cost tracking and batches; the app has its typed API client. | 40 (#1–40) | 6/40 | 80.5 | 16 |
+| [M1 Foundations](#m1-foundations) | R1 | Kitchen's event outbox and the Go consumers run, the gateway maps errors and idempotency keys, and ai answers through Claude with structured output, cost tracking and batches; the app has its typed API client. | 40 (#1–40) | 7/40 | 80.5 | 16 |
 | [M2 Sign-in, households and plans](#m2-sign-in-households-and-plans) | R1 | Identity publishes household events; a phone starts anonymously, signs in with an e-mail code, keeps its household, and the gateway knows Free vs Plus; founder alerts arrive by e-mail. | 50 (#41–90) | 0/50 | 88 | 34 |
 | [M3 Back office](#m3-back-office) | R1 | An admin signs in at admin.<domain>; every action is in the audit log. | 13 (#91–103) | 0/13 | 25 | 39 |
 | [M4 Catalogue and kitchen profile](#m4-catalogue-and-kitchen-profile) | R1 | Ingredients are searchable in pl/de/en, names match to the catalogue, and onboarding saves cuisines, tools, diets and staples. | 38 (#104–141) | 0/38 | 77 | 54 |
@@ -61,7 +61,7 @@ Total: 558 tasks, about 1174 developer-days (235 weeks for one developer): R1 71
 | 4 | [KIT-01-02](kitchen/E01-platform/KIT-01-02-event-envelope-outbox.md) | Event envelope and outbox writer | kitchen | M |  |  | done |
 | 5 | [KIT-01-03](kitchen/E01-platform/KIT-01-03-outbox-relay.md) | Outbox relay to Redis Streams | kitchen | M | 4 |  | done |
 | 6 | [KIT-01-04](kitchen/E01-platform/KIT-01-04-stream-consumer.md) | Stream consumer with idempotent handlers | kitchen | L | 4 |  | done |
-| 7 | [KIT-01-07](kitchen/E01-platform/KIT-01-07-admin-service-scaffold.md) | KitchenAdminService scaffold and change records | kitchen | M | 3 |  | todo |
+| 7 | [KIT-01-07](kitchen/E01-platform/KIT-01-07-admin-service-scaffold.md) | KitchenAdminService scaffold and change records | kitchen | M | 3 |  | done |
 | 8 | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) | Event consumer (Redis Streams, Go) | planner | M | 3 |  | todo |
 | 9 | [PLN-01-02](planner/E01-platform/PLN-01-02-service-clients.md) | Clients for kitchen, offers, ai, notifier, identity | planner | M |  |  | todo |
 | 10 | [PLN-01-06](planner/E01-platform/PLN-01-06-admin-service.md) | PlannerAdminService scaffold and change log | planner | S |  |  | todo |

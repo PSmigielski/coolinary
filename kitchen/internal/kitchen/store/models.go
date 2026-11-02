@@ -8,6 +8,17 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type AdminChange struct {
+	ID          int64
+	AdminUserID string
+	Action      string
+	EntityType  string
+	EntityID    string
+	Before      []byte
+	After       []byte
+	CreatedAt   pgtype.Timestamptz
+}
+
 type Outbox struct {
 	ID          pgtype.UUID
 	Type        string

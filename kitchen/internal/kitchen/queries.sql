@@ -47,3 +47,22 @@ ON CONFLICT (event_id) DO NOTHING;
 
 -- name: DeleteProcessedEvents :execrows
 DELETE FROM processed_events WHERE processed_at < sqlc.arg(cutoff)::timestamptz;
+
+-- name: InsertAdminChange :exec
+-- Only recordAdminChange calls this, always with a transaction's Queries (q.WithTx(tx)).
+INSERT INTO admin_changes (admin_user_id, action, entity_type, entity_id, before, after)
+VALUES ($1, $2, $3, $4, $5, $6);
+
+-- name: ListAdminChanges :many
+-- One entity's history, newest first. after_id is the page token: the last id of the previous page, or 0 for the
+-- first page.
+SELECT id, admin_user_id, action, entity_type, entity_id, before, after, created_at
+FROM admin_changes
+WHERE entity_type = sqlc.arg(entity_type)
+  AND entity_id = sqlc.arg(entity_id)
+  AND (sqlc.arg(after_id)::bigint = 0 OR id < sqlc.arg(after_id)::bigint)
+ORDER BY id DESC
+LIMIT sqlc.arg(row_limit);
+
+-- name: DeleteAdminChangesBefore :execrows
+DELETE FROM admin_changes WHERE created_at < sqlc.arg(cutoff)::timestamptz;
