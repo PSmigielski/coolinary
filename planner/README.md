@@ -9,6 +9,10 @@ Go. Dish suggestions ("what can I make now"), day and week plans, per-person por
   runs the handlers registered with `consumer.Handle(type, version, fn)` once per event (`processed_events`). Entries
   it gives up on (5 failed deliveries, a newer version, a malformed envelope) go to `dead_events`. Planner publishes
   no events.
+- Calls: `clients.New` (`internal/clients`) builds the kitchen, offers, ai, notifier and identity clients. Each call
+  gets a deadline (the per-service default, or the caller's deadline minus 200 ms), kitchen and offers reads retry
+  once after 100 ms, and `clients.KindOf(err)` sorts errors into `Unavailable`, `Rejected` and `Bug`. Background
+  jobs call with `clients.JobContext(ctx, plan)`.
 
 Runs with the rest of the stack: `make dev` from the repo root (hot reload, debugger). Settings: `.env.example`
 (all variables), `.env.dev` (dev), `.env.prod` (prod, secrets via `*_FILE`). Shared rules:

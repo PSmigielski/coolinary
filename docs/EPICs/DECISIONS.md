@@ -11,7 +11,7 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
   `Decided` rule and this line together.
 - **Severity** of the items that were triaged: 5 critical, 42 high, 78 medium, 78 low; 28 were asked before triage.
 
-235 decisions: 12 you chose, 67 you confirmed, 156 default.
+239 decisions: 12 you chose, 71 you confirmed, 156 default.
 
 ## Where you chose differently from the recommendation
 
@@ -91,6 +91,10 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
 | Q233 | low | Planner's lag metric: the task's `events_lag_seconds{stream}` or Q041's `events_consumer_lag{stream,group}`? | Q041's name, in entries from XINFO GROUPS (as KIT-01-05), refreshed every minute. | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
 | Q234 | medium | The `dead_events` sketch can't hold malformed entries (invalid JSON, no event id). How are dead entries stored? | Keyed by (stream, entry_id); nullable event_id; raw envelope as text. | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
 | Q235 | low | Unknown event types in planner: result label `unknown` (task) or `skipped` (kitchen)? | `skipped`, with kitchen's other labels (ok, duplicate, error, dead). | you confirmed | [PLN-01-01](planner/E01-platform/PLN-01-01-event-consumer.md) |
+| Q236 | low | Where do planner's client deadlines, retries and error kinds live? `internal/platform/rpc` must stay identical in kitchen, offers and planner. | In planner's own package `internal/clients`; `internal/platform/rpc` is unchanged. | you confirmed | [PLN-01-02](planner/E01-platform/PLN-01-02-service-clients.md) |
+| Q237 | medium | PLN-01-02's error kinds put ABORTED and ALREADY_EXISTS under `Bug` ("anything else"), though the conventions treat them as business answers. Which kind? | `Rejected` with the code kept; CANCELED and other unlisted codes stay `Bug`. | you confirmed | [PLN-01-02](planner/E01-platform/PLN-01-02-service-clients.md) |
+| Q238 | medium | Which kitchen and offers calls are "reads" that retry once on `Unavailable`? | All except kitchen's stock writes AddStockItems, UpdateStockItem, RemoveStockItems and ConsumeStock; MatchNames is a read. | you confirmed | [PLN-01-02](planner/E01-platform/PLN-01-02-service-clients.md) |
+| Q239 | medium | Does one deadline cover a client call and its retry, or does each attempt get its own? | One deadline covers both attempts and the 100 ms wait; an attempt that used up the deadline is not retried. | you confirmed | [PLN-01-02](planner/E01-platform/PLN-01-02-service-clients.md) |
 
 ### M3 Back office (R1)
 

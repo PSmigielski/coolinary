@@ -14,6 +14,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"coolinary/planner/gen/coolinary/planner/v1/plannerv1connect"
+	"coolinary/planner/internal/clients"
 	"coolinary/planner/internal/config"
 	"coolinary/planner/internal/planner"
 	"coolinary/planner/internal/planner/store"
@@ -70,7 +71,11 @@ func run() error {
 		return err
 	}
 
-	svc := planner.New(store.New(pool), logger)
+	calls := clients.New(clients.Addrs{
+		Kitchen: cfg.KitchenAddr, Offers: cfg.OffersAddr, AI: cfg.AIAddr,
+		Notifier: cfg.NotifierAddr, Identity: cfg.IdentityAddr,
+	})
+	svc := planner.New(store.New(pool), calls, logger)
 	grpcSrv := rpc.NewServer(cfg.GRPCPort, cfg.GRPCReflection, logger)
 	path, handler := plannerv1connect.NewPlannerServiceHandler(svc, rpc.Options(logger)...)
 	grpcSrv.Handle(plannerv1connect.PlannerServiceName, path, handler)

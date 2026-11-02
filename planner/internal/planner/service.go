@@ -10,17 +10,21 @@ import (
 
 	plannerv1 "coolinary/planner/gen/coolinary/planner/v1"
 	"coolinary/planner/gen/coolinary/planner/v1/plannerv1connect"
+	"coolinary/planner/internal/clients"
 	"coolinary/planner/internal/planner/store"
 )
 
 type Service struct {
-	q   *store.Queries
-	log *slog.Logger
+	q     *store.Queries
+	calls *clients.Clients // kitchen, offers, ai, notifier, identity
+	log   *slog.Logger
 }
 
 var _ plannerv1connect.PlannerServiceHandler = (*Service)(nil)
 
-func New(q *store.Queries, log *slog.Logger) *Service { return &Service{q: q, log: log} }
+func New(q *store.Queries, calls *clients.Clients, log *slog.Logger) *Service {
+	return &Service{q: q, calls: calls, log: log}
+}
 
 // SuggestDishes lists library dishes for a meal. Ranking by stock on hand
 // (via kitchen) and expiry comes with the planner feature; share_on_hand is 0 for now.

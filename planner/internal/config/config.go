@@ -22,9 +22,11 @@ type Config struct {
 	EventStreams []string
 
 	// Addresses of services this one calls (host:port).
-	KitchenAddr string
-	OffersAddr  string
-	AIAddr      string
+	KitchenAddr  string
+	OffersAddr   string
+	AIAddr       string
+	NotifierAddr string
+	IdentityAddr string
 }
 
 func Load() (Config, error) {
@@ -41,6 +43,8 @@ func Load() (Config, error) {
 		KitchenAddr:    get("KITCHEN_GRPC_ADDR", "kitchen:50051"),
 		OffersAddr:     get("OFFERS_GRPC_ADDR", "offers:50051"),
 		AIAddr:         get("AI_GRPC_ADDR", "ai:50051"),
+		NotifierAddr:   get("NOTIFIER_GRPC_ADDR", "notifier:50051"),
+		IdentityAddr:   get("IDENTITY_GRPC_ADDR", "identity:50051"),
 	}
 	if c.DatabaseURL == "" {
 		return c, fmt.Errorf("DATABASE_URL is required")
