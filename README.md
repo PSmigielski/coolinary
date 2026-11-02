@@ -155,7 +155,7 @@ On the server (Linux, Docker Compose ≥ 5.0), with DNS for `api.`, `grafana.` a
 
 ```sh
 # set DOMAIN in .env
-make secrets    # generates ./secrets (never overwrites); then edit secrets/smtp_url
+make secrets    # generates ./secrets (never overwrites); then edit secrets/smtp_url and secrets/anthropic_api_key
 make prod       # builds the images and starts everything behind Caddy (ports 80/443 only)
 make backup     # run a database backup now (it also runs nightly at 03:00 UTC)
 ```

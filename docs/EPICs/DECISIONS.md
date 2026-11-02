@@ -11,7 +11,7 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
   `Decided` rule and this line together.
 - **Severity** of the items that were triaged: 5 critical, 42 high, 78 medium, 78 low; 28 were asked before triage.
 
-239 decisions: 12 you chose, 71 you confirmed, 156 default.
+243 decisions: 12 you chose, 75 you confirmed, 156 default.
 
 ## Where you chose differently from the recommendation
 
@@ -58,6 +58,10 @@ Every small choice the task files left open, settled on 1 November 2026. The tas
 | Q020 | — | Should the app send its version and platform in an x-client header on every request? | Yes, for support and for refusing too-old app versions | you confirmed | [MOB-02-01](mobile/E02-api-client/MOB-02-01-request-middleware.md), [GW-01-01](gateway/E01-platform/GW-01-01-request-context.md) |
 | Q021 | — | How long may a phone stay offline and still have its queued edits replayed safely: 72 hours or 24 hours? | 24 hours — Idempotency keys replay for 24 hours; the app drops queued offline edits older than 24 hours. | **you chose** | [GW-01-03](gateway/E01-platform/GW-01-03-idempotency-keys.md) |
 | Q022 | — | Should a flyer PDF a user uploads stay capped at 20 pages (25 MB), or go up to 40 pages? | 40 pages — Own-flyer PDFs may have up to 40 pages and 25 MB, from R2. | **you chose** | [GW-01-05](gateway/E01-platform/GW-01-05-uploads.md), [OFF-10-01](offers/E10-user-flyers/OFF-10-01-upload-and-jobs.md), [MOB-07-03](mobile/E07-uploads/MOB-07-03-flyer-inputs.md) |
+| Q240 | medium | How do env overrides (`AI_JOB_<JOB>_MODEL`/`_EFFORT`) combine with the file's `by_plan` overrides, given decision 15 pins Free day plans to Haiku? | Env replaces model and effort for every plan, `by_plan` included, except `compose_day_plan`'s Free model, pinned to Haiku in code; start-up fails if the file lacks that override. | you confirmed | [AI-01-01](ai/E01-claude-provider/AI-01-01-sdk-config-and-job-registry.md) |
+| Q241 | low | AI-01-01 checks model ids against the price table, which AI-02-01 builds later. What does the check use until then? | `prices.toml` with the two model rows and AI-02-01's prices; AI-02-01 adds the calculator, multipliers and fallback rows. | you confirmed | [AI-01-01](ai/E01-claude-provider/AI-01-01-sdk-config-and-job-registry.md) |
+| Q242 | low | Should AI-01-01's registry already hold the batch kinds, for which only model and effort are given? | No: the 13 sync jobs only; AI-04-01 adds the `[batch.<kind>]` tables. | you confirmed | [AI-01-01](ai/E01-claude-provider/AI-01-01-sdk-config-and-job-registry.md) |
+| Q243 | medium | How do server-side fallbacks resolve when a job's model changes by plan or env (Q017: on for every Sonnet job)? | `fallbacks = true` on the Sonnet jobs and `compose_day_plan`; effective only when the model used is a `claude-sonnet-*` model. | you confirmed | [AI-01-01](ai/E01-claude-provider/AI-01-01-sdk-config-and-job-registry.md) |
 
 ### M2 Sign-in, households and plans (R1)
 

@@ -234,8 +234,8 @@ Everything below is planned task by task in `docs/EPICs/` (order in `docs/EPICs/
 - identity: sign-in by e-mail code instead of passwords, anonymous accounts, invites, entitlements, account deletion.
 - Gateway: Free-tier AI quota, rate limits, idempotency keys, the live shopping-list WebSocket.
 - notifier: push (Expo Push API), devices and preferences, founder alerts.
-- ai: the Claude provider (`LLM_PROVIDER` only knows `stub` today), cost tracking and the spend limit (needs
-  `REDIS_STATE_URL` and `ANTHROPIC_API_KEY`), batch jobs.
+- ai: the Claude provider (settings, `ANTHROPIC_API_KEY` and the job registry exist; the provider is AI-01-03),
+  cost tracking and the spend limit (needs `REDIS_STATE_URL`), batch jobs.
 - admin: the whole service (ADM-01), its database, Caddy route and Prometheus target.
 - Remote push in the app needs a development build: Expo Go on SDK 58 does not receive remote push notifications.
 - Off-site copies of the nightly database backups; a container registry and CI.

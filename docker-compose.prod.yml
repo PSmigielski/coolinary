@@ -38,6 +38,7 @@ secrets:
   langfuse_public_key: { file: ./secrets/langfuse_public_key }
   langfuse_secret_key: { file: ./secrets/langfuse_secret_key }
   trace_hash_salt: { file: ./secrets/trace_hash_salt }
+  anthropic_api_key: { file: ./secrets/anthropic_api_key }
   grafana_admin_password: { file: ./secrets/grafana_admin_password }
 
 volumes:
@@ -188,7 +189,7 @@ services:
     build:
       target: prod
     env_file: [./ai/.env.prod]
-    secrets: [langfuse_public_key, langfuse_secret_key, trace_hash_salt]
+    secrets: [langfuse_public_key, langfuse_secret_key, trace_hash_salt, anthropic_api_key]
     deploy:
       resources:
         limits: { cpus: "1", memory: 384M }

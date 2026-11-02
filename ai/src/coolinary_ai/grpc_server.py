@@ -17,9 +17,9 @@ from prometheus_client import Counter, Histogram
 from coolinary.ai.v1 import ai_pb2, ai_pb2_grpc
 from coolinary.common.v1 import common_pb2
 
-from . import cache, tracing
+from . import cache, jobs, tracing
 from .config import settings
-from .llm import get_provider
+from .llm import Provider, get_provider
 from .log import log
 
 SERVICE_NAME = ai_pb2.DESCRIPTOR.services_by_name["AiService"].full_name
@@ -83,9 +83,19 @@ def _to_proto(items: list[dict[str, Any]]) -> list[ai_pb2.ExtractedItem]:
     return out
 
 
+async def _abort_disabled(context: grpc.aio.ServicerContext[Any, Any], job: jobs.Job) -> None:
+    """A job switched off in the registry: UNAVAILABLE, so the caller runs its non-AI fallback."""
+    await context.abort(
+        grpc.StatusCode.UNAVAILABLE,
+        f"ai_disabled: {job.name} is switched off",
+        trailing_metadata=(("x-error-code", "ai_disabled"),),
+    )
+
+
 class AiServicer(ai_pb2_grpc.AiServiceServicer):
-    def __init__(self) -> None:
-        self.provider = get_provider(settings.llm_provider)
+    def __init__(self, registry: jobs.Registry, provider: Provider) -> None:
+        self.registry = registry
+        self.provider = provider
 
     async def ExtractItemsFromText(
         self,
@@ -103,6 +113,9 @@ class AiServicer(ai_pb2_grpc.AiServiceServicer):
             )
         # Text metadata only; binary (-bin) keys carry bytes.
         md = {k: v for k, v in context.invocation_metadata() or () if isinstance(v, str)}
+        job = self.registry.job("text_to_items", md.get("x-plan", ""))
+        if not job.enabled:
+            await _abort_disabled(context, job)
         language = request.language or "en"
 
         k = cache.key("text_to_items", self.provider.name, language, text)
@@ -129,7 +142,7 @@ class AiServicer(ai_pb2_grpc.AiServiceServicer):
         return ai_pb2.ExtractItemsFromTextResponse(items=_to_proto(items), model=result.model, cached=False)
 
 
-async def start() -> grpc.aio.Server:
+async def start(registry: jobs.Registry) -> grpc.aio.Server:
     server = grpc.aio.server(
         interceptors=[MetricsInterceptor()],
         options=[
@@ -138,7 +151,9 @@ async def start() -> grpc.aio.Server:
             ("grpc.http2.min_ping_interval_without_data_ms", 10_000),
         ],
     )
-    ai_pb2_grpc.add_AiServiceServicer_to_server(AiServicer(), server)
+    ai_pb2_grpc.add_AiServiceServicer_to_server(
+        AiServicer(registry, get_provider(settings.llm_provider)), server
+    )
     health_servicer = health.aio.HealthServicer()
     health_pb2_grpc.add_HealthServicer_to_server(health_servicer, server)
     for name in ("", SERVICE_NAME):

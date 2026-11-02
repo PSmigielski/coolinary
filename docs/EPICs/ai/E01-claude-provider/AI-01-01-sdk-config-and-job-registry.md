@@ -6,7 +6,7 @@
 | Epic | [AI-01 Claude provider foundation](README.md) |
 | Release | R1 |
 | Size | M |
-| Status | todo |
+| Status | done |
 | Depends on | — |
 | Unblocks | AI-01-02, AI-01-08, AI-02-01 |
 
@@ -29,6 +29,8 @@ cache lifetime is configured, so changing a model is a config change, not a code
    `[<job>.by_plan.plus]` overrides for `model` and `effort`. The plan is read from `x-plan` (AI-01-08); an empty or
    unknown plan uses the `free` override. Decision 15: `compose_day_plan` ships with
    `[compose_day_plan.by_plan.free] model = "claude-haiku-5-5"`, and that override may not be removed by env.
+   Decided (Q243): `fallbacks = true` on the six Sonnet jobs and on `compose_day_plan`, `false` on Haiku jobs; a
+   resolved job has fallbacks only when the model it runs on is a `claude-sonnet-*` model.
 4. Starting values (tuned later by evals, AI-03):
 
    | Job | model | effort | max_tokens | timeout_s |
@@ -48,10 +50,19 @@ cache lifetime is configured, so changing a model is a config change, not a code
    | extract_receipt | claude-haiku-5-5 | medium | 6000 | 25 |
    | batch kinds | see the kinds table in [AI-04](../E04-batch-jobs/README.md) | | | |
 
+   Decided (Q242): this task builds the 13 sync jobs above; batch kinds get their `[batch.<kind>]` tables in
+   AI-04-01.
+
 5. Model ids are written exactly `claude-haiku-5-5` and `claude-sonnet-5-5`, never with a date suffix. The
    registry rejects any model id not in the price table (AI-02-01) at start-up.
+   Decided (Q241): until AI-02-01 the price table is `src/coolinary_ai/prices.toml` with the two model rows and the
+   prices of AI-02-01's table; the registry checks model ids against its keys. AI-02-01 adds the calculator, the
+   multipliers and the fallback-model rows, and re-checks the prices.
 6. Per-request overrides through env: `AI_JOB_<JOB>_MODEL`, `AI_JOB_<JOB>_EFFORT`, `AI_JOB_<JOB>_ENABLED`
    (upper-case job name). Env wins over the file.
+   Decided (Q240): env overrides replace a job's model and effort for every plan, `by_plan` overrides in the file
+   included, except `compose_day_plan`'s Free model, which is pinned to `claude-haiku-5-5` in code; start-up fails if
+   `jobs.toml` lacks that override or names another model.
 7. A job with `enabled=false` returns `UNAVAILABLE` with reason `ai_disabled` (AI-01-04) without calling Claude, so
    any AI feature can be switched off in prod by env and the caller's non-AI fallback runs.
 8. The registry is loaded once at start-up and validated: effort in the allowed set, `max_tokens` between 256 and

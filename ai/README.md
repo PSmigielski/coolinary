@@ -4,7 +4,8 @@ Python 3.14 + uv + FastAPI. Every LLM call in the system. Callers are the Go ser
 
 - gRPC `50051` (`grpc.aio`, started in FastAPI's lifespan), admin HTTP `8081` (FastAPI: `/healthz`, `/metrics`), debugpy `5678` in dev.
 - RPC: `AiService.ExtractItemsFromText`.
-- LLM providers live in `src/coolinary_ai/llm/`; only `stub` (rule-based) exists until a provider is chosen (`LLM_PROVIDER`).
+- LLM providers live in `src/coolinary_ai/llm/`: `LLM_PROVIDER=stub` (rule-based; dev, tests, CI) or `anthropic` (Claude API, AI-01-03).
+- Every job's model, effort and limits: `src/coolinary_ai/jobs.toml`, checked at start-up; env overrides `AI_JOB_<JOB>_MODEL`, `_EFFORT`, `_ENABLED`.
 - Generated gRPC code: `src/coolinary/` (`make proto`, via `scripts/gen-proto.sh`).
 - Tests: `uv run pytest`; lint: `make lint s=ai` from the repo root (ruff check + format, mypy strict).
 

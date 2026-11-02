@@ -1,0 +1,18 @@
+# Claude prices in USD per million tokens. The job registry accepts only the models listed here (AI-01-01).
+# AI-02-01 re-checks the prices against the public pricing page and adds the models a Sonnet fallback can
+# answer with.
+#
+# input, output                     prompts up to 100K tokens (input + cache read + cache write)
+# input_over_100k, output_over_100k longer prompts
+
+[claude-haiku-5-5]
+input = 0.10
+output = 0.50
+input_over_100k = 0.50
+output_over_100k = 2.50
+
+[claude-sonnet-5-5]
+input = 2.00
+output = 10.00
+input_over_100k = 2.00
+output_over_100k = 10.00

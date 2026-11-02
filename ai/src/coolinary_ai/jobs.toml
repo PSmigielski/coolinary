@@ -1,0 +1,150 @@
+# Every AI job's model, effort and limits (AI-01-01). Changing a model is a config change.
+# Starting values; each is tuned by the job's golden set (AI-03).
+#
+# model              a model in prices.toml, without a date suffix
+# effort             low, medium, high, xhigh or max
+# max_tokens         256–64000
+# timeout_seconds    5–120
+# max_retries        0–3
+# cache_ttl_seconds  how long a result stays in the result cache (AI-01-09)
+# enabled            false: calls fail UNAVAILABLE ai_disabled and the caller's non-AI fallback runs
+# fallbacks          server-side refusal fallbacks; used only while the job runs on a Sonnet model (Q017, Q243)
+#
+# [<job>.by_plan.free] / [<job>.by_plan.plus] override model and effort for one plan; an empty or unknown x-plan
+# uses free. Env overrides win over this file for every plan (Q240): AI_JOB_<JOB>_MODEL, AI_JOB_<JOB>_EFFORT,
+# AI_JOB_<JOB>_ENABLED. The one exception is compose_day_plan's Free model, fixed to Haiku (decision 15).
+
+[text_to_items]
+model = "claude-haiku-5-5"
+effort = "low"
+max_tokens = 4000
+timeout_seconds = 15
+max_retries = 2
+cache_ttl_seconds = 604800  # 7 days
+enabled = true
+fallbacks = false
+
+[photo_to_items]
+model = "claude-haiku-5-5"
+effort = "medium"
+max_tokens = 8000
+timeout_seconds = 25
+max_retries = 2
+cache_ttl_seconds = 86400  # 1 day
+enabled = true
+fallbacks = false
+
+[read_label]
+model = "claude-haiku-5-5"
+effort = "low"
+max_tokens = 3000
+timeout_seconds = 15
+max_retries = 2
+cache_ttl_seconds = 2592000  # 30 days
+enabled = true
+fallbacks = false
+
+[pick_matches]
+model = "claude-haiku-5-5"
+effort = "low"
+max_tokens = 6000
+timeout_seconds = 20
+max_retries = 2
+cache_ttl_seconds = 2592000  # 30 days
+enabled = true
+fallbacks = false
+
+# Plus stays on Haiku until AI-10-05 shows Sonnet 5.5 clearly better.
+[compose_day_plan]
+model = "claude-haiku-5-5"
+effort = "medium"
+max_tokens = 16000
+timeout_seconds = 55
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+# Decision 15: Free day plans compose on Haiku 5.5. Required; env can't change it.
+[compose_day_plan.by_plan.free]
+model = "claude-haiku-5-5"
+
+[modify_meal]
+model = "claude-sonnet-5-5"
+effort = "low"
+max_tokens = 8000
+timeout_seconds = 40
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[rewrite_dish]
+model = "claude-sonnet-5-5"
+effort = "low"
+max_tokens = 8000
+timeout_seconds = 40
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[compose_family_day]
+model = "claude-sonnet-5-5"
+effort = "medium"
+max_tokens = 16000
+timeout_seconds = 55
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[compose_from_deals]
+model = "claude-sonnet-5-5"
+effort = "medium"
+max_tokens = 16000
+timeout_seconds = 55
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[compose_week_plan]
+model = "claude-sonnet-5-5"
+effort = "high"
+max_tokens = 32000
+timeout_seconds = 110
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[cheapest_top_up]
+model = "claude-sonnet-5-5"
+effort = "medium"
+max_tokens = 12000
+timeout_seconds = 55
+max_retries = 2
+cache_ttl_seconds = 3600  # 1 hour
+enabled = true
+fallbacks = true
+
+[extract_flyer_offers]
+model = "claude-haiku-5-5"
+effort = "medium"
+max_tokens = 12000
+timeout_seconds = 40
+max_retries = 2
+cache_ttl_seconds = 2592000  # 30 days
+enabled = true
+fallbacks = false
+
+[extract_receipt]
+model = "claude-haiku-5-5"
+effort = "medium"
+max_tokens = 6000
+timeout_seconds = 25
+max_retries = 2
+cache_ttl_seconds = 86400  # 1 day
+enabled = true
+fallbacks = false

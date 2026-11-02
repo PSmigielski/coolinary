@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Generates production secrets into ./secrets (gitignored). Never overwrites an existing file,
-# so it is safe to re-run after adding a new secret. Edit secrets/smtp_url by hand.
+# so it is safe to re-run after adding a new secret. Edit secrets/smtp_url and secrets/anthropic_api_key by hand.
 #
 # Files are 0644 because Compose (without Swarm) bind-mounts them as they are and our
 # images run as uid 65532. The folder itself is 0700.
@@ -29,6 +29,7 @@ done
 
 write better_auth_secret "$(rand 64)"
 write smtp_url "smtp://user:password@smtp.example.com:587"
+write anthropic_api_key "sk-ant-replace-me"
 write trace_hash_salt "$(rand 32)"
 write grafana_admin_password "$(rand 24)"
 write langfuse_public_key "pk-lf-$(rand 32)"
@@ -81,6 +82,6 @@ LANGFUSE_INIT_USER_NAME=Admin
 LANGFUSE_INIT_USER_PASSWORD=$(cat "$dir/langfuse_admin_password")
 "
 echo
-echo "Done. Edit $dir/smtp_url with your mail provider."
+echo "Done. Edit $dir/smtp_url with your mail provider and $dir/anthropic_api_key with your Claude API key."
 echo "Grafana:  admin / $dir/grafana_admin_password"
 echo "Langfuse: admin@${DOMAIN} / $dir/langfuse_admin_password"
