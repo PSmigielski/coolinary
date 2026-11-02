@@ -79,6 +79,9 @@ func run() error {
 	grpcSrv := rpc.NewServer(cfg.GRPCPort, cfg.GRPCReflection, logger)
 	path, handler := plannerv1connect.NewPlannerServiceHandler(svc, rpc.Options(logger)...)
 	grpcSrv.Handle(plannerv1connect.PlannerServiceName, path, handler)
+	backOffice := planner.NewAdmin(pool, logger)
+	path, handler = plannerv1connect.NewPlannerAdminServiceHandler(backOffice, rpc.AdminOptions(logger)...)
+	grpcSrv.Handle(plannerv1connect.PlannerAdminServiceName, path, handler)
 
 	adminSrv := admin.NewServer(cfg.AdminPort, []admin.Check{
 		{Name: "postgres", Fn: pool.Ping},
@@ -99,6 +102,7 @@ func run() error {
 	g.Go(grpcSrv.Serve)
 	g.Go(adminSrv.Serve)
 	g.Go(func() error { return consumer.Run(gctx) })
+	g.Go(func() error { backOffice.RunCleanup(gctx); return nil })
 	g.Go(func() error {
 		<-gctx.Done()
 		logger.Info("shutting down")

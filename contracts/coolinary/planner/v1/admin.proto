@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package coolinary.planner.v1;
+
+import "coolinary/common/v1/common.proto";
+
+// Back-office RPCs, called only by the admin service (decision 9). Every call needs x-admin-user-id metadata;
+// without it planner answers PERMISSION_DENIED. RPCs that change data record who changed what in admin_changes.
+service PlannerAdminService {
+  // The change history of one target (e.g. one dish), newest first.
+  rpc ListAdminChanges(ListAdminChangesRequest) returns (ListAdminChangesResponse);
+  // One count per work queue, for the admin overview (ADM-07-01).
+  rpc GetQueueCounts(GetQueueCountsRequest) returns (GetQueueCountsResponse);
+  // Review, import and promotion RPCs are added by PLN-03 and PLN-11.
+}
+
+message ListAdminChangesRequest {
+  // What was changed, as "<kind>:<id>", e.g. "dish:3f2c...", "import:9a1b...".
+  string target = 1;
+  // 50 per page by default, at most 200.
+  coolinary.common.v1.PageRequest page = 2;
+}
+
+// One change an admin made.
+message AdminChange {
+  string admin_user_id = 1;
+  // The name of the RPC that made the change.
+  string rpc = 2;
+  string target = 3;
+  // A short JSON summary: ids and counts, never free text from users.
+  string summary_json = 4;
+  // RFC 3339, UTC.
+  string created_at = 5;
+}
+
+message ListAdminChangesResponse {
+  repeated AdminChange changes = 1;
+  coolinary.common.v1.PageResponse page = 2;
+}
+
+message GetQueueCountsRequest {}
+
+message GetQueueCountsResponse {
+  // Open items per queue, by stable key: review_queue, dietitian_pending, effort_tags_pending, promotion_candidates,
+  // open_batches. A queue whose feature isn't built yet is left out.
+  map<string, int64> counts = 1;
+  // RFC 3339, UTC.
+  string computed_at = 2;
+}

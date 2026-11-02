@@ -4,6 +4,11 @@ Go. Dish suggestions ("what can I make now"), day and week plans, per-person por
 
 - gRPC `50051` (connect-go), admin `8081`, Delve `2345` in dev.
 - RPC: `PlannerService.SuggestDishes`.
+- Admin RPC: `PlannerAdminService` (`ListAdminChanges`, `GetQueueCounts`), same port, called only by admin and
+  refused without `x-admin-user-id`; the gateway has no client for it. Admin RPCs that change data call
+  `recordAdminChange` in their transaction (`admin_changes`: admin, RPC, target such as `dish:<id>`, a JSON summary
+  of ids and counts; kept 1 year). Try `make grpc s=planner d='{}' flags="-H x-admin-user-id:a1"
+  args=coolinary.planner.v1.PlannerAdminService/GetQueueCounts`.
 - Migrations: `migrations/*.sql` (goose). Queries: `internal/planner/queries.sql` → `make sqlc`.
 - Events: `events.Consumer` (`internal/platform/events`) reads the streams in `EVENT_STREAMS` (group `planner`) and
   runs the handlers registered with `consumer.Handle(type, version, fn)` once per event (`processed_events`). Entries

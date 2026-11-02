@@ -6,7 +6,7 @@
 | Epic | [PLN-01 Platform](README.md) |
 | Release | R1 |
 | Size | S |
-| Status | todo |
+| Status | done |
 | Depends on | — |
 | Unblocks | PLN-03-03, PLN-03-07, PLN-03-08, PLN-03-09, PLN-11-03, ADM-04 |
 

@@ -21,3 +21,21 @@ DELETE FROM processed_events WHERE processed_at < sqlc.arg(cutoff)::timestamptz;
 INSERT INTO dead_events (stream, entry_id, event_id, type, envelope, last_error, deliveries)
 VALUES ($1, $2, $3, $4, $5, $6, $7)
 ON CONFLICT (stream, entry_id) DO NOTHING;
+
+-- name: InsertAdminChange :exec
+-- Only recordAdminChange calls this, always with a transaction's Queries (q.WithTx(tx)).
+INSERT INTO admin_changes (admin_user_id, rpc, target, summary)
+VALUES ($1, $2, $3, $4);
+
+-- name: ListAdminChanges :many
+-- One target's history, newest first. after_id is the page token: the last id of the previous page, or 0 for the
+-- first page.
+SELECT id, admin_user_id, rpc, target, summary, created_at
+FROM admin_changes
+WHERE target = sqlc.arg(target)
+  AND (sqlc.arg(after_id)::bigint = 0 OR id < sqlc.arg(after_id)::bigint)
+ORDER BY id DESC
+LIMIT sqlc.arg(row_limit);
+
+-- name: DeleteAdminChangesBefore :execrows
+DELETE FROM admin_changes WHERE created_at < sqlc.arg(cutoff)::timestamptz;

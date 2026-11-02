@@ -8,6 +8,15 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type AdminChange struct {
+	ID          int64
+	AdminUserID string
+	Rpc         string
+	Target      string
+	Summary     []byte
+	CreatedAt   pgtype.Timestamptz
+}
+
 type DeadEvent struct {
 	Stream     string
 	EntryID    string

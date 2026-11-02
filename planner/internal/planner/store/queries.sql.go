@@ -11,6 +11,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deleteAdminChangesBefore = `-- name: DeleteAdminChangesBefore :execrows
+DELETE FROM admin_changes WHERE created_at < $1::timestamptz
+`
+
+func (q *Queries) DeleteAdminChangesBefore(ctx context.Context, cutoff pgtype.Timestamptz) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteAdminChangesBefore, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const deleteProcessedEvents = `-- name: DeleteProcessedEvents :execrows
 DELETE FROM processed_events WHERE processed_at < $1::timestamptz
 `
@@ -21,6 +33,29 @@ func (q *Queries) DeleteProcessedEvents(ctx context.Context, cutoff pgtype.Times
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const insertAdminChange = `-- name: InsertAdminChange :exec
+INSERT INTO admin_changes (admin_user_id, rpc, target, summary)
+VALUES ($1, $2, $3, $4)
+`
+
+type InsertAdminChangeParams struct {
+	AdminUserID string
+	Rpc         string
+	Target      string
+	Summary     []byte
+}
+
+// Only recordAdminChange calls this, always with a transaction's Queries (q.WithTx(tx)).
+func (q *Queries) InsertAdminChange(ctx context.Context, arg InsertAdminChangeParams) error {
+	_, err := q.db.Exec(ctx, insertAdminChange,
+		arg.AdminUserID,
+		arg.Rpc,
+		arg.Target,
+		arg.Summary,
+	)
+	return err
 }
 
 const insertDeadEvent = `-- name: InsertDeadEvent :exec
@@ -74,6 +109,50 @@ func (q *Queries) InsertProcessedEvent(ctx context.Context, arg InsertProcessedE
 		return 0, err
 	}
 	return result.RowsAffected(), nil
+}
+
+const listAdminChanges = `-- name: ListAdminChanges :many
+SELECT id, admin_user_id, rpc, target, summary, created_at
+FROM admin_changes
+WHERE target = $1
+  AND ($2::bigint = 0 OR id < $2::bigint)
+ORDER BY id DESC
+LIMIT $3
+`
+
+type ListAdminChangesParams struct {
+	Target   string
+	AfterID  int64
+	RowLimit int32
+}
+
+// One target's history, newest first. after_id is the page token: the last id of the previous page, or 0 for the
+// first page.
+func (q *Queries) ListAdminChanges(ctx context.Context, arg ListAdminChangesParams) ([]AdminChange, error) {
+	rows, err := q.db.Query(ctx, listAdminChanges, arg.Target, arg.AfterID, arg.RowLimit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []AdminChange
+	for rows.Next() {
+		var i AdminChange
+		if err := rows.Scan(
+			&i.ID,
+			&i.AdminUserID,
+			&i.Rpc,
+			&i.Target,
+			&i.Summary,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listDishesForMeal = `-- name: ListDishesForMeal :many
