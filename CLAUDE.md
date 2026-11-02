@@ -7,8 +7,9 @@ Start with `README.md`. Product rules: `docs/features.md`, `docs/business-model.
 ## Building the planned work
 
 - All planned work is in `docs/EPICs/`: one file per task, built in the order of `docs/EPICs/ROADMAP.md`.
-- Work on one task at a time with `/next-task` (unattended: `scripts/epics/run-tasks.sh`). Never start a task whose
-  dependencies (the roadmap's "After" column) aren't done.
+- Build tasks with `/next-task` (unattended: `scripts/epics/run-tasks.sh`): a batch of ready tasks at a time, each
+  built by its own subagent in its own git worktree, then landed on the milestone branch one commit per task. Never
+  start a task whose dependencies (the roadmap's "After" column) aren't done.
 - The task file is the spec: business rules, `Decided (Qnnn):` rules, contract and data sketches, errors and
   acceptance criteria. `docs/EPICs/README.md` holds the decisions and the cross-service names (RPCs, events, error
   reasons) that bind every task; `docs/EPICs/DECISIONS.md` indexes every decision.
@@ -44,4 +45,5 @@ Start with `README.md`. Product rules: `docs/features.md`, `docs/business-model.
 
 - One branch per milestone (`m01-foundations`, … as `tasks.py next` names it), one commit per finished task:
   `feat(<svc>): <TASK-ID> <title>`. Never push, merge, rebase or reset; the owner reviews and merges each milestone.
+  Task worktrees are created, landed (cherry-picked as one commit) and removed only with `scripts/epics/worktree.sh`.
 - Commit only the files the task changed. Other work may be staged or modified in the tree: leave it alone.

@@ -4,6 +4,8 @@
 # Tests that need Postgres or Redis read TEST_DATABASE_URL, TEST_REDIS_CACHE_URL and TEST_REDIS_STATE_URL and must
 # skip when they are unset. Those are set only when the dev stack is up (`make dev`): the service then gets its own
 # `<svc>_test` database (created on first use, owned by the service role) and Redis database 15, never the dev data.
+# In a linked git worktree (parallel /next-task batches, scripts/epics/worktree.sh) the database is
+# `<svc>_test_<worktree folder>`, so parallel tasks with different migrations never share one.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -15,6 +17,11 @@ UV="${UV:-$(command -v uv || echo "$HOME/.local/bin/uv")}"
 CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/coolinary-lint"
 DEV=(docker compose -f docker-compose.dev.yml)
 
+testdb="${svc}_test"
+if [[ "$(git rev-parse --path-format=absolute --git-dir 2>/dev/null)" != "$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ]]; then
+  testdb="${svc}_test_$(basename "$PWD" | tr 'A-Z' 'a-z' | tr -c 'a-z0-9\n' '_' | cut -c1-40)"
+fi
+
 echo "── test $svc"
 [[ -d "$svc" ]] || { echo "no folder $svc"; exit 1; }
 
@@ -23,13 +30,13 @@ if docker network inspect coolinary >/dev/null 2>&1 && [[ -n "$("${DEV[@]}" ps -
   stack=1
 fi
 
-# Create <svc>_test when the service has a database role.
+# Create the test database when the service has a database role.
 db=""
 if [[ -n "$stack" ]]; then
   psql=("${DEV[@]}" exec -T postgres psql -U postgres -qtA)
   if [[ "$("${psql[@]}" -c "SELECT 1 FROM pg_roles WHERE rolname = '$svc'")" == 1 ]]; then
-    if [[ "$("${psql[@]}" -c "SELECT 1 FROM pg_database WHERE datname = '${svc}_test'")" != 1 ]]; then
-      "${psql[@]}" -c "CREATE DATABASE ${svc}_test OWNER $svc" >/dev/null
+    if [[ "$("${psql[@]}" -c "SELECT 1 FROM pg_database WHERE datname = '$testdb'")" != 1 ]]; then
+      "${psql[@]}" -c "CREATE DATABASE \"$testdb\" OWNER $svc" >/dev/null
     fi
     db=1
   fi
@@ -41,7 +48,7 @@ fi
 test_env() {
   local pg="$1" cache="$2" state="$3"
   [[ -n "$stack" ]] || return 0
-  [[ -n "$db" ]] && echo "TEST_DATABASE_URL=postgres://$svc:$svc-dev@$pg:5432/${svc}_test?sslmode=disable"
+  [[ -n "$db" ]] && echo "TEST_DATABASE_URL=postgres://$svc:$svc-dev@$pg:5432/$testdb?sslmode=disable"
   echo "TEST_REDIS_CACHE_URL=redis://$cache:6379/15"
   echo "TEST_REDIS_STATE_URL=redis://$state:6379/15"
 }

@@ -34,28 +34,36 @@ docs/EPICs/
 
 ## Working through the tasks
 
-Tasks are built one at a time, in ROADMAP.md order, by Claude Code using the project's `/next-task` command
+Tasks are built in ROADMAP.md order, in parallel batches, by Claude Code using the project's `/next-task` command
 (`.claude/skills/next-task/`, rules in `CLAUDE.md`).
 
 1. Start the dev stack (`make dev`) and make sure the working tree is clean: `/next-task` refuses to start on
    changes that aren't from a task.
-2. **Interactive:** run `claude` in the repo and type `/next-task` (or `/next-task KIT-07-03` for a specific ready
-   task). Review, then repeat.
-3. **Unattended:** `scripts/epics/run-tasks.sh` runs one `claude -p "/next-task <id>"` per task, capped by
-   `--budget` dollars per task (default 5). It stops at the end of each milestone, on a blocked task or a failed
-   run. `--dry-run` shows what it would do. Run logs and costs: `.claude/state/runs/`.
+2. **Interactive:** run `claude` in the repo and type `/next-task`: it builds up to 4 ready tasks of the current
+   milestone at once (`/next-task 6` for up to 6, `/next-task KIT-07-03 KIT-07-04` for those). Review, then repeat.
+3. **Unattended:** `scripts/epics/run-tasks.sh` runs one `claude -p "/next-task <ID> ..."` per batch of up to
+   `--jobs` tasks (default 4; `--jobs 1` builds one at a time), with an optional `--budget` cap in dollars per run.
+   It stops at the end of each milestone, on a blocked task or a failed run. `--dry-run` shows what it would do.
+   Run logs and costs: `.claude/state/runs/`.
 4. Each milestone is built on its own branch (`m01-foundations`, …), one commit per task. Review and merge it, then
    continue.
 
 How it fits together:
 
-- `scripts/epics/tasks.py` holds the state: `next`, `show <ID>`, `start`, `done`, `block <ID> "<why>"`, `status`.
-  Status lives in each task file's `Status` row; ROADMAP.md shows it after `scripts/epics/roadmap.sh`.
+- `scripts/epics/tasks.py` holds the state: `next`, `ready [N]`, `show <ID>`, `start`, `done`,
+  `block <ID> "<why>"`, `status`. Status lives in each task file's `Status` row; ROADMAP.md shows it after
+  `scripts/epics/roadmap.sh`.
+- In a batch, each task is built by a subagent in its own git worktree (`.claude/worktrees/<ID>`, branch
+  `task/<ID>`, made by `scripts/epics/worktree.sh`), whose tests use their own `<svc>_test_<id>` databases. The
+  main session then lands the tasks one at a time in roadmap order as one commit each. It resolves mechanical
+  conflicts (regenerated code, lockfiles, a migration number taken twice, lines both sides only added). A conflict
+  that needs a choice sends the task back to `todo` for the next batch. A worker never asks or decides: it stops,
+  and the main session asks you (interactive) or blocks the task (unattended).
 - A task is ready when every task in its "After" column is `done`. A `blocked` task is skipped; tasks that depend on
   it wait. Unblock one by fixing the cause and running `tasks.py set <ID> todo`.
-- `make lint s=<svc>` and `make test s=<svc>` must pass for every service a task touched. The Stop hook
-  (`.claude/hooks/verify-task.sh`) checks this after a task is marked done, sends Claude back up to three times,
-  and blocks the task after the third failure.
+- `make lint s=<svc>` and `make test s=<svc>` must pass for every service a task or batch touched. The Stop hook
+  (`.claude/hooks/verify-task.sh`) checks this once the tasks are marked done, sends Claude back up to three times,
+  and after the third failure blocks the tasks whose service still fails.
 - Claude never makes a design decision on its own: an unclear task is blocked with a note saying what needs
   deciding (under "## Blocked" in the task file).
 

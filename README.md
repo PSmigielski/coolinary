@@ -122,8 +122,9 @@ Generated code (`gen/`, sqlc `store/`, `src/coolinary/`, `auth-schema.ts`, Drizz
 ## Planned work
 
 Every planned feature is a task in `docs/EPICs/` (start with `docs/EPICs/README.md`), built in the order of
-`docs/EPICs/ROADMAP.md`. Claude Code builds them one at a time: `/next-task` in an interactive session, or
-`scripts/epics/run-tasks.sh` unattended (stops after each milestone). `make test s=<svc>` runs a service's tests.
+`docs/EPICs/ROADMAP.md`. Claude Code builds them in parallel batches (one subagent and git worktree per task, one
+commit each): `/next-task` in an interactive session, or `scripts/epics/run-tasks.sh` unattended (stops after each
+milestone). `make test s=<svc>` runs a service's tests.
 
 ## Debugging (Zed)
 
